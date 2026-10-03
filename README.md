@@ -7,7 +7,7 @@ Sementara: https://hitographic.github.io/Tjoomde/
 
 ## 1. Edit cepat
 
-- Nomor WA: buka `script.js` → ganti `WA_NUMBER = "6281234567890"` dengan nomor asli (format 62...).
+- Nomor WA: sudah `6281384812214` di `script.js` (`WA_NUMBER`).
 - Produk/harga: edit array `PRODUCTS` di `script.js`.
 - Bahasa default: `id`. Toggle ID/EN otomatis tersimpan di localStorage.
 
