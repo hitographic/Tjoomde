@@ -1,5 +1,5 @@
 // ===== CONFIG: GANTI NOMOR WA DI SINI =====
-const WA_NUMBER = "6281234567890"; // ganti dengan nomor WA Tjoomde, format: 62...
+const WA_NUMBER = "6281384812214"; // WA Tjoomde
 const IG_URL = "https://instagram.com/tjoomde";
 
 const PRODUCTS = [
