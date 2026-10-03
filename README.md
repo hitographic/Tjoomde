@@ -1,9 +1,8 @@
-# Tjoomde — tjoomde.is-a.page
+# Tjoomde — hitographic.github.io/Tjoomde
 
 Website parfum Tjoomde. Minimal modern, bilingual ID/EN, katalog 6 parfum dummy + order via WhatsApp. Static site, siap GitHub Pages.
 
-Live (setelah domain aktif): https://tjoomde.is-a.page
-Sementara: https://hitographic.github.io/Tjoomde/
+Live: https://hitographic.github.io/Tjoomde/
 
 ## 1. Edit cepat
 
@@ -17,29 +16,12 @@ Sementara: https://hitographic.github.io/Tjoomde/
 2. GitHub → repo Settings → Pages → Source: `Deploy from a branch`, Branch: `main` / `/ (root)`.
 3. Tunggu 1-2 menit, cek `https://hitographic.github.io/Tjoomde/` jalan.
 
-File `CNAME` berisi `tjoomde.is-a.page` — jangan dihapus. File `.nojekyll` agar Pages serve file statis apa adanya.
+Custom domain nonaktif untuk sekarang (file `CNAME` dihapus). File `.nojekyll` agar Pages serve file statis apa adanya.
 
-## 3. Daftar domain tjoomde.is-a.page
+## 3. Custom domain (ditunda)
 
-File siap PR ada di `register-domains/tjoomde.json`:
-
-```json
-{
-  "description": "Tjoomde perfume brand store",
-  "type": "CNAME",
-  "cname": "hitographic.github.io",
-  "proxied": false,
-  "owner": { "username": "hitographic", "email": "hitographic@gmail.com" }
-}
-```
-
-Status: PR https://github.com/is-a-page/register/pull/4 (menunggu review + merge).
-Setelah merge, DNS + redirect otomatis push ke Cloudflare.
-
-1. Setelah PR merge: repo Settings → Pages → Custom domain → isi `tjoomde.is-a.page` → Save → centang Enforce HTTPS.
-2. Tunggu propagasi DNS ±10 menit, cek `https://tjoomde.is-a.page`.
-
-Catatan: repo `is-a-page/register` public, jadi JSON pendaftar (username/email) terlihat publik. Repo website ini tetap public (wajib public untuk GitHub Pages Free).
+Pernah dicoba `tjoomde.is-a.dev` (ditolak: syarat non-komersial/dev-only) dan `tjoomde.is-a.page` (PR https://github.com/is-a-page/register/pull/4, admin tidak aktif).
+File contoh tersimpan di `register-domains/tjoomde.json`. Kalau nanti dapat domain (mis. via `dash.is-pro.dev`), buat lagi file `CNAME` berisi domainnya + set di Settings → Pages → Custom domain → Enforce HTTPS.
 
 ## Struktur
 
