@@ -1,8 +1,8 @@
-# Tjoomde — tjoomde.is-a.dev
+# Tjoomde — tjoomde.is-a.page
 
 Website parfum Tjoomde. Minimal modern, bilingual ID/EN, katalog 6 parfum dummy + order via WhatsApp. Static site, siap GitHub Pages.
 
-Live (setelah domain aktif): https://tjoomde.is-a.dev
+Live (setelah domain aktif): https://tjoomde.is-a.page
 Sementara: https://hitographic.github.io/Tjoomde/
 
 ## 1. Edit cepat
@@ -17,28 +17,29 @@ Sementara: https://hitographic.github.io/Tjoomde/
 2. GitHub → repo Settings → Pages → Source: `Deploy from a branch`, Branch: `main` / `/ (root)`.
 3. Tunggu 1-2 menit, cek `https://hitographic.github.io/Tjoomde/` jalan.
 
-File `CNAME` berisi `tjoomde.is-a.dev` — jangan dihapus. File `.nojekyll` agar Pages serve file statis apa adanya.
+File `CNAME` berisi `tjoomde.is-a.page` — jangan dihapus. File `.nojekyll` agar Pages serve file statis apa adanya.
 
-## 3. Daftar domain tjoomde.is-a.dev
+## 3. Daftar domain tjoomde.is-a.page
 
 File siap PR ada di `register-domains/tjoomde.json`:
 
 ```json
 {
-  "owner": { "username": "hitographic", "email": "..." },
-  "records": { "CNAME": "hitographic.github.io" }
+  "description": "Tjoomde perfume brand store",
+  "type": "CNAME",
+  "cname": "hitographic.github.io",
+  "proxied": true,
+  "owner": { "username": "hitographic", "email": "hitographic@gmail.com" }
 }
 ```
 
-Langkah (sesuai docs.is-a.dev/guides/github-pages):
+Status: PR https://github.com/is-a-page/register/pull/4 (menunggu review + merge).
+Setelah merge, DNS + redirect otomatis push ke Cloudflare.
 
-1. Fork https://github.com/is-a-dev/register
-2. Buat file `domains/tjoomde.json` di fork, isi dari `register-domains/tjoomde.json` (ganti email dengan email kamu).
-3. Open PR ke is-a-dev/register. Tunggu review + merge (biasanya <24 jam).
-4. Opsional tapi disarankan: verifikasi domain di GitHub Settings → Pages → Add a domain → `tjoomde.is-a.dev` (tambah TXT record sesuai instruksi GitHub).
-5. Setelah PR merge: repo Settings → Pages → Custom domain → isi `tjoomde.is-a.dev` → Save → centang Enforce HTTPS.
+1. Setelah PR merge: repo Settings → Pages → Custom domain → isi `tjoomde.is-a.page` → Save → centang Enforce HTTPS.
+2. Tunggu propagasi DNS ±10 menit, cek `https://tjoomde.is-a.page`.
 
-Catatan: repo `is-a-dev/register` public, jadi JSON pendaftar (username/email) terlihat publik. Repo website ini boleh tetap public (wajib public untuk GitHub Pages Free).
+Catatan: repo `is-a-page/register` public, jadi JSON pendaftar (username/email) terlihat publik. Repo website ini tetap public (wajib public untuk GitHub Pages Free).
 
 ## Struktur
 

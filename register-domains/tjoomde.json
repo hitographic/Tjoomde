@@ -1,8 +1,10 @@
 {
+  "description": "Tjoomde perfume brand store",
+  "type": "CNAME",
+  "cname": "hitographic.github.io",
+  "proxied": true,
   "owner": {
-    "username": "hitographic"
-  },
-  "records": {
-    "CNAME": "hitographic.github.io"
+    "username": "hitographic",
+    "email": "hitographic@gmail.com"
   }
 }
