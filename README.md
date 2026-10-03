@@ -28,7 +28,7 @@ File siap PR ada di `register-domains/tjoomde.json`:
   "description": "Tjoomde perfume brand store",
   "type": "CNAME",
   "cname": "hitographic.github.io",
-  "proxied": true,
+  "proxied": false,
   "owner": { "username": "hitographic", "email": "hitographic@gmail.com" }
 }
 ```
