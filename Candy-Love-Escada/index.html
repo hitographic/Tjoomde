@@ -54,9 +54,9 @@
     <section class="vcard">
       <h2 data-id="Piramida Parfum" data-en="Perfume Pyramid">Piramida Parfum</h2>
       <div class="pyr">
-        <div><h3>Top Notes</h3><p><span class='note'>Candy Apple</span></p></div>
-        <div><h3>Heart Notes</h3><p><span class='note'>Rose</span></p></div>
-        <div><h3>Base Notes</h3><p><span class='note'>Whipped Cream</span> <span class='note'>Vanilla</span></p></div>
+        <div><h3>Top Notes</h3><div class="notes-grid"><div class='note-item'><div class='img-wrap'><img data-note="Candy Apple" loading="lazy" alt="Candy Apple" /></div><div class='note-name'>Candy Apple</div></div></div></div>
+        <div><h3>Heart Notes</h3><div class="notes-grid"><div class='note-item'><div class='img-wrap'><img data-note="Rose" loading="lazy" alt="Rose" /></div><div class='note-name'>Rose</div></div></div></div>
+        <div><h3>Base Notes</h3><div class="notes-grid"><div class='note-item'><div class='img-wrap'><img data-note="Whipped Cream" loading="lazy" alt="Whipped Cream" /></div><div class='note-name'>Whipped Cream</div></div><div class='note-item'><div class='img-wrap'><img data-note="Vanilla" loading="lazy" alt="Vanilla" /></div><div class='note-name'>Vanilla</div></div></div></div>
       </div>
     </section>
 
@@ -84,6 +84,8 @@
     <p class="muted">© <span id="year"></span> Tjoomde.</p>
   </div></footer>
 
+  <script src="../assets/notes-db.js"></script>
+  <script src="../assets/note-images.js"></script>
   <script>
     const WA = "6281384812214", NAME = "Candy Love - Escada";
     let lang = localStorage.getItem("tjoomde-lang") || "id";

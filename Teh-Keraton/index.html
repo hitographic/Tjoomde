@@ -52,9 +52,9 @@
     <section class="vcard">
       <h2 data-id="Piramida Parfum" data-en="Perfume Pyramid">Piramida Parfum</h2>
       <div class="pyr">
-        <div><h3>Top Notes</h3><p><em>—</em></p></div>
-        <div><h3>Heart Notes</h3><p><em>—</em></p></div>
-        <div><h3>Base Notes</h3><p><em>—</em></p></div>
+        <div><h3>Top Notes</h3><div class="notes-grid"><div class='empty'>—</div></div></div>
+        <div><h3>Heart Notes</h3><div class="notes-grid"><div class='empty'>—</div></div></div>
+        <div><h3>Base Notes</h3><div class="notes-grid"><div class='empty'>—</div></div></div>
       </div>
     </section>
 
@@ -82,6 +82,8 @@
     <p class="muted">© <span id="year"></span> Tjoomde.</p>
   </div></footer>
 
+  <script src="../assets/notes-db.js"></script>
+  <script src="../assets/note-images.js"></script>
   <script>
     const WA = "6281384812214", NAME = "Teh Keraton";
     let lang = localStorage.getItem("tjoomde-lang") || "id";

@@ -56,9 +56,9 @@
     <section class="vcard">
       <h2 data-id="Piramida Parfum" data-en="Perfume Pyramid">Piramida Parfum</h2>
       <div class="pyr">
-        <div><h3>Top Notes</h3><p><span class='note'>Passionfruit</span> <span class='note'>Peach</span> <span class='note'>Bergamot</span></p></div>
-        <div><h3>Heart Notes</h3><p><span class='note'>Caramel</span> <span class='note'>Jasmine</span> <span class='note'>Geranium</span></p></div>
-        <div><h3>Base Notes</h3><p><span class='note'>White Musk</span> <span class='note'>Patchouli</span> <span class='note'>Amber</span></p></div>
+        <div><h3>Top Notes</h3><div class="notes-grid"><div class='note-item'><div class='img-wrap'><img data-note="Passionfruit" loading="lazy" alt="Passionfruit" /></div><div class='note-name'>Passionfruit</div></div><div class='note-item'><div class='img-wrap'><img data-note="Peach" loading="lazy" alt="Peach" /></div><div class='note-name'>Peach</div></div><div class='note-item'><div class='img-wrap'><img data-note="Bergamot" loading="lazy" alt="Bergamot" /></div><div class='note-name'>Bergamot</div></div></div></div>
+        <div><h3>Heart Notes</h3><div class="notes-grid"><div class='note-item'><div class='img-wrap'><img data-note="Caramel" loading="lazy" alt="Caramel" /></div><div class='note-name'>Caramel</div></div><div class='note-item'><div class='img-wrap'><img data-note="Jasmine" loading="lazy" alt="Jasmine" /></div><div class='note-name'>Jasmine</div></div><div class='note-item'><div class='img-wrap'><img data-note="Geranium" loading="lazy" alt="Geranium" /></div><div class='note-name'>Geranium</div></div></div></div>
+        <div><h3>Base Notes</h3><div class="notes-grid"><div class='note-item'><div class='img-wrap'><img data-note="White Musk" loading="lazy" alt="White Musk" /></div><div class='note-name'>White Musk</div></div><div class='note-item'><div class='img-wrap'><img data-note="Patchouli" loading="lazy" alt="Patchouli" /></div><div class='note-name'>Patchouli</div></div><div class='note-item'><div class='img-wrap'><img data-note="Amber" loading="lazy" alt="Amber" /></div><div class='note-name'>Amber</div></div></div></div>
       </div>
     </section>
 
@@ -86,6 +86,8 @@
     <p class="muted">© <span id="year"></span> Tjoomde.</p>
   </div></footer>
 
+  <script src="../assets/notes-db.js"></script>
+  <script src="../assets/note-images.js"></script>
   <script>
     const WA = "6281384812214", NAME = "Mykonos Crimson";
     let lang = localStorage.getItem("tjoomde-lang") || "id";

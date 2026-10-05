@@ -56,9 +56,9 @@
     <section class="vcard">
       <h2 data-id="Piramida Parfum" data-en="Perfume Pyramid">Piramida Parfum</h2>
       <div class="pyr">
-        <div><h3>Top Notes</h3><p><span class='note'>Sicilian Mandarin</span></p></div>
-        <div><h3>Heart Notes</h3><p><span class='note'>Pink Peony</span> <span class='note'>Damask Rose</span> <span class='note'>Apricot</span> <span class='note'>Peach</span></p></div>
-        <div><h3>Base Notes</h3><p><span class='note'>White Musk</span></p></div>
+        <div><h3>Top Notes</h3><div class="notes-grid"><div class='note-item'><div class='img-wrap'><img data-note="Sicilian Mandarin" loading="lazy" alt="Sicilian Mandarin" /></div><div class='note-name'>Sicilian Mandarin</div></div></div></div>
+        <div><h3>Heart Notes</h3><div class="notes-grid"><div class='note-item'><div class='img-wrap'><img data-note="Pink Peony" loading="lazy" alt="Pink Peony" /></div><div class='note-name'>Pink Peony</div></div><div class='note-item'><div class='img-wrap'><img data-note="Damask Rose" loading="lazy" alt="Damask Rose" /></div><div class='note-name'>Damask Rose</div></div><div class='note-item'><div class='img-wrap'><img data-note="Apricot" loading="lazy" alt="Apricot" /></div><div class='note-name'>Apricot</div></div><div class='note-item'><div class='img-wrap'><img data-note="Peach" loading="lazy" alt="Peach" /></div><div class='note-name'>Peach</div></div></div></div>
+        <div><h3>Base Notes</h3><div class="notes-grid"><div class='note-item'><div class='img-wrap'><img data-note="White Musk" loading="lazy" alt="White Musk" /></div><div class='note-name'>White Musk</div></div></div></div>
       </div>
     </section>
 
@@ -86,6 +86,8 @@
     <p class="muted">© <span id="year"></span> Tjoomde.</p>
   </div></footer>
 
+  <script src="../assets/notes-db.js"></script>
+  <script src="../assets/note-images.js"></script>
   <script>
     const WA = "6281384812214", NAME = "Blooming Bouquet";
     let lang = localStorage.getItem("tjoomde-lang") || "id";

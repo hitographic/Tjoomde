@@ -56,9 +56,9 @@
     <section class="vcard">
       <h2 data-id="Piramida Parfum" data-en="Perfume Pyramid">Piramida Parfum</h2>
       <div class="pyr">
-        <div><h3>Top Notes</h3><p><span class='note'>Bergamot</span> <span class='note'>Orange</span> <span class='note'>Mandarin Orange</span> <span class='note'>Litsea Cubeba</span></p></div>
-        <div><h3>Heart Notes</h3><p><span class='note'>Oolong Tea</span> <span class='note'>Nutmeg</span></p></div>
-        <div><h3>Base Notes</h3><p><span class='note'>Fig</span> <span class='note'>Musk</span></p></div>
+        <div><h3>Top Notes</h3><div class="notes-grid"><div class='note-item'><div class='img-wrap'><img data-note="Bergamot" loading="lazy" alt="Bergamot" /></div><div class='note-name'>Bergamot</div></div><div class='note-item'><div class='img-wrap'><img data-note="Orange" loading="lazy" alt="Orange" /></div><div class='note-name'>Orange</div></div><div class='note-item'><div class='img-wrap'><img data-note="Mandarin Orange" loading="lazy" alt="Mandarin Orange" /></div><div class='note-name'>Mandarin Orange</div></div><div class='note-item'><div class='img-wrap'><img data-note="Litsea Cubeba" loading="lazy" alt="Litsea Cubeba" /></div><div class='note-name'>Litsea Cubeba</div></div></div></div>
+        <div><h3>Heart Notes</h3><div class="notes-grid"><div class='note-item'><div class='img-wrap'><img data-note="Oolong Tea" loading="lazy" alt="Oolong Tea" /></div><div class='note-name'>Oolong Tea</div></div><div class='note-item'><div class='img-wrap'><img data-note="Nutmeg" loading="lazy" alt="Nutmeg" /></div><div class='note-name'>Nutmeg</div></div></div></div>
+        <div><h3>Base Notes</h3><div class="notes-grid"><div class='note-item'><div class='img-wrap'><img data-note="Fig" loading="lazy" alt="Fig" /></div><div class='note-name'>Fig</div></div><div class='note-item'><div class='img-wrap'><img data-note="Musk" loading="lazy" alt="Musk" /></div><div class='note-name'>Musk</div></div></div></div>
       </div>
     </section>
 
@@ -86,6 +86,8 @@
     <p class="muted">© <span id="year"></span> Tjoomde.</p>
   </div></footer>
 
+  <script src="../assets/notes-db.js"></script>
+  <script src="../assets/note-images.js"></script>
   <script>
     const WA = "6281384812214", NAME = "Wulong Cha - Nishane";
     let lang = localStorage.getItem("tjoomde-lang") || "id";

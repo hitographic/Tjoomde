@@ -56,9 +56,9 @@
     <section class="vcard">
       <h2 data-id="Piramida Parfum" data-en="Perfume Pyramid">Piramida Parfum</h2>
       <div class="pyr">
-        <div><h3>Top Notes</h3><p><span class='note'>Lavender</span> <span class='note'>Mint</span></p></div>
-        <div><h3>Heart Notes</h3><p><span class='note'>Vanilla</span> <span class='note'>Benzoin</span></p></div>
-        <div><h3>Base Notes</h3><p><span class='note'>Honey</span> <span class='note'>Tonka Bean</span> <span class='note'>Tobacco</span></p></div>
+        <div><h3>Top Notes</h3><div class="notes-grid"><div class='note-item'><div class='img-wrap'><img data-note="Lavender" loading="lazy" alt="Lavender" /></div><div class='note-name'>Lavender</div></div><div class='note-item'><div class='img-wrap'><img data-note="Mint" loading="lazy" alt="Mint" /></div><div class='note-name'>Mint</div></div></div></div>
+        <div><h3>Heart Notes</h3><div class="notes-grid"><div class='note-item'><div class='img-wrap'><img data-note="Vanilla" loading="lazy" alt="Vanilla" /></div><div class='note-name'>Vanilla</div></div><div class='note-item'><div class='img-wrap'><img data-note="Benzoin" loading="lazy" alt="Benzoin" /></div><div class='note-name'>Benzoin</div></div></div></div>
+        <div><h3>Base Notes</h3><div class="notes-grid"><div class='note-item'><div class='img-wrap'><img data-note="Honey" loading="lazy" alt="Honey" /></div><div class='note-name'>Honey</div></div><div class='note-item'><div class='img-wrap'><img data-note="Tonka Bean" loading="lazy" alt="Tonka Bean" /></div><div class='note-name'>Tonka Bean</div></div><div class='note-item'><div class='img-wrap'><img data-note="Tobacco" loading="lazy" alt="Tobacco" /></div><div class='note-name'>Tobacco</div></div></div></div>
       </div>
     </section>
 
@@ -86,6 +86,8 @@
     <p class="muted">© <span id="year"></span> Tjoomde.</p>
   </div></footer>
 
+  <script src="../assets/notes-db.js"></script>
+  <script src="../assets/note-images.js"></script>
   <script>
     const WA = "6281384812214", NAME = "Le Male Elixir";
     let lang = localStorage.getItem("tjoomde-lang") || "id";

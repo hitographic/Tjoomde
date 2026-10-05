@@ -56,9 +56,9 @@
     <section class="vcard">
       <h2 data-id="Piramida Parfum" data-en="Perfume Pyramid">Piramida Parfum</h2>
       <div class="pyr">
-        <div><h3>Top Notes</h3><p><span class='note'>Mandarin Orange</span> <span class='note'>Lemon</span></p></div>
-        <div><h3>Heart Notes</h3><p><span class='note'>Lavender</span> <span class='note'>Lychee</span> <span class='note'>Aquatic Notes</span> <span class='note'>Rosemary</span> <span class='note'>Cardamom</span> <span class='note'>Geranium</span></p></div>
-        <div><h3>Base Notes</h3><p><span class='note'>Teak Wood</span> <span class='note'>Tonka Bean</span> <span class='note'>Vetiver</span></p></div>
+        <div><h3>Top Notes</h3><div class="notes-grid"><div class='note-item'><div class='img-wrap'><img data-note="Mandarin Orange" loading="lazy" alt="Mandarin Orange" /></div><div class='note-name'>Mandarin Orange</div></div><div class='note-item'><div class='img-wrap'><img data-note="Lemon" loading="lazy" alt="Lemon" /></div><div class='note-name'>Lemon</div></div></div></div>
+        <div><h3>Heart Notes</h3><div class="notes-grid"><div class='note-item'><div class='img-wrap'><img data-note="Lavender" loading="lazy" alt="Lavender" /></div><div class='note-name'>Lavender</div></div><div class='note-item'><div class='img-wrap'><img data-note="Lychee" loading="lazy" alt="Lychee" /></div><div class='note-name'>Lychee</div></div><div class='note-item'><div class='img-wrap'><img data-note="Aquatic Notes" loading="lazy" alt="Aquatic Notes" /></div><div class='note-name'>Aquatic Notes</div></div><div class='note-item'><div class='img-wrap'><img data-note="Rosemary" loading="lazy" alt="Rosemary" /></div><div class='note-name'>Rosemary</div></div><div class='note-item'><div class='img-wrap'><img data-note="Cardamom" loading="lazy" alt="Cardamom" /></div><div class='note-name'>Cardamom</div></div><div class='note-item'><div class='img-wrap'><img data-note="Geranium" loading="lazy" alt="Geranium" /></div><div class='note-name'>Geranium</div></div></div></div>
+        <div><h3>Base Notes</h3><div class="notes-grid"><div class='note-item'><div class='img-wrap'><img data-note="Teak Wood" loading="lazy" alt="Teak Wood" /></div><div class='note-name'>Teak Wood</div></div><div class='note-item'><div class='img-wrap'><img data-note="Tonka Bean" loading="lazy" alt="Tonka Bean" /></div><div class='note-name'>Tonka Bean</div></div><div class='note-item'><div class='img-wrap'><img data-note="Vetiver" loading="lazy" alt="Vetiver" /></div><div class='note-name'>Vetiver</div></div></div></div>
       </div>
     </section>
 
@@ -86,6 +86,8 @@
     <p class="muted">© <span id="year"></span> Tjoomde.</p>
   </div></footer>
 
+  <script src="../assets/notes-db.js"></script>
+  <script src="../assets/note-images.js"></script>
   <script>
     const WA = "6281384812214", NAME = "California Signature";
     let lang = localStorage.getItem("tjoomde-lang") || "id";

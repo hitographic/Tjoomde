@@ -56,9 +56,9 @@
     <section class="vcard">
       <h2 data-id="Piramida Parfum" data-en="Perfume Pyramid">Piramida Parfum</h2>
       <div class="pyr">
-        <div><h3>Top Notes</h3><p><span class='note'>Grapefruit</span> <span class='note'>Bergamot</span> <span class='note'>Jasmine</span> <span class='note'>Magnolia</span></p></div>
-        <div><h3>Heart Notes</h3><p><span class='note'>Ginger</span> <span class='note'>Herbal Notes</span> <span class='note'>Powdery Notes</span></p></div>
-        <div><h3>Base Notes</h3><p><span class='note'>Musk</span> <span class='note'>Cedar</span> <span class='note'>Amber</span> <span class='note'>Patchouli</span> <span class='note'>Orris Root</span></p></div>
+        <div><h3>Top Notes</h3><div class="notes-grid"><div class='note-item'><div class='img-wrap'><img data-note="Grapefruit" loading="lazy" alt="Grapefruit" /></div><div class='note-name'>Grapefruit</div></div><div class='note-item'><div class='img-wrap'><img data-note="Bergamot" loading="lazy" alt="Bergamot" /></div><div class='note-name'>Bergamot</div></div><div class='note-item'><div class='img-wrap'><img data-note="Jasmine" loading="lazy" alt="Jasmine" /></div><div class='note-name'>Jasmine</div></div><div class='note-item'><div class='img-wrap'><img data-note="Magnolia" loading="lazy" alt="Magnolia" /></div><div class='note-name'>Magnolia</div></div></div></div>
+        <div><h3>Heart Notes</h3><div class="notes-grid"><div class='note-item'><div class='img-wrap'><img data-note="Ginger" loading="lazy" alt="Ginger" /></div><div class='note-name'>Ginger</div></div><div class='note-item'><div class='img-wrap'><img data-note="Herbal Notes" loading="lazy" alt="Herbal Notes" /></div><div class='note-name'>Herbal Notes</div></div><div class='note-item'><div class='img-wrap'><img data-note="Powdery Notes" loading="lazy" alt="Powdery Notes" /></div><div class='note-name'>Powdery Notes</div></div></div></div>
+        <div><h3>Base Notes</h3><div class="notes-grid"><div class='note-item'><div class='img-wrap'><img data-note="Musk" loading="lazy" alt="Musk" /></div><div class='note-name'>Musk</div></div><div class='note-item'><div class='img-wrap'><img data-note="Cedar" loading="lazy" alt="Cedar" /></div><div class='note-name'>Cedar</div></div><div class='note-item'><div class='img-wrap'><img data-note="Amber" loading="lazy" alt="Amber" /></div><div class='note-name'>Amber</div></div><div class='note-item'><div class='img-wrap'><img data-note="Patchouli" loading="lazy" alt="Patchouli" /></div><div class='note-name'>Patchouli</div></div><div class='note-item'><div class='img-wrap'><img data-note="Orris Root" loading="lazy" alt="Orris Root" /></div><div class='note-name'>Orris Root</div></div></div></div>
       </div>
     </section>
 
@@ -86,6 +86,8 @@
     <p class="muted">© <span id="year"></span> Tjoomde.</p>
   </div></footer>
 
+  <script src="../assets/notes-db.js"></script>
+  <script src="../assets/note-images.js"></script>
   <script>
     const WA = "6281384812214", NAME = "Vibrato";
     let lang = localStorage.getItem("tjoomde-lang") || "id";

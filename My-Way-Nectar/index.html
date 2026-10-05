@@ -56,9 +56,9 @@
     <section class="vcard">
       <h2 data-id="Piramida Parfum" data-en="Perfume Pyramid">Piramida Parfum</h2>
       <div class="pyr">
-        <div><h3>Top Notes</h3><p><span class='note'>Pear</span> <span class='note'>Orange Blossom</span> <span class='note'>Bergamot</span></p></div>
-        <div><h3>Heart Notes</h3><p><span class='note'>Tuberose</span> <span class='note'>Jasmine</span> <span class='note'>Violet Leaf</span></p></div>
-        <div><h3>Base Notes</h3><p><span class='note'>White Musk</span> <span class='note'>Bourbon Vanilla</span> <span class='note'>Cedarwood</span></p></div>
+        <div><h3>Top Notes</h3><div class="notes-grid"><div class='note-item'><div class='img-wrap'><img data-note="Pear" loading="lazy" alt="Pear" /></div><div class='note-name'>Pear</div></div><div class='note-item'><div class='img-wrap'><img data-note="Orange Blossom" loading="lazy" alt="Orange Blossom" /></div><div class='note-name'>Orange Blossom</div></div><div class='note-item'><div class='img-wrap'><img data-note="Bergamot" loading="lazy" alt="Bergamot" /></div><div class='note-name'>Bergamot</div></div></div></div>
+        <div><h3>Heart Notes</h3><div class="notes-grid"><div class='note-item'><div class='img-wrap'><img data-note="Tuberose" loading="lazy" alt="Tuberose" /></div><div class='note-name'>Tuberose</div></div><div class='note-item'><div class='img-wrap'><img data-note="Jasmine" loading="lazy" alt="Jasmine" /></div><div class='note-name'>Jasmine</div></div><div class='note-item'><div class='img-wrap'><img data-note="Violet Leaf" loading="lazy" alt="Violet Leaf" /></div><div class='note-name'>Violet Leaf</div></div></div></div>
+        <div><h3>Base Notes</h3><div class="notes-grid"><div class='note-item'><div class='img-wrap'><img data-note="White Musk" loading="lazy" alt="White Musk" /></div><div class='note-name'>White Musk</div></div><div class='note-item'><div class='img-wrap'><img data-note="Bourbon Vanilla" loading="lazy" alt="Bourbon Vanilla" /></div><div class='note-name'>Bourbon Vanilla</div></div><div class='note-item'><div class='img-wrap'><img data-note="Cedarwood" loading="lazy" alt="Cedarwood" /></div><div class='note-name'>Cedarwood</div></div></div></div>
       </div>
     </section>
 
@@ -86,6 +86,8 @@
     <p class="muted">© <span id="year"></span> Tjoomde.</p>
   </div></footer>
 
+  <script src="../assets/notes-db.js"></script>
+  <script src="../assets/note-images.js"></script>
   <script>
     const WA = "6281384812214", NAME = "My Way Nectar";
     let lang = localStorage.getItem("tjoomde-lang") || "id";

@@ -56,9 +56,9 @@
     <section class="vcard">
       <h2 data-id="Piramida Parfum" data-en="Perfume Pyramid">Piramida Parfum</h2>
       <div class="pyr">
-        <div><h3>Top Notes</h3><p><span class='note'>Coriander</span> <span class='note'>Bergamot</span></p></div>
-        <div><h3>Heart Notes</h3><p><span class='note'>Jasmine Sambac</span></p></div>
-        <div><h3>Base Notes</h3><p><span class='note'>Vanilla</span></p></div>
+        <div><h3>Top Notes</h3><div class="notes-grid"><div class='note-item'><div class='img-wrap'><img data-note="Coriander" loading="lazy" alt="Coriander" /></div><div class='note-name'>Coriander</div></div><div class='note-item'><div class='img-wrap'><img data-note="Bergamot" loading="lazy" alt="Bergamot" /></div><div class='note-name'>Bergamot</div></div></div></div>
+        <div><h3>Heart Notes</h3><div class="notes-grid"><div class='note-item'><div class='img-wrap'><img data-note="Jasmine Sambac" loading="lazy" alt="Jasmine Sambac" /></div><div class='note-name'>Jasmine Sambac</div></div></div></div>
+        <div><h3>Base Notes</h3><div class="notes-grid"><div class='note-item'><div class='img-wrap'><img data-note="Vanilla" loading="lazy" alt="Vanilla" /></div><div class='note-name'>Vanilla</div></div></div></div>
       </div>
     </section>
 
@@ -86,6 +86,8 @@
     <p class="muted">© <span id="year"></span> Tjoomde.</p>
   </div></footer>
 
+  <script src="../assets/notes-db.js"></script>
+  <script src="../assets/note-images.js"></script>
   <script>
     const WA = "6281384812214", NAME = "EOS";
     let lang = localStorage.getItem("tjoomde-lang") || "id";

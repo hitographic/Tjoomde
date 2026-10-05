@@ -189,9 +189,9 @@ PAGE_TPL = """<!DOCTYPE html>
     <section class="vcard">
       <h2 data-id="Piramida Parfum" data-en="Perfume Pyramid">Piramida Parfum</h2>
       <div class="pyr">
-        <div><h3>Top Notes</h3><p>{top_html}</p></div>
-        <div><h3>Heart Notes</h3><p>{mid_html}</p></div>
-        <div><h3>Base Notes</h3><p>{base_html}</p></div>
+        <div><h3>Top Notes</h3><div class="notes-grid">{top_html}</div></div>
+        <div><h3>Heart Notes</h3><div class="notes-grid">{mid_html}</div></div>
+        <div><h3>Base Notes</h3><div class="notes-grid">{base_html}</div></div>
       </div>
     </section>
 
@@ -219,6 +219,8 @@ PAGE_TPL = """<!DOCTYPE html>
     <p class="muted">© <span id="year"></span> Tjoomde.</p>
   </div></footer>
 
+  <script src="../assets/notes-db.js"></script>
+  <script src="../assets/note-images.js"></script>
   <script>
     const WA = "{wa}", NAME = "{js_name}";
     let lang = localStorage.getItem("tjoomde-lang") || "id";
@@ -305,8 +307,12 @@ def main():
 
 def chips(notes):
     if not notes:
-        return "<em>—</em>"
-    return " ".join(f"<span class='note'>{esc(n)}</span>" for n in notes)
+        return "<div class='empty'>—</div>"
+    return "".join(
+        f"<div class='note-item'><div class='img-wrap'>"
+        f"<img data-note=\"{esc(n)}\" loading=\"lazy\" alt=\"{esc(n)}\" /></div>"
+        f"<div class='note-name'>{esc(n)}</div></div>"
+        for n in notes)
 
 
 def render_page(v, rel):
