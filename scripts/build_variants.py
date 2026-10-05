@@ -20,21 +20,85 @@ XLSX = ROOT / "Data" / "Tjoomde.xlsx"
 OVERRIDES = ROOT / "Data" / "overrides.json"
 WA_NUMBER = "6281384812214"
 
-# note keyword -> accord
-ACCORD_MAP = [
-    ("sweet", ["sugar", "caramel", "toffee", "honey", "candy", "praline", "tonka", "vanilla", "marshmallow", "whipped cream", "coconut", "strawberry", "raspberry", "apple", "pear", "peach", "pineapple", "mango", "pitahaya", "chocolate"]),
-    ("fruity", ["apple", "pear", "peach", "pineapple", "mango", "berry", "berries", "raspberry", "strawberry", "cassis", "black currant", "blackcurrant", "grapes", "grape", "grapefruit", "orange", "mandarin", "lemon", "citron", "bergamot", "nectarine", "apricot", "lychee", "litchi", "melon", "fig", "plum", "cherry", "passionfruit", "cognac", "rum"]),
-    ("floral", ["rose", "jasmine", "peony", "freesia", "violet", "iris", "lily", "magnolia", "mimosa", "tuberose", "frangipani", "orange blossom", "neroli", "geranium", "lavender", "heliotrope", "carnation", "blossom"]),
-    ("citrus", ["lemon", "bergamot", "orange", "mandarin", "grapefruit", "citron", "calabrian", "sicilian", "yuzu", "litsea", "rhubarb"]),
-    ("woody", ["cedar", "sandalwood", "vetiver", "teak", "guaiac", "akigalawood", "woody notes", "oakmoss", "evernyl", "dry wood", "caraway", "cypress"]),
-    ("musky", ["musk", "white musk", "ambrette", "ambroxan", "ambrofix", "ambro", "ambergris", "amberwood", "mahonial"]),
-    ("fresh", ["mint", "green tea", "green notes", "aquatic", "marine", "ozonic", "cucumber", "rhubarb", "celery", "violet leaf", "basil", "ginger", "tea", "oolong", "wulong"]),
-    ("powdery", ["orris", "violet", "iris", "heliotrope", "musk", "powdery", "rice", "almond"]),
-    ("amber", ["amber", "benzoin", "labdanum", "myrrh", "opoponax", "balsam", "styrax"]),
-    ("spicy", ["pepper", "pink pepper", "cinnamon", "cardamom", "nutmeg", "cloves", "saffron", "coriander", "cumin", "ginger", "timur", "paprika"]),
-    ("smoky", ["tobacco", "leather", "suede", "incense", "birch", "smoke", "oud", "agarwood", "hay", "black amber", "licorice"]),
-    ("green", ["green", "fig leaf", "violet leaf", "basil", "rosemary", "mint", "tea", "vetiver", "galbanum"]),
-]
+# note -> [(accord, weight)]; vocabulary mirrors Fragrantica accord names.
+NOTE_ACCORDS = {
+    "bergamot": [("citrus", 1.0)], "calabrian bergamot": [("citrus", 1.0)],
+    "bitter orange": [("citrus", .8), ("aromatic", .2)], "citron": [("citrus", 1.0)],
+    "grapefruit": [("citrus", .9), ("fruity", .1)], "italian lemon": [("citrus", 1.0)],
+    "lemon": [("citrus", 1.0)], "mandarin": [("citrus", .9), ("fruity", .1)],
+    "mandarin orange": [("citrus", .9), ("fruity", .1)], "orange": [("citrus", .8), ("fruity", .2)],
+    "orange peel": [("citrus", 1.0)], "sicilian mandarin": [("citrus", .9), ("fruity", .1)],
+    "sicilian orange": [("citrus", .9), ("fruity", .1)], "litsea cubeba": [("citrus", .7), ("fresh", .3)],
+    "rhubarb": [("green", .5), ("fruity", .3), ("fresh", .2)],
+    "apple": [("fruity", .9), ("sweet", .1)], "apricot": [("fruity", .8), ("sweet", .2)],
+    "black currant": [("fruity", .8), ("green", .2)], "blackcurrant": [("fruity", .8), ("green", .2)],
+    "cassis": [("fruity", .7), ("green", .3)], "candy apple": [("sweet", .6), ("fruity", .4)],
+    "coconut": [("lactonic", .5), ("sweet", .3), ("tropical", .2)],
+    "fig": [("green", .5), ("fruity", .3), ("woody", .2)], "grapes": [("fruity", .9), ("sweet", .1)],
+    "granny smith apple": [("fruity", .9), ("green", .1)], "litchi": [("fruity", .8), ("floral", .2)],
+    "lychee": [("fruity", .8), ("floral", .2)], "melon": [("fruity", .7), ("aquatic", .3)],
+    "nectarine blossom": [("floral", .5), ("fruity", .5)], "passionfruit": [("fruity", .8), ("tropical", .2)],
+    "peach": [("fruity", .8), ("sweet", .2)], "pear": [("fruity", .9), ("green", .1)],
+    "pineapple": [("fruity", .8), ("tropical", .2)], "pitahaya": [("fruity", .7), ("tropical", .3)],
+    "raspberry": [("fruity", .8), ("sweet", .2)], "strawberry": [("fruity", .7), ("sweet", .3)],
+    "damask rose": [("floral", 1.0)], "rose": [("floral", 1.0)],
+    "carnation": [("floral", .7), ("warm spicy", .3)], "freesia": [("floral", .8), ("fresh", .2)],
+    "frangipani": [("floral", .7), ("sweet", .3)], "geranium": [("floral", .6), ("green", .4)],
+    "heliotrope": [("powdery", .6), ("floral", .4)], "iris": [("powdery", .7), ("floral", .3)],
+    "orris root": [("powdery", .8), ("earthy", .2)], "jasmine": [("white floral", .9), ("floral", .1)],
+    "jasmine sambac": [("white floral", 1.0)], "lavender": [("aromatic", .7), ("floral", .3)],
+    "lily-of-the-valley": [("white floral", .8), ("green", .2)], "magnolia": [("floral", .7), ("citrus", .3)],
+    "mimosa absolute": [("powdery", .5), ("floral", .5)], "orange blossom": [("white floral", .9), ("citrus", .1)],
+    "tunisian orange blossom": [("white floral", .9), ("citrus", .1)],
+    "pink peony": [("floral", .9), ("fresh", .1)], "tuberose": [("white floral", .9), ("sweet", .1)],
+    "violet": [("powdery", .5), ("floral", .5)], "violet leaf": [("green", .8), ("powdery", .2)],
+    "benzoin": [("balsamic", .7), ("sweet", .3)], "caramel": [("sweet", 1.0)],
+    "coumarin": [("sweet", .6), ("powdery", .4)], "gourmand accord": [("sweet", 1.0)],
+    "honey": [("honey", .8), ("sweet", .2)], "marshmallow": [("sweet", .6), ("powdery", .4)],
+    "praline": [("sweet", .8), ("nutty", .2)], "sugar": [("sweet", 1.0)],
+    "toffee": [("sweet", .9), ("balsamic", .1)], "tonka": [("sweet", .6), ("powdery", .4)],
+    "tonka bean": [("sweet", .6), ("powdery", .4)], "vanilla": [("sweet", .6), ("powdery", .4)],
+    "bourbon vanilla": [("sweet", .6), ("powdery", .4)], "madagascar vanilla": [("sweet", .6), ("powdery", .4)],
+    "whipped cream": [("lactonic", .6), ("sweet", .4)],
+    "akigalawood": [("woody", .8), ("warm spicy", .2)], "cashmeran": [("woody", .6), ("musky", .4)],
+    "cedar": [("woody", 1.0)], "cedarwood": [("woody", 1.0)], "dry wood": [("woody", 1.0)],
+    "evernyl": [("woody", .6), ("earthy", .4)], "guaiac wood": [("woody", .7), ("smoky", .3)],
+    "oakmoss": [("earthy", .8), ("green", .2)], "patchouli": [("earthy", .6), ("woody", .4)],
+    "sandalwood": [("woody", .8), ("lactonic", .2)], "teak wood": [("woody", 1.0)],
+    "vetiver": [("woody", .6), ("green", .4)], "haitian vetiver": [("woody", .6), ("green", .4)],
+    "woody notes": [("woody", 1.0)], "woodsy notes": [("woody", .8), ("green", .2)],
+    "sand": [("aquatic", .5), ("musky", .5)],
+    "amber": [("amber", 1.0)], "ambergris": [("amber", .6), ("musky", .4)],
+    "amberwood": [("amber", .6), ("woody", .4)], "ambrette": [("musky", .8), ("sweet", .2)],
+    "ambrofix": [("musky", .5), ("woody", .3), ("amber", .2)],
+    "ambroxan": [("musky", .5), ("woody", .3), ("amber", .2)],
+    "black amber": [("amber", .8), ("smoky", .2)], "labdanum": [("amber", .6), ("balsamic", .4)],
+    "mahonial": [("woody", .6), ("amber", .4)], "musk": [("musky", 1.0)],
+    "white musk": [("musky", 1.0)], "white amber": [("amber", .7), ("musky", .3)],
+    "cardamom": [("warm spicy", .8), ("aromatic", .2)], "caraway": [("warm spicy", .7), ("green", .3)],
+    "cinnamon": [("warm spicy", 1.0)], "cloves": [("warm spicy", 1.0)],
+    "coriander": [("fresh spicy", .7), ("green", .3)], "ginger": [("fresh spicy", .7), ("citrus", .3)],
+    "nutmeg": [("warm spicy", .8), ("sweet", .2)], "pepper": [("warm spicy", .8), ("fresh spicy", .2)],
+    "pink pepper": [("fresh spicy", .6), ("fruity", .4)], "saffron": [("warm spicy", .6), ("leathery", .4)],
+    "timur": [("fresh spicy", .7), ("citrus", .3)], "fennel": [("aromatic", .6), ("sweet", .4)],
+    "licorice": [("sweet", .6), ("aromatic", .4)], "celery seeds": [("green", .7), ("fresh spicy", .3)],
+    "bay leaf": [("aromatic", .6), ("fresh spicy", .4)], "basil": [("aromatic", .7), ("green", .3)],
+    "rosemary": [("aromatic", .8), ("fresh", .2)],
+    "aquatic notes": [("aquatic", 1.0)], "green notes": [("green", 1.0)],
+    "green tea": [("green", .6), ("fresh", .4)], "mint": [("fresh", .7), ("green", .3)],
+    "oolong tea": [("green", .5), ("floral", .3), ("smoky", .2)],
+    "white tea": [("green", .4), ("white floral", .4), ("fresh", .2)],
+    "solar notes": [("floral", .5), ("sweet", .3), ("fresh", .2)],
+    "hay": [("green", .4), ("sweet", .3), ("powdery", .3)],
+    "cognac": [("sweet", .5), ("warm spicy", .3), ("smoky", .2)],
+    "rum": [("sweet", .7), ("warm spicy", .3)], "tobacco": [("smoky", .5), ("sweet", .3), ("leathery", .2)],
+    "tobacco leaf": [("smoky", .5), ("sweet", .3), ("leathery", .2)],
+    "leather": [("leathery", 1.0)], "suede": [("leathery", .7), ("powdery", .3)],
+    "incense": [("smoky", .7), ("balsamic", .3)],
+}
+
+# base notes linger longest -> weighted heaviest (mirrors overall impression)
+TIER_W = {"top": 1.0, "heart": 1.2, "base": 1.4}
 
 FEM = ["rose", "jasmine", "peony", "tuberose", "vanilla", "caramel", "strawberry", "coconut", "candy", "praline", "frangipani", "mimosa", "freesia", "lychee", "peach", "apricot", "white musk", "powdery"]
 MASC = ["vetiver", "leather", "tobacco", "oud", "cedar", "lavender", "aquatic", "marine", "rum", "cognac", "pepper", "cypress", "oakmoss", "smoke", "suede"]
@@ -50,16 +114,19 @@ def split_notes(cell):
     return [n.strip() for n in str(cell).split(",") if n.strip()]
 
 
-def accords_for(notes):
-    joined = " | ".join(n.lower() for n in notes)
+def accords_for(tiers):
+    """tiers = [(tier_name, [notes])]; score weighted by tier, scaled to max=100."""
     scores = {}
-    for accord, keys in ACCORD_MAP:
-        hits = sum(1 for k in keys if k in joined)
-        if hits:
-            scores[accord] = hits
-    total = sum(scores.values()) or 1
-    ranked = sorted(scores.items(), key=lambda x: -x[1])[:5]
-    return [(a, round(h / total * 100)) for a, h in ranked]
+    for tier_name, notes in tiers:
+        w = TIER_W.get(tier_name, 1.0)
+        for n in notes:
+            for accord, aw in NOTE_ACCORDS.get(n.strip().lower(), [("musky", 0.3)]):
+                scores[accord] = scores.get(accord, 0) + aw * w
+    if not scores:
+        return []
+    mx = max(scores.values())
+    return sorted(((a, round(s / mx * 100)) for a, s in scores.items()),
+                  key=lambda x: -x[1])[:5]
 
 
 def primary_accord(accords):
@@ -175,6 +242,7 @@ PAGE_TPL = """<!DOCTYPE html>
       <section class="vcard">
         <h2 data-id="Main Accords" data-en="Main Accords">Main Accords</h2>
         {accords_html}
+        <p class="est" data-id="* Interpretasi accords oleh Tjoomde dari komposisi notes." data-en="* Accord interpretation by Tjoomde from the note composition.">* Interpretasi accords oleh Tjoomde dari komposisi notes.</p>
       </section>
       <section class="vcard">
         <h2 data-id="Performa" data-en="Performance">Performa</h2>
@@ -271,7 +339,7 @@ def main():
             continue
         top, mid, base = split_notes(top_c), split_notes(mid_c), split_notes(base_c)
         notes = top + mid + base
-        acc = accords_for(notes)
+        acc = accords_for([("top", top), ("heart", mid), ("base", base)])
         est = estimate(notes, overrides.get(slug) or overrides.get(name))
         variants.append({
             "name": name, "slug": slug, "inspiration": (insp or "").strip() or None,
