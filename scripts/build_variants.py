@@ -232,9 +232,14 @@ PAGE_TPL = """<!DOCTYPE html>
 
   <main class="wrap vpage">
     <p class="crumb"><a href="../">Home</a> / {name}</p>
-    <p class="eyebrow">TJOOMDE • EAU DE PARFUM 50ML</p>
-    <h1>{name}</h1>
-    {insp_html}
+    <div class="vhero">
+      {thumb_html}
+      <div>
+        <p class="eyebrow">TJOOMDE • EAU DE PARFUM 50ML</p>
+        <h1>{name}</h1>
+        {insp_html}
+      </div>
+    </div>
 
     <p class="sub" data-id="{desc_id}" data-en="{desc_en}">{desc_id}</p>
 
@@ -242,7 +247,7 @@ PAGE_TPL = """<!DOCTYPE html>
       <section class="vcard">
         <h2 data-id="Main Accords" data-en="Main Accords">Main Accords</h2>
         {accords_html}
-        <p class="est" data-id="* Interpretasi accords oleh Tjoomde dari komposisi notes." data-en="* Accord interpretation by Tjoomde from the note composition.">* Interpretasi accords oleh Tjoomde dari komposisi notes.</p>
+        {acc_note}
       </section>
       <section class="vcard">
         <h2 data-id="Performa" data-en="Performance">Performa</h2>
@@ -327,6 +332,8 @@ def main():
     ws = wb["Sheet1"]
     rows = list(ws.iter_rows(values_only=True))[1:]
     overrides = json.loads(OVERRIDES.read_text()) if OVERRIDES.exists() else {}
+    frag_path = ROOT / "Data" / "fragrantica_accords.json"
+    frag_data = json.loads(frag_path.read_text()) if frag_path.exists() else {}
 
     variants = []
     for r in rows:
@@ -340,12 +347,29 @@ def main():
         top, mid, base = split_notes(top_c), split_notes(mid_c), split_notes(base_c)
         notes = top + mid + base
         acc = accords_for([("top", top), ("heart", mid), ("base", base)])
+        fdata = (frag_data.get(slug) or {}) if isinstance(frag_data.get(slug), dict) else {}
+        if fdata.get("accords"):
+            acc = [(a, int(p)) for a, p in fdata["accords"][:5]]
+            acc_src = "frag"
+        else:
+            acc_src = "est"
+        genders = set((fdata.get("gender") or []))
+        if genders == {"female"}:
+            gender = ("Women", "Wanita")
+        elif genders == {"male"}:
+            gender = ("Men", "Pria")
+        else:
+            gender = estimate(notes, {})["gender"]
+        if (overrides.get(slug) or {}).get("gender"):
+            gender = tuple((overrides[slug]["gender"]))
         est = estimate(notes, overrides.get(slug) or overrides.get(name))
+        est["gender"] = gender
         variants.append({
             "name": name, "slug": slug, "inspiration": (insp or "").strip() or None,
             "frag": (frag or "").strip() or None,
             "top": top, "mid": mid, "base": base,
-            "accords": acc, "primary": primary_accord(acc), **est,
+            "accords": acc, "primary": primary_accord(acc), "acc_src": acc_src,
+            "thumb": (fdata.get("thumb") or None), **est,
             "desc_id": overrides.get(slug, {}).get("desc_id") or describe_id(name, (insp or "").strip(), top, mid, base),
             "desc_en": overrides.get(slug, {}).get("desc_en") or describe_en(name, (insp or "").strip(), top, mid, base),
         })
@@ -413,6 +437,19 @@ def render_page(v, rel):
     g_en, g_id = v["gender"]
     d_en, d_id = v["daytime"]
     s_en, s_id = v["seasons"]
+    if v.get("thumb"):
+        thumb_html = (f"<img class='vbottle' src='{esc(v['thumb'])}' "
+                      f"alt='{esc(v['name'])}' loading='lazy' />")
+    else:
+        thumb_html = ""
+    if v.get("acc_src") == "frag":
+        acc_note = ("<p class='est' data-id='* Main accords berdasarkan voting Fragrantica.' "
+                    "data-en='* Main accords based on Fragrantica votes.'>"
+                    "* Main accords berdasarkan voting Fragrantica.</p>")
+    else:
+        acc_note = ("<p class='est' data-id='* Interpretasi accords oleh Tjoomde dari komposisi notes.' "
+                    "data-en='* Accord interpretation by Tjoomde from the note composition.'>"
+                    "* Interpretasi accords oleh Tjoomde dari komposisi notes.</p>")
     tiers_html = (tier("Top Notes", "tier-top", v["top"]) + tier("Heart Notes", "tier-mid", v["mid"])
                   + tier("Base Notes", "tier-base", v["base"]))
     if not tiers_html:
@@ -420,10 +457,12 @@ def render_page(v, rel):
                       "data-en='Detailed notes coming soon.'>Detail notes menyusul.</p>")
     return PAGE_TPL.format(
         name=esc(v["name"]), js_name=json.dumps(v["name"])[1:-1].replace('"', '\\"'),
-        wa=WA_NUMBER, insp_html=insp_html, frag_html=frag_html,
+        wa=WA_NUMBER, insp_html=insp_html, frag_html=frag_html, thumb_html=thumb_html,
         desc_id=esc(v["desc_id"]).replace('"', "&quot;"), desc_en=esc(v["desc_en"]).replace('"', "&quot;"),
         accord_list=esc(acc_list), pyr_short=esc(", ".join(pyr[:6])),
-        accords_html=acc_html, long_h=esc(str(v["longevity_h"])), long_pct=long_pct,
+        accords_html=acc_html or ("<p class='muted' data-id='Accords menyusul.' "
+                                    "data-en='Accords coming soon.'>Accords menyusul.</p>"),
+        acc_note=acc_note, long_h=esc(str(v["longevity_h"])), long_pct=long_pct,
         sil_en=sil_en, sil_id=sil_id, dots=dots,
         tiers_html=tiers_html,
         gender_en=g_en, gender_id=g_id, day_en=d_en, day_id=d_id, sea_en=s_en, sea_id=s_id,

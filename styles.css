@@ -101,6 +101,9 @@ footer{border-top:1px solid var(--line);padding:22px 0;background:#fff}
 
 /* ===== Variant pages (Fragrantica-style) ===== */
 .vpage{padding:26px 22px 64px}
+.vhero{display:flex;gap:20px;align-items:center;margin:4px 0 6px}
+.vbottle{width:124px;border-radius:16px;box-shadow:0 14px 30px rgba(0,0,0,.12);background:#f1ede6}
+@media(max-width:560px){.vhero{align-items:flex-start}.vbottle{width:92px}}
 .crumb{font-size:.85rem;color:var(--muted);margin:0 0 6px}
 .crumb a{color:var(--muted)}
 .vpage h1{font-size:clamp(2rem,5vw,3.2rem);margin:0}
