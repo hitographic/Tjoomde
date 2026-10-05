@@ -91,6 +91,7 @@
 
   function resolve(img) {
     var name = img.getAttribute("data-note") || "";
+    img.addEventListener("load", function () { img.classList.add("ld"); });
     var key = IDX[name.toLowerCase()];
     var fimgs = key && NOTES_DB[key].id
       ? "https://fimgs.net/mdimg/sastojci/t." + NOTES_DB[key].id + ".jpg"

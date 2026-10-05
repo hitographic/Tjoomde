@@ -141,10 +141,21 @@ footer{border-top:1px solid var(--line);padding:22px 0;background:#fff}
 @media(max-width:900px){.vgrid,.pyr{grid-template-columns:1fr}.facts{grid-template-columns:1fr 1fr}.rel-grid{grid-template-columns:1fr}}
 
 /* ===== Pyramid note photos ===== */
-.notes-grid{display:flex;flex-wrap:wrap;gap:14px 12px}
-.note-item{display:flex;flex-direction:column;align-items:center;gap:6px;width:88px}
-.img-wrap{width:76px;height:76px;border-radius:16px;overflow:hidden;background:#f1ede6;display:flex;align-items:center;justify-content:center}
-.img-wrap img{width:76px;height:76px;object-fit:cover;display:block;background:#f1ede6}
-.img-wrap .ph{font-size:1.9rem}
-.note-name{font-size:.72rem;font-weight:500;color:#333;text-align:center;line-height:1.3}
-.notes-grid .empty{color:var(--muted);font-size:.85rem;font-style:italic}
+.pyr-stack{display:flex;flex-direction:column;gap:14px}
+.tier{background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:18px 14px 16px}
+.tier-head{display:flex;justify-content:center;margin-bottom:14px}
+.tier-pill{font-size:.74rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;padding:6px 18px;border-radius:999px;border:1px solid}
+.tier-top{color:#8a5f14;background:rgba(244,192,107,.16);border-color:rgba(244,192,107,.45)}
+.tier-mid{color:#2f6b4a;background:rgba(137,201,160,.16);border-color:rgba(137,201,160,.45)}
+.tier-base{color:#5f4390;background:rgba(160,124,197,.16);border-color:rgba(160,124,197,.45)}
+.notes-grid{display:flex;flex-wrap:wrap;gap:14px 10px;justify-content:center}
+.note-item{display:flex;flex-direction:column;align-items:center;gap:7px;width:92px}
+.img-wrap{width:76px;height:76px;border-radius:18px;overflow:hidden;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(100deg,#ece7dd 40%,#f7f3ec 50%,#ece7dd 60%);background-size:200% 100%;animation:shimmer 1.4s linear infinite}
+@keyframes shimmer{to{background-position:-200% 0}}
+.img-wrap img{width:76px;height:76px;object-fit:cover;display:block;opacity:0;transition:opacity .35s ease}
+.img-wrap img.ld{opacity:1;animation:none}
+.img-wrap:has(img.ld){animation:none;background:#f1ede6}
+.img-wrap .ph{font-size:1.9rem;animation:none}
+.note-name{font-size:.72rem;font-weight:500;color:#333;text-align:center;line-height:1.35;min-height:2.5em;display:flex;align-items:flex-start;justify-content:center}
+@media(max-width:560px){.note-item{width:80px}.img-wrap,.img-wrap img{width:64px;height:64px}}

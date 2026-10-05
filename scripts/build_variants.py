@@ -188,10 +188,8 @@ PAGE_TPL = """<!DOCTYPE html>
 
     <section class="vcard">
       <h2 data-id="Piramida Parfum" data-en="Perfume Pyramid">Piramida Parfum</h2>
-      <div class="pyr">
-        <div><h3>Top Notes</h3><div class="notes-grid">{top_html}</div></div>
-        <div><h3>Heart Notes</h3><div class="notes-grid">{mid_html}</div></div>
-        <div><h3>Base Notes</h3><div class="notes-grid">{base_html}</div></div>
+      <div class="pyr-stack">
+        {tiers_html}
       </div>
     </section>
 
@@ -307,12 +305,20 @@ def main():
 
 def chips(notes):
     if not notes:
-        return "<div class='empty'>—</div>"
+        return ""
     return "".join(
         f"<div class='note-item'><div class='img-wrap'>"
-        f"<img data-note=\"{esc(n)}\" loading=\"lazy\" alt=\"{esc(n)}\" /></div>"
+        f"<img data-note=\"{esc(n)}\" width=\"76\" height=\"76\" loading=\"lazy\" alt=\"{esc(n)}\" /></div>"
         f"<div class='note-name'>{esc(n)}</div></div>"
         for n in notes)
+
+
+def tier(title, cls, notes):
+    if not notes:
+        return ""
+    return (f"<div class='tier'><div class='tier-head'>"
+            f"<span class='tier-pill {cls}'>{title} · {len(notes)}</span></div>"
+            f"<div class='notes-grid'>{chips(notes)}</div></div>")
 
 
 def render_page(v, rel):
@@ -339,6 +345,11 @@ def render_page(v, rel):
     g_en, g_id = v["gender"]
     d_en, d_id = v["daytime"]
     s_en, s_id = v["seasons"]
+    tiers_html = (tier("Top Notes", "tier-top", v["top"]) + tier("Heart Notes", "tier-mid", v["mid"])
+                  + tier("Base Notes", "tier-base", v["base"]))
+    if not tiers_html:
+        tiers_html = ("<p class='muted' data-id='Detail notes menyusul.' "
+                      "data-en='Detailed notes coming soon.'>Detail notes menyusul.</p>")
     return PAGE_TPL.format(
         name=esc(v["name"]), js_name=json.dumps(v["name"])[1:-1].replace('"', '\\"'),
         wa=WA_NUMBER, insp_html=insp_html, frag_html=frag_html,
@@ -346,7 +357,7 @@ def render_page(v, rel):
         accord_list=esc(acc_list), pyr_short=esc(", ".join(pyr[:6])),
         accords_html=acc_html, long_h=esc(str(v["longevity_h"])), long_pct=long_pct,
         sil_en=sil_en, sil_id=sil_id, dots=dots,
-        top_html=chips(v["top"]), mid_html=chips(v["mid"]), base_html=chips(v["base"]),
+        tiers_html=tiers_html,
         gender_en=g_en, gender_id=g_id, day_en=d_en, day_id=d_id, sea_en=s_en, sea_id=s_id,
         related_html=rel_html)
 
