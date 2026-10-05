@@ -1,8 +1,9 @@
-# Tjoomde — hitographic.github.io/Tjoomde
+# Tjoomde — tjoomde.my.id
 
 Website parfum Tjoomde. Minimal modern, bilingual ID/EN, katalog 6 parfum dummy + order via WhatsApp. Static site, siap GitHub Pages.
 
-Live: https://hitographic.github.io/Tjoomde/
+Live: https://tjoomde.my.id (juga https://www.tjoomde.my.id)
+Cadangan: https://hitographic.github.io/Tjoomde/
 
 ## 1. Edit cepat
 
@@ -16,12 +17,12 @@ Live: https://hitographic.github.io/Tjoomde/
 2. GitHub → repo Settings → Pages → Source: `Deploy from a branch`, Branch: `main` / `/ (root)`.
 3. Tunggu 1-2 menit, cek `https://hitographic.github.io/Tjoomde/` jalan.
 
-Custom domain nonaktif untuk sekarang (file `CNAME` dihapus). File `.nojekyll` agar Pages serve file statis apa adanya.
+Custom domain aktif via file `CNAME` (`tjoomde.my.id`). File `.nojekyll` agar Pages serve file statis apa adanya.
 
-## 3. Custom domain (ditunda)
+## 3. Custom domain tjoomde.my.id (aktif)
 
-Pernah dicoba `tjoomde.is-a.dev` (ditolak: syarat non-komersial/dev-only) dan `tjoomde.is-a.page` (PR https://github.com/is-a-page/register/pull/4, admin tidak aktif).
-File contoh tersimpan di `register-domains/tjoomde.json`. Kalau nanti dapat domain (mis. via `dash.is-pro.dev`), buat lagi file `CNAME` berisi domainnya + set di Settings → Pages → Custom domain → Enforce HTTPS.
+DNS: 4x A `@` → `185.199.108-111.153` + CNAME `www` → `hitographic.github.io`.
+Setelah ganti domain: buat file `CNAME`, push, lalu Settings → Pages → pastikan custom domain + Enforce HTTPS.
 
 ## Struktur
 
