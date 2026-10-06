@@ -15,7 +15,8 @@ h1 em{font-style:italic;font-weight:300}
 .nav{position:sticky;top:0;background:rgba(250,250,248,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);z-index:20}
 .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px}
 .logo{font-weight:700;letter-spacing:.14em;text-decoration:none;color:var(--ink)}
-.logo img{height:34px;width:auto;display:block}
+.logo img{height:24px;width:auto;display:block}
+.foot .logo img{height:26px}
 .logo .dot{color:#b89b5e}
 .links{display:flex;gap:22px}
 .links a{text-decoration:none;color:#333;font-size:.92rem}
