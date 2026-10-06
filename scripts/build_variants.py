@@ -218,7 +218,7 @@ PAGE_TPL = """<!DOCTYPE html>
 <body>
   <div class="announce"><span>TJOOMDE • EDP 50ML</span></div>
   <header class="nav"><div class="wrap nav-inner">
-    <a href="../" class="logo">TJOOMDE<span class="dot">.</span></a>
+    <a href="../" class="logo"><img src="../assets/logo.png" alt="Tjoomde" /></a>
     <nav class="links" id="navLinks">
       <a href="../#collection" data-id="Koleksi" data-en="Collection">Koleksi</a>
       <a href="../#about" data-id="Tentang" data-en="About">Tentang</a>
@@ -286,7 +286,7 @@ PAGE_TPL = """<!DOCTYPE html>
   </main>
 
   <footer><div class="wrap foot">
-    <div class="logo">TJOOMDE<span class="dot">.</span></div>
+    <div class="logo"><img src="../assets/logo.png" alt="Tjoomde" /></div>
     <p class="muted">© <span id="year"></span> Tjoomde.</p>
   </div></footer>
 
