@@ -100,6 +100,44 @@ NOTE_ACCORDS = {
 # base notes linger longest -> weighted heaviest (mirrors overall impression)
 TIER_W = {"top": 1.0, "heart": 1.2, "base": 1.4}
 
+ACCORD_COLORS = {
+    "citrus": "#EFA13B", "fruity": "#E4572E", "sweet": "#B565D8",
+    "floral": "#EC6FAE", "white floral": "#9FB6CD", "green": "#6AA84F",
+    "fresh": "#4FB0A5", "aquatic": "#4FA3D1", "aromatic": "#8A9A5B",
+    "woody": "#8B5E34", "earthy": "#6E6259", "powdery": "#C9A9C9",
+    "musky": "#9AA5B1", "amber": "#D97B29", "balsamic": "#9C6B30",
+    "smoky": "#555555", "leathery": "#7B4B2A", "lactonic": "#D9BE8C",
+    "warm spicy": "#C1440E", "fresh spicy": "#D97941", "honey": "#C9A227",
+    "tropical": "#8AC926", "nutty": "#A67C52", "soapy": "#AFC6D8",
+    "vanilla": "#EAD9A8", "coconut": "#EFE3CB", "patchouli": "#66744F",
+    "rose": "#C2185B", "oud": "#4A3728",
+}
+
+DAY_KEYS = ["citrus", "lemon", "bergamot", "orange", "grapefruit", "mandarin",
+            "aquatic", "marine", "green tea", "white tea", "mint", "green",
+            "fresh", "neroli", "violet leaf", "rhubarb", "litsea", "ozonic"]
+NIGHT_KEYS = ["amber", "tobacco", "leather", "oud", "vanilla", "tonka", "rum",
+              "cognac", "suede", "incense", "benzoin", "labdanum", "myrrh"]
+
+
+def day_night_pct(top, mid, base, ov):
+    if ov and "day_night" in ov:
+        d, n = ov["day_night"]
+        return int(d), int(n)
+    day = night = 0.0
+    for tier_name, notes in (("top", top), ("heart", mid), ("base", base)):
+        w = TIER_W.get(tier_name, 1.0)
+        for n in notes:
+            low = n.lower()
+            if any(k in low for k in DAY_KEYS):
+                day += w
+            if any(k in low for k in NIGHT_KEYS):
+                night += w
+    if day + night == 0:
+        return 50, 50
+    d = round(100 * day / (day + night))
+    return max(5, min(95, d)), 100 - max(5, min(95, d))
+
 FEM = ["rose", "jasmine", "peony", "tuberose", "vanilla", "caramel", "strawberry", "coconut", "candy", "praline", "frangipani", "mimosa", "freesia", "lychee", "peach", "apricot", "white musk", "powdery"]
 MASC = ["vetiver", "leather", "tobacco", "oud", "cedar", "lavender", "aquatic", "marine", "rum", "cognac", "pepper", "cypress", "oakmoss", "smoke", "suede"]
 
@@ -270,11 +308,10 @@ PAGE_TPL = """<!DOCTYPE html>
       <h2 data-id="Fakta" data-en="Facts">Fakta</h2>
       <div class="facts">
         <div><span data-id="Gender" data-en="Gender">Gender</span><strong>{gender_id} / {gender_en}</strong></div>
-        <div><span data-id="Waktu" data-en="Time">Waktu</span><strong>{day_id} / {day_en}</strong></div>
-        <div><span data-id="Musim" data-en="Season">Musim</span><strong>{sea_id} / {sea_en}</strong></div>
-        <div><span data-id="Konsentrasi" data-en="Strength">Konsentrasi</span><strong>EDP 50ml</strong></div>
+        <div class="fact-time"><span data-id="Waktu pakai" data-en="Best time to wear">Waktu pakai</span>
+          <div class="dn"><span class="dn-day" style="width:{day_pct}%">☀ Day {day_pct}%</span><span class="dn-night" style="width:{night_pct}%">Night {night_pct}% 🌙</span></div>
+        </div>
       </div>
-      {frag_html}
     </section>
 
     <div class="vorder">
@@ -364,11 +401,13 @@ def main():
             gender = tuple((overrides[slug]["gender"]))
         est = estimate(notes, overrides.get(slug) or overrides.get(name))
         est["gender"] = gender
+        d_pct, n_pct = day_night_pct(top, mid, base, overrides.get(slug) or {})
         variants.append({
             "name": name, "slug": slug, "inspiration": (insp or "").strip() or None,
             "frag": (frag or "").strip() or None,
             "top": top, "mid": mid, "base": base,
             "accords": acc, "primary": primary_accord(acc), "acc_src": acc_src,
+            "day_pct": d_pct, "night_pct": n_pct,
             "thumb": (fdata.get("thumb") or None), **est,
             "desc_id": overrides.get(slug, {}).get("desc_id") or describe_id(name, (insp or "").strip(), top, mid, base),
             "desc_en": overrides.get(slug, {}).get("desc_en") or describe_en(name, (insp or "").strip(), top, mid, base),
@@ -417,7 +456,9 @@ def render_page(v, rel):
     acc_list = ", ".join(a for a, _ in v["accords"]) or "musky"
     pyr = " | ".join((v["top"][:3] + v["mid"][:2] + v["base"][:2])) or ["—"]
     acc_html = "\n".join(
-        f"<div class='acc'><span>{esc(a.title())}</span><div class='bar'><i style='width:{p}%'></i></div><b>{p}%</b></div>"
+        f"<div class='acc'><span>{esc(a.title())}</span>"
+        f"<div class='bar'><i style='width:{p}%;background:{ACCORD_COLORS.get(a.lower(), '#111')}'></i></div>"
+        f"<b>{p}%</b></div>"
         for a, p in v["accords"]) or "<p>—</p>"
     long_pct = {"4-6": 55, "6-8": 75, "8-10": 95}.get(v["longevity_h"], 75)
     sil_en, sil_id = sillage_label(v["sillage"])
@@ -457,15 +498,15 @@ def render_page(v, rel):
                       "data-en='Detailed notes coming soon.'>Detail notes menyusul.</p>")
     return PAGE_TPL.format(
         name=esc(v["name"]), js_name=json.dumps(v["name"])[1:-1].replace('"', '\\"'),
-        wa=WA_NUMBER, insp_html=insp_html, frag_html=frag_html, thumb_html=thumb_html,
+        wa=WA_NUMBER, insp_html=insp_html, thumb_html=thumb_html,
         desc_id=esc(v["desc_id"]).replace('"', "&quot;"), desc_en=esc(v["desc_en"]).replace('"', "&quot;"),
         accord_list=esc(acc_list), pyr_short=esc(", ".join(pyr[:6])),
         accords_html=acc_html or ("<p class='muted' data-id='Accords menyusul.' "
                                     "data-en='Accords coming soon.'>Accords menyusul.</p>"),
         acc_note=acc_note, long_h=esc(str(v["longevity_h"])), long_pct=long_pct,
         sil_en=sil_en, sil_id=sil_id, dots=dots,
-        tiers_html=tiers_html,
-        gender_en=g_en, gender_id=g_id, day_en=d_en, day_id=d_id, sea_en=s_en, sea_id=s_id,
+        tiers_html=tiers_html, gender_en=g_en, gender_id=g_id,
+        day_pct=v["day_pct"], night_pct=v["night_pct"],
         related_html=rel_html)
 
 

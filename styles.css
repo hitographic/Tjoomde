@@ -128,10 +128,14 @@ footer{border-top:1px solid var(--line);padding:22px 0;background:#fff}
 .pyr{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .pyr h3{font-family:'Inter',sans-serif;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
 .note{display:inline-block;background:var(--beige);border-radius:999px;padding:4px 12px;font-size:.83rem;margin:0 6px 6px 0}
-.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.facts div{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:4px}
+.facts{display:grid;grid-template-columns:1fr 2fr;gap:12px}
+.facts div{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:8px}
 .facts span{font-size:.78rem;color:var(--muted)}
 .facts strong{font-size:.95rem}
+.dn{display:flex;border-radius:10px;overflow:hidden;font-size:.85rem;font-weight:600;min-height:38px}
+.dn-day{background:#bcd7f0;color:#2c4a63;display:flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap;overflow:hidden}
+.dn-night{background:#7a7f87;color:#fff;display:flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap;overflow:hidden}
+@media(max-width:900px){.facts{grid-template-columns:1fr}}
 .frag{margin:14px 0 0;font-size:.9rem}
 .frag a{color:var(--ink)}
 .vorder{display:flex;gap:12px;margin:24px 0;flex-wrap:wrap}
