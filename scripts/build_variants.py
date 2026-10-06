@@ -309,7 +309,7 @@ PAGE_TPL = """<!DOCTYPE html>
       <div class="facts">
         <div><span data-id="Gender" data-en="Gender">Gender</span><strong>{gender_id} / {gender_en}</strong></div>
         <div class="fact-time"><span data-id="Waktu pakai" data-en="Best time to wear">Waktu pakai</span>
-          <div class="dn"><span class="dn-day" style="width:{day_pct}%">☀ Day {day_pct}%</span><span class="dn-night" style="width:{night_pct}%">Night {night_pct}% 🌙</span></div>
+          <div class="dn"><span class="dn-day" style="width:{day_pct}%">{day_label}</span><span class="dn-night" style="width:{night_pct}%">{night_label}</span></div>
         </div>
       </div>
     </section>
@@ -507,6 +507,8 @@ def render_page(v, rel):
         sil_en=sil_en, sil_id=sil_id, dots=dots,
         tiers_html=tiers_html, gender_en=g_en, gender_id=g_id,
         day_pct=v["day_pct"], night_pct=v["night_pct"],
+        day_label=(f"☀ Day {v['day_pct']}%" if v["day_pct"] >= 20 else f"☀ {v['day_pct']}%"),
+        night_label=(f"Night {v['night_pct']}% 🌙" if v["night_pct"] >= 20 else f"{v['night_pct']}% 🌙"),
         related_html=rel_html)
 
 
