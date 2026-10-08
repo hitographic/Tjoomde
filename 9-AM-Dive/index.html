@@ -1,26 +1,32 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" data-theme="day">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>9 AM Dive by Tjoomde | tjoomde.my.id</title>
-  <meta name="description" content="9 AM Dive by Tjoomde — fruity, green, woody, citrus, aromatic. L, e, m, o, n,  " />
+  <title>9 AM Dive by Tjoomde — Citrus Green Fruity | tjoomde.my.id</title>
+  <meta name="description" content="9 AM Dive by Tjoomde — fruity, green, woody, citrus, aromatic. Lemon, mint, apple, sandalwood. EDP 50ml interaktif." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,300;9..144,0,400;9..144,0,500;9..144,1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,300;9..144,0,400;9..144,0,500;9..144,1,400&family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../styles.css" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23111111'/><text x='50' y='68' font-size='55' text-anchor='middle' fill='white' font-family='serif'>T</text></svg>" />
+  <link rel="stylesheet" href="../assets/playful.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23E4572E'/><text x='50' y='68' font-size='55' text-anchor='middle' fill='white' font-family='serif'>9</text></svg>" />
 </head>
-<body>
-  <div class="announce"><span>TJOOMDE • EDP 50ML</span></div>
+<body class="playful">
+  <canvas id="mist"></canvas>
+  <div class="blobs"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+
+  <div class="announce"><span>🌊 9 AM DIVE • CITRUS GREEN FRUITY • EDP 50ML 🌊</span></div>
   <header class="nav"><div class="wrap nav-inner">
     <a href="../" class="logo"><img src="../assets/logo.png" alt="Tjoomde" /></a>
     <nav class="links" id="navLinks">
       <a href="../#collection" data-id="Koleksi" data-en="Collection">Koleksi</a>
-      <a href="../#about" data-id="Tentang" data-en="About">Tentang</a>
-      <a href="../#contact" data-id="Kontak" data-en="Contact">Kontak</a>
+      <a href="#accords" data-id="Accords" data-en="Accords">Accords</a>
+      <a href="#pyramid" data-id="Notes" data-en="Notes">Notes</a>
+      <a href="#quiz" data-id="Quiz" data-en="Quiz">Quiz</a>
     </nav>
     <div class="nav-cta">
+      <button class="theme-toggle" id="themeToggle">🌙 Night</button>
       <div class="lang"><button id="btnID" class="lang-btn active">ID</button><button id="btnEN" class="lang-btn">EN</button></div>
       <button class="burger" id="burger" aria-label="menu">☰</button>
     </div>
@@ -28,60 +34,121 @@
 
   <main class="wrap vpage">
     <p class="crumb"><a href="../">Home</a> / 9 AM Dive</p>
-    <div class="vhero">
-      <img class='vbottle' src='https://fimgs.net/mdimg/perfume-thumbs/375x500.78611.jpg' alt='9 AM Dive' loading='lazy' />
-      <div>
-        <p class="eyebrow">TJOOMDE • EAU DE PARFUM 50ML</p>
-        <h1>9 AM Dive</h1>
-        <p class='insp' data-id='Terinspirasi dari 9 AM Dive - Afnan' data-en='Inspired by 9 AM Dive - Afnan'>Terinspirasi dari 9 AM Dive - Afnan</p>
-      </div>
-    </div>
 
-    <p class="sub" data-id="9 AM Dive adalah interpretasi Tjoomde dari 9 AM Dive - Afnan. Dibuka dengan lemon, mint, black currant. Jantungnya apple, cedar, incense. Mengering menjadi ginger, sandalwood, patchouli, jasmine yang tahan lama." data-en="9 AM Dive is Tjoomde&#x27;s take on 9 AM Dive - Afnan. It opens with lemon, mint, black currant. The heart is apple, cedar, incense. It dries down to long-lasting ginger, sandalwood, patchouli, jasmine.">9 AM Dive adalah interpretasi Tjoomde dari 9 AM Dive - Afnan. Dibuka dengan lemon, mint, black currant. Jantungnya apple, cedar, incense. Mengering menjadi ginger, sandalwood, patchouli, jasmine yang tahan lama.</p>
-
-    <div class="vgrid">
-      <section class="vcard">
-        <h2 data-id="Main Accords" data-en="Main Accords">Main Accords</h2>
-        <div class='acc'><span>Fruity</span><div class='bar'><i style='width:100%;background:#E4572E'></i></div><b>100%</b></div>
-<div class='acc'><span>Green</span><div class='bar'><i style='width:96%;background:#6AA84F'></i></div><b>96%</b></div>
-<div class='acc'><span>Woody</span><div class='bar'><i style='width:93%;background:#8B5E34'></i></div><b>93%</b></div>
-<div class='acc'><span>Citrus</span><div class='bar'><i style='width:82%;background:#EFA13B'></i></div><b>82%</b></div>
-<div class='acc'><span>Aromatic</span><div class='bar'><i style='width:80%;background:#8A9A5B'></i></div><b>80%</b></div>
-        <p class='est' data-id='* Main accords berdasarkan voting Fragrantica.' data-en='* Main accords based on Fragrantica votes.'>* Main accords berdasarkan voting Fragrantica.</p>
-      </section>
-      <section class="vcard">
-        <h2 data-id="Performa" data-en="Performance">Performa</h2>
-        <div class="perf"><div><strong data-id="Daya tahan" data-en="Longevity">Daya tahan</strong><span>6-8 jam • EDP</span></div>
-        <div class="bar"><i style="width:75%"></i></div></div>
-        <div class="perf"><div><strong>Sillage</strong><span>Moderate / Moderat</span></div>
-        <div class="dots"><i class='on'></i><i class='on'></i><i class='on'></i><i></i><i></i></div></div>
-        <p class="est" data-id="* Estimasi Tjoomde dari komposisi notes." data-en="* Tjoomde estimate from the note composition.">* Estimasi Tjoomde dari komposisi notes.</p>
-      </section>
-    </div>
-
-    <section class="vcard">
-      <h2 data-id="Piramida Parfum" data-en="Perfume Pyramid">Piramida Parfum</h2>
-      <div class="pyr-stack">
-        <div class='tier'><div class='tier-head'><span class='tier-pill tier-top'>Top Notes · 4</span></div><div class='notes-grid'><div class='note-item'><div class='img-wrap'><img data-note="Lemon" width="76" height="76" loading="lazy" alt="Lemon" /></div><div class='note-name'>Lemon</div></div><div class='note-item'><div class='img-wrap'><img data-note="Mint" width="76" height="76" loading="lazy" alt="Mint" /></div><div class='note-name'>Mint</div></div><div class='note-item'><div class='img-wrap'><img data-note="Black Currant" width="76" height="76" loading="lazy" alt="Black Currant" /></div><div class='note-name'>Black Currant</div></div><div class='note-item'><div class='img-wrap'><img data-note="Pink Pepper" width="76" height="76" loading="lazy" alt="Pink Pepper" /></div><div class='note-name'>Pink Pepper</div></div></div></div><div class='tier'><div class='tier-head'><span class='tier-pill tier-mid'>Heart Notes · 3</span></div><div class='notes-grid'><div class='note-item'><div class='img-wrap'><img data-note="Apple" width="76" height="76" loading="lazy" alt="Apple" /></div><div class='note-name'>Apple</div></div><div class='note-item'><div class='img-wrap'><img data-note="Cedar" width="76" height="76" loading="lazy" alt="Cedar" /></div><div class='note-name'>Cedar</div></div><div class='note-item'><div class='img-wrap'><img data-note="Incense" width="76" height="76" loading="lazy" alt="Incense" /></div><div class='note-name'>Incense</div></div></div></div><div class='tier'><div class='tier-head'><span class='tier-pill tier-base'>Base Notes · 4</span></div><div class='notes-grid'><div class='note-item'><div class='img-wrap'><img data-note="Ginger" width="76" height="76" loading="lazy" alt="Ginger" /></div><div class='note-name'>Ginger</div></div><div class='note-item'><div class='img-wrap'><img data-note="Sandalwood" width="76" height="76" loading="lazy" alt="Sandalwood" /></div><div class='note-name'>Sandalwood</div></div><div class='note-item'><div class='img-wrap'><img data-note="Patchouli" width="76" height="76" loading="lazy" alt="Patchouli" /></div><div class='note-name'>Patchouli</div></div><div class='note-item'><div class='img-wrap'><img data-note="Jasmine" width="76" height="76" loading="lazy" alt="Jasmine" /></div><div class='note-name'>Jasmine</div></div></div></div>
-      </div>
-    </section>
-
-    <section class="vcard">
-      <h2 data-id="Fakta" data-en="Facts">Fakta</h2>
-      <div class="facts">
-        <div><span data-id="Gender" data-en="Gender">Gender</span><strong>Unisex / Unisex</strong></div>
-        <div class="fact-time"><span data-id="Waktu pakai" data-en="Best time to wear">Waktu pakai</span>
-          <div class="dn"><span class="dn-day" style="width:62%">☀ Day 62%</span><span class="dn-night" style="width:38%">Night 38% 🌙</span></div>
+    <!-- HERO -->
+    <section class="play-hero">
+      <div class="stage3d rv">
+        <div class="bottle-tilt" id="tilt">
+          <div class="bottle-shine"></div>
+          <span class="float-badge f1">Fruity 100%</span>
+          <span class="float-badge f2">☀️ Day 62%</span>
+          <img src="https://fimgs.net/mdimg/perfume-thumbs/375x500.78611.jpg" alt="9 AM Dive bottle" loading="eager" />
+          <div class="stage-actions">
+            <button class="spray-btn" id="sprayBtn">💨 Spray me!</button>
+          </div>
+          <p class="hint-tilt" data-id="Gerakkan mouse / jari untuk 3D tilt • klik Spray!" data-en="Move mouse / finger for 3D tilt • hit Spray!">Gerakkan mouse / jari untuk 3D tilt • klik Spray!</p>
         </div>
       </div>
+      <div class="rv">
+        <span class="play-kicker">TJOOMDE • EAU DE PARFUM 50ML</span>
+        <h1 class="play-title">9 AM <span class="dive">Dive</span></h1>
+        <p class="insp" data-id="Terinspirasi dari 9 AM Dive - Afnan" data-en="Inspired by 9 AM Dive - Afnan">Terinspirasi dari 9 AM Dive - Afnan</p>
+        <p class="play-desc" data-id="9 AM Dive adalah interpretasi Tjoomde dari 9 AM Dive - Afnan. Dibuka dengan lemon, mint, black currant. Jantungnya apple, cedar, incense. Mengering menjadi ginger, sandalwood, patchouli, jasmine yang tahan lama." data-en="9 AM Dive is Tjoomde's take on 9 AM Dive - Afnan. It opens with lemon, mint, black currant. The heart is apple, cedar, incense. It dries down to long-lasting ginger, sandalwood, patchouli, jasmine.">9 AM Dive adalah interpretasi Tjoomde dari 9 AM Dive - Afnan. Dibuka dengan lemon, mint, black currant. Jantungnya apple, cedar, incense. Mengering menjadi ginger, sandalwood, patchouli, jasmine yang tahan lama.</p>
+        <div class="quick-chips">
+          <span class="qchip">🍋 Citrus splash</span>
+          <span class="qchip">🌿 Green fresh</span>
+          <span class="qchip">🪵 Woody base</span>
+          <span class="qchip">⏱ 6–8 jam</span>
+        </div>
+        <div class="cta-row">
+          <button class="btn btn-dark" id="orderBtn"><span data-id="Order 9 AM Dive via WhatsApp" data-en="Order 9 AM Dive via WhatsApp">Order 9 AM Dive via WhatsApp</span> →</button>
+          <a class="btn btn-ghost" href="#quiz"><span data-id="Cek kecocokan 🔮" data-en="Check match 🔮">Cek kecocokan 🔮</span></a>
+        </div>
+        <p class="est" data-id="* Main accords berdasarkan voting Fragrantica." data-en="* Main accords based on Fragrantica votes.">* Main accords berdasarkan voting Fragrantica.</p>
+      </div>
     </section>
 
-    <div class="vorder">
-      <button class="btn btn-dark" id="orderBtn"><span data-id="Order 9 AM Dive via WhatsApp" data-en="Order 9 AM Dive via WhatsApp">Order 9 AM Dive via WhatsApp</span> →</button>
-      <a class="btn btn-ghost" href="../#collection"><span data-id="← Semua varian" data-en="← All variants">← Semua varian</span></a>
-    </div>
+    <!-- ACCORDS -->
+    <section class="pcard rv acc-anim" id="accords" style="--w:100%">
+      <h2 data-id="🎨 Main Accords — tap warna, rasakan vibe" data-en="🎨 Main Accords — tap the colors, feel the vibe">🎨 Main Accords — tap warna, rasakan vibe</h2>
+      <div class="acc-row"><span>Fruity</span><div class="bar"><i style="--w:100%;background:#E4572E"></i></div><b>100%</b></div>
+      <div class="acc-row"><span>Green</span><div class="bar"><i style="--w:96%;background:#6AA84F"></i></div><b>96%</b></div>
+      <div class="acc-row"><span>Woody</span><div class="bar"><i style="--w:93%;background:#8B5E34"></i></div><b>93%</b></div>
+      <div class="acc-row"><span>Citrus</span><div class="bar"><i style="--w:82%;background:#EFA13B"></i></div><b>82%</b></div>
+      <div class="acc-row"><span>Aromatic</span><div class="bar"><i style="--w:80%;background:#8A9A5B"></i></div><b>80%</b></div>
+    </section>
 
-    <section class='vcard'><h2 data-id='Varian se-aroma' data-en='Similar scents'>Varian se-aroma</h2><div class='rel-grid'><a class='rel-card' href='../Kirke-Tiziana-Terenzi/'><strong>Kirke - Tiziana Terenzi</strong><span>Passionfruit, Peach</span></a><a class='rel-card' href='../9-PM-Rebel-Sweet-Version/'><strong>9 PM Rebel Sweet Version</strong><span>Pineapple, Granny Smith Apple</span></a></div></section>
+    <!-- LONGEVITY TIMELINE -->
+    <section class="pcard rv timeline">
+      <h2 data-id="⏱ Longevity Journey — geser jam" data-en="⏱ Longevity Journey — drag the hours">⏱ Longevity Journey — geser jam</h2>
+      <input type="range" id="lifeRange" min="0" max="8" step="0.5" value="1" />
+      <div class="tl-phase">
+        <div><strong>🌅 Top · 0–0.5h</strong><span>Lemon • Mint • Pink Pepper</span></div>
+        <div><strong>💚 Heart · 0.5–4h</strong><span>Apple • Cedar • Incense</span></div>
+        <div><strong>🌙 Base · 4–8h</strong><span>Ginger • Sandalwood • Patchouli</span></div>
+      </div>
+      <p class="tl-output" id="lifeOut"></p>
+      <div class="perf"><div><strong>Sillage</strong><span>Moderate / Moderat</span></div>
+      <div class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></div></div>
+    </section>
+
+    <!-- PYRAMID -->
+    <section class="pcard rv" id="pyramid">
+      <h2 data-id="👃 Piramida Parfum — klik notes-nya!" data-en="👃 Perfume Pyramid — click the notes!">👃 Piramida Parfum — klik notes-nya!</h2>
+      <div class="pyr-tabs">
+        <button class="ptab active" data-tier="top">Top · 4</button>
+        <button class="ptab" data-tier="heart">Heart · 3</button>
+        <button class="ptab" data-tier="base">Base · 4</button>
+      </div>
+      <div class="tier-pane active" id="pane-top"><div class="notes-grid">
+        <div class="note-item"><div class="img-wrap"><img data-note="Lemon" width="76" height="76" loading="lazy" alt="Lemon" /></div><div class="note-name">Lemon</div></div>
+        <div class="note-item"><div class="img-wrap"><img data-note="Mint" width="76" height="76" loading="lazy" alt="Mint" /></div><div class="note-name">Mint</div></div>
+        <div class="note-item"><div class="img-wrap"><img data-note="Black Currant" width="76" height="76" loading="lazy" alt="Black Currant" /></div><div class="note-name">Black Currant</div></div>
+        <div class="note-item"><div class="img-wrap"><img data-note="Pink Pepper" width="76" height="76" loading="lazy" alt="Pink Pepper" /></div><div class="note-name">Pink Pepper</div></div>
+      </div></div>
+      <div class="tier-pane" id="pane-heart"><div class="notes-grid">
+        <div class="note-item"><div class="img-wrap"><img data-note="Apple" width="76" height="76" loading="lazy" alt="Apple" /></div><div class="note-name">Apple</div></div>
+        <div class="note-item"><div class="img-wrap"><img data-note="Cedar" width="76" height="76" loading="lazy" alt="Cedar" /></div><div class="note-name">Cedar</div></div>
+        <div class="note-item"><div class="img-wrap"><img data-note="Incense" width="76" height="76" loading="lazy" alt="Incense" /></div><div class="note-name">Incense</div></div>
+      </div></div>
+      <div class="tier-pane" id="pane-base"><div class="notes-grid">
+        <div class="note-item"><div class="img-wrap"><img data-note="Ginger" width="76" height="76" loading="lazy" alt="Ginger" /></div><div class="note-name">Ginger</div></div>
+        <div class="note-item"><div class="img-wrap"><img data-note="Sandalwood" width="76" height="76" loading="lazy" alt="Sandalwood" /></div><div class="note-name">Sandalwood</div></div>
+        <div class="note-item"><div class="img-wrap"><img data-note="Patchouli" width="76" height="76" loading="lazy" alt="Patchouli" /></div><div class="note-name">Patchouli</div></div>
+        <div class="note-item"><div class="img-wrap"><img data-note="Jasmine" width="76" height="76" loading="lazy" alt="Jasmine" /></div><div class="note-name">Jasmine</div></div>
+      </div></div>
+      <div id="noteDetail" data-id="👆 Klik salah satu notes di atas untuk lihat karakternya." data-en="👆 Click any note above to see its character.">👆 Klik salah satu notes di atas untuk lihat karakternya.</div>
+    </section>
+
+    <!-- DAY/NIGHT LAB -->
+    <section class="pcard rv">
+      <h2 data-id="☀️🌙 Day / Night Lab — kapan dia bersinar?" data-en="☀️🌙 Day / Night Lab — when does it shine?">☀️🌙 Day / Night Lab — kapan dia bersinar?</h2>
+      <div class="dn-lab" id="dnLab">
+        <div class="sunmoon" id="sunmoon">☀️</div>
+        <input type="range" id="timeRange" min="5" max="23" step="1" value="9" />
+        <p id="timeOut" style="font-weight:700"></p>
+        <div class="dn"><span class="dn-day" style="width:62%">☀ Day 62%</span><span class="dn-night" style="width:38%">Night 38% 🌙</span></div>
+      </div>
+      <p class="est" data-id="Unisex • Siang juara, malam tetap aman." data-en="Unisex • Daytime winner, still safe at night.">Unisex • Siang juara, malam tetap aman.</p>
+    </section>
+
+    <!-- QUIZ -->
+    <section class="pcard rv quiz" id="quiz">
+      <h2 data-id="🔮 Scent Match Quiz — 3 klik!" data-en="🔮 Scent Match Quiz — 3 clicks!">🔮 Scent Match Quiz — 3 klik!</h2>
+      <div id="quizBox">
+        <div class="quiz-bar"><i id="quizBar"></i></div>
+        <h3 id="quizQ" style="margin:8px 0"></h3>
+        <div class="quiz-opts" id="quizOpts"></div>
+        <div id="quizRes" style="display:none;margin-top:10px"></div>
+        <button class="spray-btn" id="quizRestart" style="display:none;margin-top:10px">↺ Ulangi</button>
+      </div>
+      <div class="vorder">
+        <button class="btn btn-dark" id="orderBtn2"><span data-id="Order 9 AM Dive via WhatsApp" data-en="Order 9 AM Dive via WhatsApp">Order 9 AM Dive via WhatsApp</span> →</button>
+        <a class="btn btn-ghost" href="../#collection"><span data-id="← Semua varian" data-en="← All variants">← Semua varian</span></a>
+      </div>
+    </section>
+
+    <section class="vcard rv"><h2 data-id="Varian se-aroma" data-en="Similar scents">Varian se-aroma</h2><div class="rel-grid"><a class="rel-card" href="../Kirke-Tiziana-Terenzi/"><strong>Kirke - Tiziana Terenzi</strong><span>Passionfruit, Peach</span></a><a class="rel-card" href="../9-PM-Rebel-Sweet-Version/"><strong>9 PM Rebel Sweet Version</strong><span>Pineapple, Granny Smith Apple</span></a></div></section>
   </main>
 
   <footer><div class="wrap foot">
@@ -91,29 +158,6 @@
 
   <script src="../assets/notes-db.js"></script>
   <script src="../assets/note-images.js"></script>
-  <script>
-    const WA = "6281384812214", NAME = "9 AM Dive";
-    let lang = localStorage.getItem("tjoomde-lang") || "id";
-    function applyLang() {
-      document.documentElement.lang = lang;
-      document.querySelectorAll("[data-id]").forEach(el => {
-        el.textContent = lang === "id" ? el.dataset.id : el.dataset.en;
-      });
-      document.getElementById("btnID").classList.toggle("active", lang === "id");
-      document.getElementById("btnEN").classList.toggle("active", lang === "en");
-      localStorage.setItem("tjoomde-lang", lang);
-    }
-    document.getElementById("btnID").onclick = () => { lang = "id"; applyLang(); };
-    document.getElementById("btnEN").onclick = () => { lang = "en"; applyLang(); };
-    document.getElementById("burger").onclick = () => document.getElementById("navLinks").classList.toggle("open");
-    document.getElementById("year").textContent = new Date().getFullYear();
-    document.getElementById("orderBtn").onclick = () => {
-      const msg = lang === "id"
-        ? "Halo Tjoomde! Saya mau order " + NAME + " 50ml EDP. Apakah masih ready?"
-        : "Hi Tjoomde! I'd like to order " + NAME + " 50ml EDP. Is it available?";
-      window.open("https://wa.me/" + WA + "?text=" + encodeURIComponent(msg), "_blank");
-    };
-    applyLang();
-  </script>
+  <script src="../assets/playful.js"></script>
 </body>
 </html>
