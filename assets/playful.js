@@ -40,7 +40,7 @@
   if(savedTheme) root.setAttribute("data-theme",savedTheme);
   function setTheme(t){ root.setAttribute("data-theme",t); localStorage.setItem("tjoomde-theme",t);
     document.querySelectorAll(".dn-lab").forEach(el=>el.classList.toggle("night",t==="night"));
-    const tt=document.getElementById("themeToggle"); if(tt) tt.textContent = t==="night"?"☀️ Day":"🌙 Night";
+    const tt=document.getElementById("themeToggle"); if(tt) tt.textContent = t==="night"?"Day":"Night";
   }
   if(!savedTheme) root.setAttribute("data-theme","day");
   setTheme(root.getAttribute("data-theme")||"day");
@@ -52,11 +52,11 @@
     if(!timeRange) return;
     const h=+timeRange.value;
     const isNight = h<6||h>=18;
-    if(sunmoon) sunmoon.textContent = h<5?"🌙":h<11?"🌅":h<16?"☀️":h<18?"🌇":"🌙";
-    if(timeOut) timeOut.textContent = `${h}:00 — ` + (h>=6&&h<11 ? (lang==="id"?"Top favorit! Citrus meledak pagi hari":"Top pick! Citrus pops in the morning")
-      : h>=11&&h<16 ? (lang==="id"?"Masih segar, sillage sopan buat outdoor":"Still fresh, office-safe sillage")
-      : h>=16&&h<18 ? (lang==="id"?"Transisi ke heart: apple + cedar mulai hangat":"Transition to heart: apple + cedar warms up")
-      : (lang==="id"?"Base dominan: sandalwood + patchouli, cocok malam":"Base heavy: sandalwood + patchouli, night-ready"));
+    if(sunmoon) sunmoon.textContent = h<11?"☀":h<16?"☀":h<18?"○":"●";
+    if(timeOut) timeOut.textContent = `${h}:00 — ` + (h>=6&&h<11 ? (lang==="id"?"Pagi hari — citrus dan green paling segar.":"Morning — citrus and green at their freshest.")
+      : h>=11&&h<16 ? (lang==="id"?"Siang hari — sillage sopan untuk aktivitas outdoor.":"Midday — polite sillage for outdoor activity.")
+      : h>=16&&h<18 ? (lang==="id"?"Sore hari — heart menghangat: apple dan cedar.":"Late afternoon — the heart warms: apple and cedar.")
+      : (lang==="id"?"Malam hari — base dominan: sandalwood dan patchouli.":"Evening — base dominant: sandalwood and patchouli."));
     // auto-suggest theme tapi jangan paksa: hanya ubah lab
     document.querySelectorAll(".dn-lab").forEach(el=>el.classList.toggle("night",isNight));
   }
@@ -71,7 +71,7 @@
       const r=tilt.getBoundingClientRect();
       const cx=(e.touches?e.touches[0].clientX:e.clientX)-r.left;
       const cy=(e.touches?e.touches[0].clientY:e.clientY)-r.top;
-      const rx=((cy/r.height)-.5)*-14, ry=((cx/r.width)-.5)*16;
+      const rx=((cy/r.height)-.5)*-7, ry=((cx/r.width)-.5)*9;
       cancelAnimationFrame(raf);
       raf=requestAnimationFrame(()=>{ tilt.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg)`; });
     }
@@ -87,7 +87,7 @@
   let parts=[];
   function sizeCv(){ if(!cv) return; cv.width=innerWidth; cv.height=innerHeight; }
   sizeCv(); addEventListener("resize",sizeCv);
-  const COLORS=["#E4572E","#6AA84F","#EFA13B","#8A9A5B","#8B5E34","#fff"];
+  const COLORS=["#C8A75F","#D8C9A3","#A9853F","#EDE4D2","#FFFFFF"];
   function spray(n){
     if(!ctx) return;
     sizeCv();
@@ -120,11 +120,11 @@
     let phase = h<0.5?0 : h<4?1 : 2;
     document.querySelectorAll(".tl-phase div").forEach((d,i)=>d.classList.toggle("active",i===phase));
     const txt = [
-      lang==="id"?`0–30 mnt: Lemon + Mint + Pink Pepper — citrus hijau meledak. Cocok buat first impression.`:`0–30 min: Lemon + Mint + Pink Pepper — zesty green burst.`,
-      lang==="id"?`${h} jam: Apple + Cedar + Incense — fruity-woody manis, inti 9 AM Dive.`:`${h}h: Apple + Cedar + Incense — fruity-woody core.`,
-      lang==="id"?`${h} jam: Ginger + Sandalwood + Patchouli — hangat, tahan di baju 2–3 hari.`:`${h}h: Ginger + Sandalwood + Patchouli — warm dry-down, lasts days on fabric.`
+      lang==="id"?`0–30 menit: Lemon, Mint, Pink Pepper. Opening citrus-green yang segar.`:`0–30 min: Lemon, Mint, Pink Pepper. A fresh citrus-green opening.`,
+      lang==="id"?`${h} jam: Apple, Cedar, Incense. Karakter fruity-woody yang seimbang.`:`${h}h: Apple, Cedar, Incense. A balanced fruity-woody character.`,
+      lang==="id"?`${h} jam: Ginger, Sandalwood, Patchouli. Dry-down hangat, tahan di kain 2–3 hari.`:`${h}h: Ginger, Sandalwood, Patchouli. A warm dry-down, lasts 2–3 days on fabric.`
     ][phase];
-    if(tlOut) tlOut.textContent=`⏱ ${txt}`;
+    if(tlOut) tlOut.textContent=`${txt}`;
   }
   if(tl){ tl.addEventListener("input",renderLife); renderLife(); }
 
@@ -138,17 +138,17 @@
   });
   const noteDetail=document.getElementById("noteDetail");
   const NOTE_INFO={
-    "Lemon":"🍋 Citrus tajam — opening segar, bikin melek pagi hari.",
-    "Mint":"🌿 Dingin hijau — efek fresh + clean 30 menit pertama.",
-    "Black Currant":"🫐 Fruity juicy — manis-asam yang bikin ketagihan.",
-    "Pink Pepper":"🌶️ Pedas pink playful — sparkle di atas citrus.",
-    "Apple":"🍎 Fruity manis — jembatan top ke heart.",
-    "Cedar":"🪵 Woody kering — struktur maskulin-unisex.",
-    "Incense":"🌲 Smoky tipis — bikin misterius tapi tetap siang-friendly.",
-    "Ginger":"🫚 Hangat rempah — dry-down berenergi.",
-    "Sandalwood":"🪵 Creamy woody — tahan lama, sopan.",
-    "Patchouli":"🍄 Earthy dalam — depth malam hari.",
-    "Jasmine":"🌸 White floral lembut — menghaluskan base."
+    "Lemon":"Citrus yang tajam — opening segar untuk pagi hari.",
+    "Mint":"Hijau yang dingin — kesan bersih 30 menit pertama.",
+    "Black Currant":"Fruity yang juicy — manis-asam yang seimbang.",
+    "Pink Pepper":"Rempah ringan — aksen segar di atas citrus.",
+    "Apple":"Fruity manis — penghubung top ke heart.",
+    "Cedar":"Woody kering — struktur unisex yang rapi.",
+    "Incense":"Smoky tipis — misterius namun tetap ringan.",
+    "Ginger":"Rempah hangat — dry-down yang berenergi.",
+    "Sandalwood":"Woody creamy — tahan lama dan sopan.",
+    "Patchouli":"Earthy yang dalam — kedalaman untuk malam.",
+    "Jasmine":"White floral lembut — menghaluskan base."
   };
   document.querySelectorAll(".note-item").forEach(n=>n.onclick=()=>{
     document.querySelectorAll(".note-item").forEach(x=>x.classList.remove("sel"));
@@ -160,18 +160,18 @@
 
   /* ---------- mini quiz ---------- */
   const quizData=[
-    {q:{id:"Kapan paling sering pakai parfum?",en:"When do you wear perfume most?"},opts:[
-      {t:{id:"☀️ Pagi / kantor / kampus",en:"☀️ Morning / office / campus"},s:30},
-      {t:{id:"🌇 Sore nongkrong",en:"🌇 Afternoon hangout"},s:22},
-      {t:{id:"🌙 Malam date",en:"🌙 Night date"},s:12}]},
-    {q:{id:"Vibe yang kamu mau?",en:"What vibe do you want?"},opts:[
-      {t:{id:"🍋 Segar + bersih",en:"🍋 Fresh + clean"},s:30},
-      {t:{id:"🍎 Manis fruity",en:"🍎 Sweet fruity"},s:25},
-      {t:{id:"🪵 Berat woody",en:"🪵 Heavy woody"},s:10}]},
+    {q:{id:"Kapan paling sering memakai parfum?",en:"When do you wear perfume most?"},opts:[
+      {t:{id:"Pagi / kantor / kampus",en:"Morning / office / campus"},s:30},
+      {t:{id:"Sore hari",en:"Afternoon"},s:22},
+      {t:{id:"Malam hari",en:"Evening"},s:12}]},
+    {q:{id:"Karakter apa yang diinginkan?",en:"What character do you prefer?"},opts:[
+      {t:{id:"Segar dan bersih",en:"Fresh and clean"},s:30},
+      {t:{id:"Manis fruity",en:"Sweet fruity"},s:25},
+      {t:{id:"Woody yang berat",en:"Heavy woody"},s:10}]},
     {q:{id:"Sillage seperti apa?",en:"What sillage?"},opts:[
-      {t:{id:"Sopan ~1m",en:"Polite ~1m"},s:25},
+      {t:{id:"Sopan, sekitar 1 meter",en:"Polite, around 1 meter"},s:25},
       {t:{id:"Moderat",en:"Moderate"},s:20},
-      {t:{id:"Menyengat",en:"Beast mode"},s:5}]}
+      {t:{id:"Kuat",en:"Strong"},s:5}]}
   ];
   let qi=0, score=0;
   const qBox=document.getElementById("quizBox"), qQ=document.getElementById("quizQ"),
@@ -184,7 +184,7 @@
       qQ.style.display="none"; qOpts.style.display="none";
       qBar.style.width="100%";
       qRes.style.display="block";
-      qRes.innerHTML=`🎯 <span class="quiz-result">${pct}% cocok!</span><br><span style="font-weight:400;font-size:.9rem">${pct>=85?(lang==="id"?"9 AM Dive fix buat kamu. Citrus-green-fruity, siang juara.":"9 AM Dive is your match. Citrus-green-fruity, daytime winner."):lang==="id"?"Lumayan cocok. Kamu suka fresh tapi butuh yang lebih manis/berat? Coba Kirke atau 9 PM Rebel.":"Partial match. You like fresh but may want sweeter/heavier? Try Kirke or 9 PM Rebel."}</span>`;
+      qRes.innerHTML=`<span class="quiz-result">${pct}% cocok.</span><br><span style="font-weight:400;font-size:.9rem">${pct>=85?(lang==="id"?"9 AM Dive sesuai untuk kebutuhan harian. Citrus-green-fruity, unggul siang hari.":"9 AM Dive suits daily wear. Citrus-green-fruity, daytime leaning."):lang==="id"?"Cukup cocok. Jika butuh lebih manis atau berat, lihat Kirke atau 9 PM Rebel.":"A partial match. If you need sweeter or heavier, see Kirke or 9 PM Rebel."}</span>`;
       if(qNext) qNext.style.display="inline-block";
       if(pct>=70) spray(70);
       return;
