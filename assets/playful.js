@@ -32,7 +32,7 @@
     window.open(`https://wa.me/${WA}?text=${encodeURIComponent(msgExtra? base+" "+msgExtra : base)}`,"_blank");
   }
   ["orderBtn","orderBtn2"].forEach(id=>{
-    const b=document.getElementById(id); if(b) b.onclick=()=>{spray(Math.floor(Math.random()*40)+40); setTimeout(()=>order(),350);};
+    const b=document.getElementById(id); if(b) b.onclick=()=>order();
   });
 
   /* ---------- theme day/night ---------- */
@@ -82,31 +82,61 @@
     stage.addEventListener("touchend",reset);
   }
 
-  /* ---------- spray particles (canvas) ---------- */
-  const cv=document.getElementById("mist"), ctx=cv?cv.getContext("2d"):null;
-  let parts=[];
-  function sizeCv(){ if(!cv) return; cv.width=innerWidth; cv.height=innerHeight; }
-  sizeCv(); addEventListener("resize",sizeCv);
-  const COLORS=["#C8A75F","#D8C9A3","#A9853F","#EDE4D2","#FFFFFF"];
-  function spray(n){
-    if(!ctx) return;
-    sizeCv();
-    const x=innerWidth/2+(Math.random()*120-60), y=innerHeight*0.32;
-    for(let i=0;i<(n||60);i++){
-      parts.push({x,y,vx:(Math.random()-.5)*7,vy:Math.random()*-5-1,r:Math.random()*5+2,c:COLORS[i%COLORS.length],life:1,decay:.008+Math.random()*.012});
+  /* ---------- sillage visualizer (pengganti spray preview) ---------- */
+  const sCanvas=document.getElementById("sillageCanvas"), sOut=document.getElementById("sillageOut");
+  let sprays=3, pulse=0;
+  function sillageText(){
+    if(lang==="id"){
+      if(sprays<=1) return "1× spray — Intimate. Tercium <0,5m. Cocok untuk ruang kecil / sholat.";
+      if(sprays<=3) return "3× spray — Personal, ±1m. Rekomendasi kantor / kampus. Sopan, tidak menyengat.";
+      return "5× spray — Strong, >2m. Untuk outdoor / malam. Jangan dipakai rapat kecil.";
     }
-    if(!spray.ticking){ spray.ticking=true; requestAnimationFrame(tick); }
+    if(sprays<=1) return "1× spray — Intimate. Noticed under 0.5m. For small rooms.";
+    if(sprays<=3) return "3× sprays — Personal, around 1m. Office / campus safe.";
+    return "5× sprays — Strong, over 2m. Outdoor / night only.";
   }
-  function tick(){
-    ctx.clearRect(0,0,cv.width,cv.height);
-    parts=parts.filter(p=>p.life>0);
-    parts.forEach(p=>{ p.x+=p.vx; p.y+=p.vy; p.vy+=.12; p.vx*=.98; p.life-=p.decay;
-      ctx.globalAlpha=Math.max(p.life,0); ctx.fillStyle=p.c; ctx.beginPath(); ctx.arc(p.x,p.y,p.r*p.life+1,0,7); ctx.fill(); });
-    ctx.globalAlpha=1;
-    if(parts.length) requestAnimationFrame(tick); else spray.ticking=false;
+  function drawSillage(){
+    if(!sCanvas) return;
+    const ctx2=sCanvas.getContext("2d");
+    const W=sCanvas.width, H=sCanvas.height, cx=W/2, cy=H/2+14;
+    ctx2.clearRect(0,0,W,H);
+    const night=root.getAttribute("data-theme")==="night";
+    const gold=getComputedStyle(document.documentElement).getPropertyValue("--gold").trim()||"#A9853F";
+    // radius by sprays: 1x kecil, 3x sedang, 5x besar
+    const R = sprays<=1? 42 : sprays<=3? 72 : 102;
+    pulse+=0.03;
+    const breathe=1+Math.sin(pulse)*0.03;
+    const rings=[
+      {r:R*breathe, fill:night?"rgba(200,167,95,.14)":"rgba(169,133,63,.14)", dash:[], label:">2m"},
+      {r:R*0.66*breathe, fill:night?"rgba(200,167,95,.18)":"rgba(169,133,63,.20)", dash:[], label:"±1m"},
+      {r:R*0.36*breathe, fill:gold, dash:[], label:""}
+    ];
+    rings.forEach(rg=>{
+      ctx2.beginPath(); ctx2.arc(cx,cy,rg.r,0,7);
+      if(rg.fill===gold){ ctx2.globalAlpha=.9; ctx2.fillStyle=rg.fill; ctx2.fill(); ctx2.globalAlpha=1; }
+      else { ctx2.fillStyle=rg.fill; ctx2.fill(); ctx2.strokeStyle=gold; ctx2.lineWidth=1; ctx2.setLineDash(rg.dash); ctx2.stroke(); ctx2.setLineDash([]); }
+    });
+    // orang di tengah
+    ctx2.fillStyle=night?"#F2EDE3":"#1B1814";
+    ctx2.beginPath(); ctx2.arc(cx,cy,9,0,7); ctx2.fill();
+    ctx2.font="10px Inter, sans-serif"; ctx2.fillStyle=night?"#A8A094":"#6E6860"; ctx2.textAlign="center";
+    ctx2.fillText("<0,5m",cx,cy-R*0.36-6);
+    ctx2.fillText("±1m",cx,cy-R*0.66-6);
+    ctx2.fillText(">2m",cx,cy-R-6);
+    if(sOut) sOut.textContent=sillageText();
   }
-  const sprayBtn=document.getElementById("sprayBtn");
-  if(sprayBtn) sprayBtn.onclick=()=>spray(90);
+  document.querySelectorAll(".seg button").forEach(b=>b.onclick=()=>{
+    document.querySelectorAll(".seg button").forEach(x=>x.classList.remove("active"));
+    b.classList.add("active");
+    sprays=+b.dataset.sprays||3;
+    drawSillage();
+  });
+  if(sCanvas){
+    setInterval(drawSillage,50);
+    drawSillage();
+  }
+  // expose untuk refresh bahasa/tema
+  window.__sillageRedraw=drawSillage;
 
   /* ---------- reveal + accords ---------- */
   const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target);} }),{threshold:.18});
@@ -155,7 +185,6 @@
     n.classList.add("sel");
     const name=n.querySelector(".note-name")?.textContent.trim()||"";
     if(noteDetail) noteDetail.textContent=NOTE_INFO[name]||`${name} — bagian dari karakter 9 AM Dive.`;
-    spray(18);
   });
 
   /* ---------- mini quiz ---------- */
@@ -186,7 +215,6 @@
       qRes.style.display="block";
       qRes.innerHTML=`<span class="quiz-result">${pct}% cocok.</span><br><span style="font-weight:400;font-size:.9rem">${pct>=85?(lang==="id"?"9 AM Dive sesuai untuk kebutuhan harian. Citrus-green-fruity, unggul siang hari.":"9 AM Dive suits daily wear. Citrus-green-fruity, daytime leaning."):lang==="id"?"Cukup cocok. Jika butuh lebih manis atau berat, lihat Kirke atau 9 PM Rebel.":"A partial match. If you need sweeter or heavier, see Kirke or 9 PM Rebel."}</span>`;
       if(qNext) qNext.style.display="inline-block";
-      if(pct>=70) spray(70);
       return;
     }
     const step=quizData[qi];
@@ -203,7 +231,7 @@
   renderQuiz();
   // re-render dynamic texts on lang change
   const _applyOrig = applyLang;
-  applyLang = function(){ _applyOrig(); renderTime(); renderLife(); renderQuizKeep(); };
+  applyLang = function(){ _applyOrig(); renderTime(); renderLife(); renderQuizKeep(); if(window.__sillageRedraw) window.__sillageRedraw(); };
   function renderQuizKeep(){
     // keep progress, just re-render current step without resetting score
     if(qi>=quizData.length) return; // result already shown, keep it

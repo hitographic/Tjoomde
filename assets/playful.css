@@ -28,9 +28,23 @@ main.vpage{max-width:1080px;padding-top:20px;padding-bottom:56px}
 .bottle-meta{display:flex;gap:8px;justify-content:center;margin:14px 0 4px;flex-wrap:wrap}
 .bottle-meta span{font-size:.74rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:6px 12px;border-radius:999px;background:var(--gold-soft);color:var(--gold);border:1px solid color-mix(in srgb, var(--gold) 30%, transparent)}
 .stage-actions{display:flex;gap:10px;justify-content:center;margin-top:12px}
-.spray-btn{border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;font-weight:600;padding:10px 18px;border-radius:999px;font-size:.88rem;transition:.18s var(--ease)}
+.spray-btn{border:1px solid var(--line);background:var(--paper);color:var(--ink);cursor:pointer;font-weight:600;padding:10px 18px;border-radius:999px;font-size:.88rem;transition:.18s var(--ease)}
 .spray-btn:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-1px)}
 .hint-tilt{font-size:.78rem;color:var(--muted);margin:10px 0 0}
+/* Sillage visualizer */
+.sillage{margin-top:16px;border-top:1px solid var(--line);padding-top:14px;text-align:left}
+.sillage-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.sillage-head strong{font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.seg{display:inline-flex;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px}
+.seg button{border:0;background:transparent;padding:6px 14px;border-radius:999px;font-size:.82rem;font-weight:600;color:var(--muted);cursor:pointer}
+.seg button.active{background:var(--ink);color:var(--paper)}
+#sillageCanvas{width:100%;height:auto;display:block;border-radius:12px;background:var(--paper);border:1px solid var(--line)}
+#sillageOut{font-size:.86rem;line-height:1.6;margin:10px 0 6px;color:var(--ink)}
+.sillage-legend{display:flex;gap:14px;font-size:.76rem;color:var(--muted);margin:0}
+.sillage-legend .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:baseline}
+.sillage-legend .d1{background:var(--gold)}
+.sillage-legend .d2{background:color-mix(in srgb, var(--gold) 55%, transparent);border:1px solid var(--gold)}
+.sillage-legend .d3{background:transparent;border:1px dashed var(--gold)}
 
 /* Title block */
 .play-kicker{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
