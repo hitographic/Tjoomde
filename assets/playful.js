@@ -82,61 +82,45 @@
     stage.addEventListener("touchend",reset);
   }
 
-  /* ---------- sillage visualizer (pengganti spray preview) ---------- */
-  const sCanvas=document.getElementById("sillageCanvas"), sOut=document.getElementById("sillageOut");
-  let sprays=3, pulse=0;
-  function sillageText(){
-    if(lang==="id"){
-      if(sprays<=1) return "1× spray — Intimate. Tercium <0,5m. Cocok untuk ruang kecil / sholat.";
-      if(sprays<=3) return "3× spray — Personal, ±1m. Rekomendasi kantor / kampus. Sopan, tidak menyengat.";
-      return "5× spray — Strong, >2m. Untuk outdoor / malam. Jangan dipakai rapat kecil.";
-    }
-    if(sprays<=1) return "1× spray — Intimate. Noticed under 0.5m. For small rooms.";
-    if(sprays<=3) return "3× sprays — Personal, around 1m. Office / campus safe.";
-    return "5× sprays — Strong, over 2m. Outdoor / night only.";
+  /* ---------- gallery next / prev ---------- */
+  const slides=Array.from(document.querySelectorAll(".g-slide"));
+  const gCount=document.getElementById("gCount"), gDots=document.getElementById("gDots");
+  let gi=0;
+  function showSlide(n){
+    if(!slides.length) return;
+    gi=(n+slides.length)%slides.length;
+    slides.forEach((s,i)=>s.classList.toggle("active",i===gi));
+    if(gCount) gCount.textContent=`${gi+1} / ${slides.length}`;
+    if(gDots) Array.from(gDots.children).forEach((d,i)=>d.classList.toggle("active",i===gi));
   }
-  function drawSillage(){
-    if(!sCanvas) return;
-    const ctx2=sCanvas.getContext("2d");
-    const W=sCanvas.width, H=sCanvas.height, cx=W/2, cy=H/2+14;
-    ctx2.clearRect(0,0,W,H);
-    const night=root.getAttribute("data-theme")==="night";
-    const gold=getComputedStyle(document.documentElement).getPropertyValue("--gold").trim()||"#A9853F";
-    // radius by sprays: 1x kecil, 3x sedang, 5x besar
-    const R = sprays<=1? 42 : sprays<=3? 72 : 102;
-    pulse+=0.03;
-    const breathe=1+Math.sin(pulse)*0.03;
-    const rings=[
-      {r:R*breathe, fill:night?"rgba(200,167,95,.14)":"rgba(169,133,63,.14)", dash:[], label:">2m"},
-      {r:R*0.66*breathe, fill:night?"rgba(200,167,95,.18)":"rgba(169,133,63,.20)", dash:[], label:"±1m"},
-      {r:R*0.36*breathe, fill:gold, dash:[], label:""}
-    ];
-    rings.forEach(rg=>{
-      ctx2.beginPath(); ctx2.arc(cx,cy,rg.r,0,7);
-      if(rg.fill===gold){ ctx2.globalAlpha=.9; ctx2.fillStyle=rg.fill; ctx2.fill(); ctx2.globalAlpha=1; }
-      else { ctx2.fillStyle=rg.fill; ctx2.fill(); ctx2.strokeStyle=gold; ctx2.lineWidth=1; ctx2.setLineDash(rg.dash); ctx2.stroke(); ctx2.setLineDash([]); }
+  if(gDots && !gDots.children.length){
+    slides.forEach((_,i)=>{
+      const d=document.createElement("button");
+      d.setAttribute("aria-label","Foto "+(i+1));
+      d.onclick=()=>showSlide(i);
+      gDots.appendChild(d);
     });
-    // orang di tengah
-    ctx2.fillStyle=night?"#F2EDE3":"#1B1814";
-    ctx2.beginPath(); ctx2.arc(cx,cy,9,0,7); ctx2.fill();
-    ctx2.font="10px Inter, sans-serif"; ctx2.fillStyle=night?"#A8A094":"#6E6860"; ctx2.textAlign="center";
-    ctx2.fillText("<0,5m",cx,cy-R*0.36-6);
-    ctx2.fillText("±1m",cx,cy-R*0.66-6);
-    ctx2.fillText(">2m",cx,cy-R-6);
-    if(sOut) sOut.textContent=sillageText();
   }
-  document.querySelectorAll(".seg button").forEach(b=>b.onclick=()=>{
-    document.querySelectorAll(".seg button").forEach(x=>x.classList.remove("active"));
-    b.classList.add("active");
-    sprays=+b.dataset.sprays||3;
-    drawSillage();
+  const gPrev=document.getElementById("gPrev"), gNext=document.getElementById("gNext");
+  if(gPrev) gPrev.onclick=()=>showSlide(gi-1);
+  if(gNext) gNext.onclick=()=>showSlide(gi+1);
+  document.addEventListener("keydown",e=>{
+    if(e.key==="ArrowLeft") showSlide(gi-1);
+    if(e.key==="ArrowRight") showSlide(gi+1);
   });
-  if(sCanvas){
-    setInterval(drawSillage,50);
-    drawSillage();
+  // swipe
+  const gal=document.getElementById("gallery");
+  let tx=null;
+  if(gal){
+    gal.addEventListener("touchstart",e=>{tx=e.touches[0].clientX;},{passive:true});
+    gal.addEventListener("touchend",e=>{
+      if(tx==null) return;
+      const dx=e.changedTouches[0].clientX-tx;
+      if(Math.abs(dx)>30) showSlide(gi+(dx<0?1:-1));
+      tx=null;
+    },{passive:true});
   }
-  // expose untuk refresh bahasa/tema
-  window.__sillageRedraw=drawSillage;
+  showSlide(0);
 
   /* ---------- reveal + accords ---------- */
   const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target);} }),{threshold:.18});
@@ -231,7 +215,7 @@
   renderQuiz();
   // re-render dynamic texts on lang change
   const _applyOrig = applyLang;
-  applyLang = function(){ _applyOrig(); renderTime(); renderLife(); renderQuizKeep(); if(window.__sillageRedraw) window.__sillageRedraw(); };
+  applyLang = function(){ _applyOrig(); renderTime(); renderLife(); renderQuizKeep(); };
   function renderQuizKeep(){
     // keep progress, just re-render current step without resetting score
     if(qi>=quizData.length) return; // result already shown, keep it
