@@ -110,7 +110,7 @@ section.prev{padding:28px;display:flex;flex-direction:column;gap:26px;align-item
   <div><label>Top notes (koma)</label><textarea id="fTop">Lemon, Mint, Black Currant, Pink Pepper</textarea></div>
   <div><label>Middle notes (koma)</label><textarea id="fHeart">Apple, Cedar, Incense</textarea></div>
   <div><label>Base notes (koma)</label><textarea id="fBase">Ginger, Sandalwood, Patchouli, Jasmine</textarea></div>
-  <div class="hint">Foto lingkaran terisi otomatis dari Wikipedia (aman untuk export). <b>Klik lingkaran</b> untuk upload foto sendiri (paling aman). Foto fimgs hanya pratinjau sementara bila Wikipedia tidak ketemu.</div>
+  <div class="hint">Foto lingkaran = foto asli <b>Fragrantica (fimgs)</b> seperti tool 18. Notes Parfum. Bila tidak ada → otomatis Wikipedia → emoji. <b>Klik lingkaran</b> untuk upload foto sendiri (paling aman saat export).</div>
   <input type="file" id="imgPick" accept="image/*" style="display:none" />
 </aside>
 
@@ -177,7 +177,7 @@ $("pwBtn").onclick=()=>{ if($("pw").value===ADMIN_PW){sessionStorage.setItem("tj
 $("logout").onclick=()=>{sessionStorage.removeItem("tj-admin");location.reload();};
 
 let FRAG={};
-const UPLOADS={}, WIKI={}, WIKI_PEND=new Set();
+const UPLOADS={};
 let IDX={};
 function buildIdx(){ IDX={}; try{ Object.keys(NOTES_DB||{}).forEach(k=>{IDX[k.toLowerCase()]=k;}); }catch(e){} }
 buildIdx();
@@ -240,13 +240,32 @@ function fimgsOf(name){
   if(key&&NOTES_DB[key]&&NOTES_DB[key].id) return `https://fimgs.net/mdimg/sastojci/t.${NOTES_DB[key].id}.jpg`;
   return null;
 }
+function guessEmoji(name){
+  const n=(name||"").toLowerCase();
+  if(/lemon|orange|bergamot|citrus|lime|grapefruit|yuzu|mandarin|tangerine|neroli|petitgrain|clementine|pomelo/.test(n)) return "🍊";
+  if(/rose|jasmine|peony|orchid|lily|violet|iris|magnolia|freesia|tuberose|blossom|flower|mimosa|frangipani|ylang|gardenia|muguet|hyacinth|tulip|cyclamen/.test(n)) return "🌸";
+  if(/apple|berr|peach|pineapple|mango|cherry|plum|grape|fig|melon|coconut|strawberry|raspberry|pear|apricot|fruit|banana|kiwi|papaya|nectarine|quince|currant/.test(n)) return "🍓";
+  if(/vanilla|sugar|caramel|honey|chocolate|candy|marshmallow|tonka|praline|toffee|fudge|syrup/.test(n)) return "🍯";
+  if(/tea|mint|basil|rosemary|sage|thyme|herb|mate|verbena|shiso|lemongrass|artemisia/.test(n)) return "🌿";
+  if(/marine|aquatic|ocean|sea|ozonic|rain|water|calone|driftwood|salt/.test(n)) return "🌊";
+  if(/oud|amber|benzoin|myrrh|incense|labdanum|copal|opoponax|balsam|frankincense/.test(n)) return "🌲";
+  if(/musk|ambroxan|ambrette|ambrettolide/.test(n)) return "💎";
+  if(/cedar|sandalwood|vetiver|patchouli|oak|pine|cypress|teak|guaiac|birch|ebony|agarwood|akigala/.test(n)) return "🪵";
+  if(/pepper|saffron|cinnamon|cardamom|clove|nutmeg|cumin|coriander|ginger|curry|paprika|anise|timur/.test(n)) return "🌶️";
+  if(/leather|tobacco|suede|smoke|earth|moss|mushroom|truffle|hay|tar/.test(n)) return "🍄";
+  return "🌿";
+}
+// Urutan Fragrantica-first seperti tool 18. Notes Parfum:
+// 1) fimgs (foto asli Fragrantica) → 2) onerror: Wikipedia → 3) emoji
 function wikiCands(name){
   const c=[], low=(name||"").toLowerCase();
   if(ALIAS[low]) c.push(ALIAS[low]);
   const key=IDX[low];
   if(key&&NOTES_DB[key].wiki) c.push(NOTES_DB[key].wiki);
   c.push(name);
-  const words=(name||"").split(/\s+/).filter(Boolean);
+  const noAcc=String(name||"").replace(/\s*accord\s*/gi,"").trim();
+  if(noAcc&&noAcc!==name) c.push(noAcc);
+  const words=noAcc.split(/\s+/).filter(Boolean);
   if(words.length>1) c.push(words[words.length-1]);
   return [...new Set(c.filter(Boolean))].slice(0,4);
 }
@@ -262,14 +281,22 @@ async function wikiThumb(name){
   }
   return null;
 }
-function ensureWiki(name){
-  if(UPLOADS[name]||WIKI[name]||WIKI_PEND.has(name)) return;
-  WIKI_PEND.add(name);
+function wikiFallback(img,name){
+  // dipanggil saat fimgs gagal dimuat: rantai kandidat Wikipedia, terakhir emoji
+  img.onerror=()=>showEmoji(img,name);
   wikiThumb(name).then(src=>{
-    WIKI_PEND.delete(name);
-    WIKI[name]=src; // bisa null
-    if(src) document.querySelectorAll(`.nimg img[data-note="${CSS.escape(name)}"]`).forEach(img=>{ img.src=src; });
+    if(!img.isConnected||img.dataset.fixed) return;
+    if(src){ img.src=src; }
+    else showEmoji(img,name);
   });
+}
+function showEmoji(img,name){
+  img.style.display="none";
+  if(img.parentNode&&!img.parentNode.querySelector(".ph")){
+    const d=document.createElement("div");
+    d.className="ph"; d.textContent=guessEmoji(name);
+    img.parentNode.insertBefore(d,img);
+  }
 }
 let lastSig="";
 function render(){
@@ -297,7 +324,13 @@ function render(){
     $("pfTop").innerHTML=mk(T)||"<span style='font-size:.8rem'>—</span>";
     $("pfHeart").innerHTML=mk(H)||"<span style='font-size:.8rem'>—</span>";
     $("pfBase").innerHTML=mk(B)||"<span style='font-size:.8rem'>—</span>";
-    [...T,...H,...B].forEach(ensureWiki);
+    // fimgs-first: hanya bila foto Fragrantica gagal → fallback Wikipedia → emoji
+    document.querySelectorAll("#cardProfile .nimg img[data-note]").forEach(img=>{
+      if(img.src.startsWith("data:")) return;
+      const n=img.dataset.note;
+      img.addEventListener("error",()=>wikiFallback(img,n),{once:true});
+      if(img.complete&&!img.naturalWidth) wikiFallback(img,n);
+    });
     bindUploads();
   }
   // accords card
@@ -329,12 +362,20 @@ async function waitImgs(el){
 }
 async function doExport(cardId,fmt){
   const st=cardId==="cardProfile"?$("st1"):$("st2");
+  const el=$(cardId);
+  const imgs=[...el.querySelectorAll("img")];
+  const orig=imgs.map(i=>i.src);
   try{
     st.textContent="Merender…";
     await document.fonts.ready;
-    const el=$(cardId);
+    // Bypass CORS ala 18. Notes Parfum: proxy wsrv.nl agar fimgs ikut ke-render
+    imgs.forEach(i=>{
+      if(i.src.startsWith("data:")) return;
+      i.crossOrigin="anonymous";
+      i.src="https://wsrv.nl/?url="+encodeURIComponent(i.src)+"&cors=1";
+    });
     await waitImgs(el);
-    const canvas=await html2canvas(el,{scale:2,backgroundColor:"#ffffff",useCORS:true,imageTimeout:15000,logging:false});
+    const canvas=await html2canvas(el,{scale:2,backgroundColor:"#ffffff",useCORS:true,allowTaint:false,imageTimeout:15000,logging:false});
     const a=document.createElement("a");
     const fn=`tjoomde-${slug($("fName").value)}-${cardId==="cardProfile"?"profile":"accords"}.${fmt==="jpg"?"jpg":"png"}`;
     a.download=fn;
@@ -342,6 +383,7 @@ async function doExport(cardId,fmt){
     a.click();
     st.textContent="✓ "+fn;toast("Tersimpan: "+fn);
   }catch(e){st.textContent="Gagal export";toast("Export gagal: "+e.message);}
+  finally{ imgs.forEach((i,x)=>{ i.src=orig[x]; }); }
   setTimeout(()=>st.textContent="",5000);
 }
 </script>
