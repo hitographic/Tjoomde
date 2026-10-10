@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Tjoomde Admin — Export Visual | tjoomde.my.id</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="../assets/variants.js"></script>
+<style>
+:root{--bg:#141311;--panel:#1E1C18;--panel2:#26231E;--line:#322E26;--gold:#C8A75F;--ink:#F2EDE3;--muted:#A8A094;--card:#fff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif}
+header{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(20,19,17,.92);backdrop-filter:blur(10px);z-index:20}
+header .mark{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#A9853F,#E8C88A);display:flex;align-items:center;justify-content:center;color:#111;font-weight:700}
+header h1{font-family:'Fraunces',serif;font-weight:400;font-size:1.15rem;margin:0}
+header small{display:block;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+header .sp{flex:1}header a,header button{color:var(--ink);text-decoration:none;font-size:.85rem;border:1px solid var(--line);background:transparent;border-radius:999px;padding:8px 16px;cursor:pointer}
+main{display:grid;grid-template-columns:400px 1fr;min-height:calc(100vh - 64px)}
+@media(max-width:1000px){main{grid-template-columns:1fr}}
+aside{background:var(--panel);border-right:1px solid var(--line);padding:22px;display:flex;flex-direction:column;gap:16px;max-height:calc(100vh - 64px);overflow:auto}
+label{font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px}
+input,select,textarea{width:100%;background:var(--panel2);border:1px solid var(--line);border-radius:10px;color:var(--ink);padding:10px 12px;font-size:.9rem;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--gold)}
+textarea{min-height:56px;resize:vertical;font-size:.85rem}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.acc-row{display:grid;grid-template-columns:1fr 64px;gap:8px;margin-bottom:8px}
+.hint{font-size:.78rem;color:var(--muted);line-height:1.6;background:rgba(200,167,95,.08);border:1px solid rgba(200,167,95,.25);border-radius:10px;padding:10px 12px}
+section.prev{padding:28px;display:flex;flex-direction:column;gap:22px;align-items:center;overflow:auto}
+.card-wrap{width:100%;max-width:720px}
+.card-label{font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.exp-bar{display:flex;gap:8px;margin-top:10px}
+.exp-bar button{flex:1;border:0;border-radius:10px;padding:11px;font-weight:700;cursor:pointer;font-size:.86rem}
+.btn-png{background:var(--gold);color:#111}.btn-jpg{background:#fff;color:#111}.btn-png:disabled,.btn-jpg:disabled{opacity:.5}
+/* ---- EXPORT CARDS (putih, aman html2canvas, tanpa foto eksternal) ---- */
+.ecard{background:#fff;color:#1B1814;border-radius:18px;padding:40px 36px;width:100%;font-family:'Inter',sans-serif}
+.ecard .etop{text-align:center;font-size:.68rem;letter-spacing:.24em;color:#A9853F;font-weight:700}
+.ecard .mono{width:84px;height:84px;border-radius:50%;margin:18px auto 12px;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:1.9rem;color:#fff}
+.ecard h2{font-family:'Fraunces',serif;font-weight:500;text-align:center;font-size:2rem;margin:0;letter-spacing:.02em}
+.ecard .einsp{text-align:center;font-style:italic;color:#8a857a;font-size:.92rem;margin:6px 0 20px}
+esec{margin:0 0 18px}.esec-t{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.esec-t::before,.esec-t::after{content:'';flex:1;height:1px;background:#E7DFD0}
+.esec-t span{font-size:.68rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;background:#1B1814;color:#fff;padding:6px 16px;border-radius:999px}
+.acc{margin:10px 0}.acc .ar{display:flex;justify-content:space-between;font-size:.86rem;margin-bottom:5px}.acc .ar b{font-weight:700}
+.abar{height:10px;background:#F1ECE1;border-radius:99px;overflow:hidden}.abar i{display:block;height:100%;border-radius:99px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}.chip{font-size:.78rem;background:#F6F1E6;border:1px solid #E7DFD0;border-radius:999px;padding:5px 12px}
+.facts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:6px}.fact{background:#FAF7F0;border:1px solid #EDE6D6;border-radius:12px;padding:10px;text-align:center}.fact small{display:block;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:#8a857a}.fact strong{font-size:.9rem}
+.dn{display:flex;height:26px;border-radius:99px;overflow:hidden;margin-top:8px}.dn div{display:flex;align-items:center;justify-content:center;font-size:.74rem;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden}
+.dn .dd{background:linear-gradient(135deg,#D99A2B,#EFC25A)}.dn .nn{background:linear-gradient(135deg,#2c3e50,#4a6076)}
+.efoot{text-align:center;font-size:.72rem;letter-spacing:.2em;color:#A9853F;margin-top:22px;font-weight:700}
+.dots{display:flex;gap:5px;justify-content:center;margin-top:6px}.dots i{width:20px;height:9px;border-radius:99px;background:#E7DFD0}.dots i.on{background:#1B1814}
+/* gate */
+#gate{position:fixed;inset:0;background:#0e0d0b;z-index:99;display:flex;align-items:center;justify-content:center;padding:20px}
+#gate .box{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:28px;width:100%;max-width:360px;text-align:center}
+#gate input{margin:12px 0;text-align:center}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:12px 20px;border-radius:999px;font-size:.86rem;display:none;z-index:99;border:1px solid var(--gold)}
+</style>
+</head>
+<body>
+<div id="gate"><div class="box">
+  <div style="font-family:Fraunces,serif;font-size:1.4rem">Tjoomde Admin</div>
+  <p style="color:var(--muted);font-size:.85rem">Halaman khusus admin. Tidak diindeks Google.</p>
+  <input type="password" id="pw" placeholder="Password admin" />
+  <button class="btn-png" id="pwBtn" style="width:100%;border:0;border-radius:10px;padding:11px;font-weight:700;cursor:pointer;background:var(--gold)">Masuk</button>
+  <p style="color:var(--muted);font-size:.72rem;margin-top:10px">Default: <code>tjoomde123</code> — ganti di kode.</p>
+</div></div>
+
+<header>
+  <div class="mark">T</div>
+  <div><h1>Admin — Export Visual</h1><small>Profile Parfum • Main Accords • PNG / JPG</small></div>
+  <div class="sp"></div>
+  <a href="../">← Lihat web</a>
+  <button id="logout">Keluar</button>
+</header>
+
+<main>
+<aside>
+  <div><label>Pilih varian (35)</label><select id="varian"></select></div>
+  <div><label>Nama parfum</label><input id="fName" value="9 AM Dive" /></div>
+  <div><label>Terinspirasi dari</label><input id="fInsp" value="9 AM Dive - Afnan" /></div>
+  <div class="row2">
+    <div><label>Gender</label><select id="fGender"><option>Unisex</option><option>Pria</option><option>Wanita</option></select></div>
+    <div><label>Daya tahan</label><select id="fLong"><option>4-6 jam</option><option selected>6-8 jam</option><option>8-10 jam</option></select></div>
+  </div>
+  <div class="row2">
+    <div><label>Sillage (1-5)</label><select id="fSil"><option>2</option><option selected>3</option><option>4</option><option>5</option></select></div>
+    <div><label>Siang % (Day)</label><input type="number" id="fDay" value="62" min="5" max="95" /></div>
+  </div>
+  <div><label>Main accords (nama + %)</label><div id="accEdit"></div></div>
+  <div><label>Top notes (koma)</label><textarea id="fTop">Lemon, Mint, Black Currant, Pink Pepper</textarea></div>
+  <div><label>Heart notes (koma)</label><textarea id="fHeart">Apple, Cedar, Incense</textarea></div>
+  <div><label>Base notes (koma)</label><textarea id="fBase">Ginger, Sandalwood, Patchouli, Jasmine</textarea></div>
+  <div class="hint">Sumber accords otomatis dari <code>Data/fragrantica_accords.json</code> bila ada, else estimasi. Warna ikut standar Fragrantica. Kartu export <b>tanpa foto eksternal</b> agar hasil PNG/JPG selalu bersih (tanpa masalah CORS). Untuk foto botol, pakai galeri halaman varian.</div>
+</aside>
+
+<section class="prev">
+  <div class="card-wrap">
+    <div class="card-label"><span>Card 1 — Profile Parfum (IG portrait)</span><span id="st1"></span></div>
+    <div class="ecard" id="cardProfile">
+      <div class="etop">TJOOMDE • EAU DE PARFUM 50ML</div>
+      <div class="mono" id="pMono">9A</div>
+      <h2 id="pName">9 AM Dive</h2>
+      <div class="einsp" id="pInsp">Terinspirasi dari 9 AM Dive - Afnan</div>
+      <div class="esec"><div class="esec-t"><span>Top Notes</span></div><div class="chips" id="pTop"></div></div>
+      <div class="esec"><div class="esec-t"><span>Heart Notes</span></div><div class="chips" id="pHeart"></div></div>
+      <div class="esec"><div class="esec-t"><span>Base Notes</span></div><div class="chips" id="pBase"></div></div>
+      <div class="esec"><div class="esec-t"><span>Fakta</span></div>
+        <div class="facts">
+          <div class="fact"><small>Gender</small><strong id="pGender">Unisex</strong></div>
+          <div class="fact"><small>Tahan</small><strong id="pLong">6-8 jam</strong></div>
+          <div class="fact"><small>Sillage</small><div class="dots" id="pDots"></div></div>
+        </div>
+        <div class="dn"><div class="dd" id="pDay">Day 62%</div><div class="nn" id="pNight">Night 38%</div></div>
+      </div>
+      <div class="efoot">TJOOMDE.MY.ID</div>
+    </div>
+    <div class="exp-bar"><button class="btn-png" data-exp="cardProfile|png">Export PNG</button><button class="btn-jpg" data-exp="cardProfile|jpg">Export JPG</button></div>
+  </div>
+
+  <div class="card-wrap">
+    <div class="card-label"><span>Card 2 — Main Accords (IG square)</span><span id="st2"></span></div>
+    <div class="ecard" id="cardAccords">
+      <div class="etop">TJOOMDE • MAIN ACCORDS</div>
+      <h2 id="aName" style="margin-top:12px">9 AM Dive</h2>
+      <div class="einsp" id="aSub">Citrus • Green • Woody</div>
+      <div id="aList"></div>
+      <div class="efoot">TJOOMDE.MY.ID</div>
+    </div>
+    <div class="exp-bar"><button class="btn-png" data-exp="cardAccords|png">Export PNG</button><button class="btn-jpg" data-exp="cardAccords|jpg">Export JPG</button></div>
+  </div>
+</section>
+</main>
+
+<div id="toast"></div>
+<script>
+const ADMIN_PW = "tjoomde123"; // ganti sesuai kebutuhan
+const COLORS = {citrus:"#EFA13B",fruity:"#E4572E",sweet:"#B565D8",floral:"#EC6FAE","white floral":"#9FB6CD",green:"#6AA84F",fresh:"#4FB0A5",aquatic:"#4FA3D1",aromatic:"#8A9A5B",woody:"#8B5E34",earthy:"#6E6259",powdery:"#C9A9C9",musky:"#9AA5B1",amber:"#D97B29",balsamic:"#9C6B30",smoky:"#555555",leathery:"#7B4B2A",lactonic:"#D9BE8C","warm spicy":"#C1440E","fresh spicy":"#D97941",honey:"#C9A227",tropical:"#8AC926",nutty:"#A67C52",vanilla:"#D9A94B",oud:"#4A3728"};
+const $ = id => document.getElementById(id);
+function toast(m){const t=$("toast");t.textContent=m;t.style.display="block";clearTimeout(t._x);t._x=setTimeout(()=>t.style.display="none",2200);}
+function slug(s){return (s||"parfum").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");}
+// gate
+if(sessionStorage.getItem("tj-admin")==="1") $("gate").style.display="none";
+$("pwBtn").onclick=()=>{ if($("pw").value===ADMIN_PW){sessionStorage.setItem("tj-admin","1");$("gate").style.display="none";toast("Selamat datang, Admin.");} else toast("Password salah."); };
+$("logout").onclick=()=>{sessionStorage.removeItem("tj-admin");location.reload();};
+
+let FRAG={};
+fetch("../Data/fragrantica_accords.json").then(r=>r.json()).then(d=>{FRAG=d||{};initSelect();}).catch(()=>initSelect());
+
+function initSelect(){
+  const sel=$("varian");sel.innerHTML="";
+  (typeof VARIANTS!=="undefined"?VARIANTS:[]).forEach(v=>{
+    const o=document.createElement("option");o.value=v.slug;o.textContent=v.name;sel.appendChild(o);
+  });
+  sel.value="9-AM-Dive";
+  sel.onchange=loadVariant;
+  buildAccEdit([["Fruity",100],["Green",96],["Woody",93],["Citrus",82],["Aromatic",80]]);
+  loadVariant();bind();
+}
+function buildAccEdit(rows){
+  const w=$("accEdit");w.innerHTML="";
+  rows.forEach(([n,p])=>{
+    const d=document.createElement("div");d.className="acc-row";
+    d.innerHTML=`<input value="${n}" class="an"/><input type="number" value="${p}" min="1" max="100" class="ap"/>`;
+    w.appendChild(d);
+  });
+  w.querySelectorAll("input").forEach(i=>i.oninput=render);
+}
+function accRows(){
+  const ns=[...document.querySelectorAll("#accEdit .an")].map(i=>i.value.trim()).filter(Boolean);
+  const ps=[...document.querySelectorAll("#accEdit .ap")].map(i=>Math.max(1,Math.min(100,+i.value||50)));
+  return ns.map((n,i)=>[n,ps[i]||50]);
+}
+async function loadVariant(){
+  const sl=$("varian").value;
+  const v=(VARIANTS||[]).find(x=>x.slug===sl);
+  if(!v) return;
+  $("fName").value=v.name;
+  $("fInsp").value=v.inspiration||"";
+  const f=FRAG[sl]||{};
+  if(f.accords) buildAccEdit(f.accords.slice(0,5).map(([a,p])=>[a.charAt(0).toUpperCase()+a.slice(1),p]));
+  if((f.gender||[]).includes("female")&&!(f.gender||[]).includes("male")) $("fGender").value="Wanita";
+  else if((f.gender||[]).includes("male")&&!(f.gender||[]).includes("female")) $("fGender").value="Pria";
+  // ambil notes lengkap dari halaman varian
+  try{
+    const html=await (await fetch(`../${sl}/`)).text();
+    const doc=new DOMParser().parseFromString(html,"text/html");
+    const panes={top:[...doc.querySelectorAll("#pane-top .note-name")].map(e=>e.textContent.trim()),
+      heart:[...doc.querySelectorAll("#pane-heart .note-name")].map(e=>e.textContent.trim()),
+      base:[...doc.querySelectorAll("#pane-base .note-name")].map(e=>e.textContent.trim())};
+    if(panes.top.length) $("fTop").value=panes.top.join(", ");
+    if(panes.heart.length) $("fHeart").value=panes.heart.join(", ");
+    if(panes.base.length) $("fBase").value=panes.base.join(", ");
+    const dn=doc.querySelector(".dn-day");if(dn){const m=dn.textContent.match(/(\d+)/);if(m)$("fDay").value=m[1];}
+  }catch(e){ /* fallback: pakai top dari variants.js */ $("fTop").value=(v.top||[]).join(", "); }
+  render();
+}
+function bind(){["fName","fInsp","fGender","fLong","fSil","fDay","fTop","fHeart","fBase"].forEach(id=>$(id).oninput=render);}
+function split(s){return (s||"").split(",").map(x=>x.trim()).filter(Boolean);}
+function render(){
+  const name=$("fName").value||"Parfum", insp=$("fInsp").value||"";
+  const accs=accRows(), day=Math.max(5,Math.min(95,+$("fDay").value||50));
+  const primary=(accs[0]||["Fruity"])[0].toLowerCase();
+  const col=COLORS[primary]||"#A9853F";
+  // profile
+  $("pName").textContent=name;
+  $("pInsp").textContent=insp?`Terinspirasi dari ${insp}`:"Kreasi orisinal Tjoomde";
+  const mono=$("pMono");mono.style.background=`linear-gradient(135deg, ${col}, #1B1814)`;
+  mono.textContent=name.split(/\s+/).map(w=>w[0]).join("").slice(0,2).toUpperCase();
+  const fill=(id,arr)=>{$(id).innerHTML=arr.map(n=>`<span class="chip">${n}</span>`).join("")||"<span style='color:#999;font-size:.8rem'>—</span>";};
+  fill("pTop",split($("fTop").value));fill("pHeart",split($("fHeart").value));fill("pBase",split($("fBase").value));
+  $("pGender").textContent=$("fGender").value;$("pLong").textContent=$("fLong").value;
+  const sil=+$("fSil").value||3;
+  $("pDots").innerHTML=[1,2,3,4,5].map(i=>`<i class="${i<=sil?"on":""}"></i>`).join("");
+  $("pDay").style.width=day+"%";$("pDay").textContent=`Day ${day}%`;
+  $("pNight").style.width=(100-day)+"%";$("pNight").textContent=`Night ${100-day}%`;
+  // accords
+  $("aName").textContent=name;
+  $("aSub").textContent=accs.slice(0,3).map(([a])=>a).join(" • ");
+  $("aList").innerHTML=accs.map(([a,p])=>{
+    const c=COLORS[a.toLowerCase()]||"#1B1814";
+    return `<div class="acc"><div class="ar"><span>${a}</span><b>${p}%</b></div><div class="abar"><i style="width:${p}%;background:${c}"></i></div></div>`;
+  }).join("");
+}
+document.querySelectorAll("[data-exp]").forEach(b=>b.onclick=()=>doExport(...b.dataset.exp.split("|")));
+async function doExport(cardId,fmt){
+  const st=cardId==="cardProfile"?$("st1"):$("st2");
+  try{
+    st.textContent="Merender…";
+    await document.fonts.ready;
+    const el=$(cardId);
+    const canvas=await html2canvas(el,{scale:2,backgroundColor:"#ffffff",useCORS:true,logging:false});
+    const a=document.createElement("a");
+    const fn=`tjoomde-${slug($("fName").value)}-${cardId==="cardProfile"?"profile":"accords"}.${fmt==="jpg"?"jpg":"png"}`;
+    a.download=fn;
+    a.href=fmt==="jpg"?canvas.toDataURL("image/jpeg",0.92):canvas.toDataURL("image/png");
+    a.click();
+    st.textContent="✓ "+fn;toast("Tersimpan: "+fn);
+  }catch(e){st.textContent="Gagal export";toast("Export gagal: "+e.message);}
+  setTimeout(()=>st.textContent="",4000);
+}
+</script>
+</body>
+</html>
