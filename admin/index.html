@@ -312,11 +312,12 @@ async function wikiThumb(name){
   return null;
 }
 function wikiFallback(img,name){
-  // dipanggil saat fimgs gagal dimuat: rantai kandidat Wikipedia, terakhir emoji
+  // dipanggil saat fimgs gagal dimuat: rantai kandidat Wikipedia, terakhir emoji.
+  // Wikimedia kirim header CORS, jadi aman pasang crossorigin di sini.
   img.onerror=()=>showEmoji(img,name);
   wikiThumb(name).then(src=>{
     if(!img.isConnected||img.dataset.fixed) return;
-    if(src){ img.src=src; }
+    if(src){ img.crossOrigin="anonymous"; img.src=src; }
     else showEmoji(img,name);
   });
 }
@@ -349,7 +350,9 @@ function render(){
     const mk=arr=>arr.map(n=>{
       const up=UPLOADS[n], fw=fimgsOf(n);
       const src=up||fw||"";
-      return `<div class="ncell"><div class="nimg" data-note="${esc(n)}" title="Klik untuk ganti foto: ${esc(n)}">${src?`<img data-note="${esc(n)}" src="${src}" ${up?"":'crossorigin="anonymous"'} alt="${esc(n)}" />`:`<span class="ph">${esc(n.charAt(0).toUpperCase())}</span>`}</div><div class="nname">${esc(n)}</div></div>`;
+      // TANPA crossorigin untuk fimgs (fimgs tak kirim header CORS → gambar rusak bila dipaksa).
+      // CORS hanya diurus saat export via proxy wsrv.nl.
+      return `<div class="ncell"><div class="nimg" data-note="${esc(n)}" title="Klik untuk ganti foto: ${esc(n)}">${src?`<img data-note="${esc(n)}" src="${src}" alt="${esc(n)}" />`:`<span class="ph">${esc(n.charAt(0).toUpperCase())}</span>`}</div><div class="nname">${esc(n)}</div></div>`;
     }).join("");
     $("pfTop").innerHTML=mk(T)||"<span style='font-size:.8rem'>—</span>";
     $("pfHeart").innerHTML=mk(H)||"<span style='font-size:.8rem'>—</span>";
