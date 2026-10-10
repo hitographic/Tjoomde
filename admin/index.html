@@ -166,7 +166,7 @@ section.prev{padding:28px;display:flex;flex-direction:column;gap:26px;align-item
 <script>
 const ADMIN_PW = "admin123";
 const COLORS = {citrus:"#EFA13B",fruity:"#E4572E",sweet:"#B565D8",floral:"#EC6FAE","white floral":"#9FB6CD",green:"#6AA84F",fresh:"#4FB0A5",aquatic:"#4FA3D1",aromatic:"#8A9A5B",woody:"#8B5E34",earthy:"#6E6259",powdery:"#C9A9C9",musky:"#9AA5B1",amber:"#D97B29",balsamic:"#9C6B30",smoky:"#555555",leathery:"#7B4B2A",lactonic:"#D9BE8C","warm spicy":"#C1440E","fresh spicy":"#D97941",honey:"#C9A227",tropical:"#8AC926",nutty:"#A67C52",vanilla:"#D9A94B",oud:"#4A3728"};
-const ALIAS = {"ambrofix":"Ambroxan","bourbon vanilla":"Vanilla","madagascar vanilla":"Vanilla","calabrian bergamot":"Bergamot","cedarwood":"Cedar","granny smith apple":"Granny Smith","haitian vetiver":"Vetiver","jasmine sambac":"Jasmine","mimosa absolute":"Mimosa","tobacco leaf":"Tobacco","tonka":"Tonka bean","tunisian orange blossom":"Orange blossom","white tea":"White tea","woodsy notes":"Wood","black currant":"Blackcurrant","pink pepper":"Pink peppercorn"};
+const ALIAS = {"ambrofix":"Ambroxan","bourbon vanilla":"Vanilla","madagascar vanilla":"Vanilla","calabrian bergamot":"Bergamot","cedarwood":"Cedar","granny smith apple":"Granny Smith","haitian vetiver":"Vetiver","herbal notes":"Herb","jasmine sambac":"Jasmine","mandarin":"Mandarin orange","mimosa absolute":"Mimosa","tobacco leaf":"Tobacco","tonka":"Tonka bean","tunisian orange blossom":"Orange blossom","white tea":"White tea","woodsy notes":"Wood","black currant":"Blackcurrant","pink pepper":"Pink Pepper"};
 const $ = id => document.getElementById(id);
 function toast(m){const t=$("toast");t.textContent=m;t.style.display="block";clearTimeout(t._x);t._x=setTimeout(()=>t.style.display="none",2400);}
 function slug(s){return (s||"parfum").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");}
@@ -224,7 +224,13 @@ async function loadVariant(){
     const html=await (await fetch(`../${sl}/`)).text();
     const doc=new DOMParser().parseFromString(html,"text/html");
     const g=q=>[...doc.querySelectorAll(q)].map(e=>e.textContent.trim()).filter(Boolean);
-    const t=g("#pane-top .note-name"), h=g("#pane-heart .note-name"), b=g("#pane-base .note-name");
+    let t=g("#pane-top .note-name"), h=g("#pane-heart .note-name"), b=g("#pane-base .note-name");
+    if(!t.length&&!h.length&&!b.length){
+      // template lama (34 varian): blok .tier urutan Top, Heart, Base
+      const tiers=[...doc.querySelectorAll(".tier")];
+      const tn=i=>tiers[i]?[...tiers[i].querySelectorAll(".note-name")].map(e=>e.textContent.trim()).filter(Boolean):[];
+      t=tn(0); h=tn(1); b=tn(2);
+    }
     if(t.length) $("fTop").value=t.join(", ");
     if(h.length) $("fHeart").value=h.join(", ");
     if(b.length) $("fBase").value=b.join(", ");
@@ -235,8 +241,16 @@ function bind(){ ["fName","fSub","fMood","fBrand","fCons","fTheme","fBg","fTop",
   $(id).addEventListener("input",()=>{ if(id==="fSub"||id==="fMood") $(id).dataset.touched="1"; render(); });
 });}
 function split(s){return (s||"").split(",").map(x=>x.trim()).filter(Boolean);}
+// samakan ejaan varian → kunci DB (persis NOTE_ALIAS contoh 18. Notes Parfum)
+function resolveKey(name){
+  const low=(name||"").toLowerCase();
+  if(IDX[low]) return IDX[low];
+  const al=ALIAS[low];
+  if(al&&IDX[al.toLowerCase()]) return IDX[al.toLowerCase()];
+  return null;
+}
 function fimgsOf(name){
-  const key=IDX[(name||"").toLowerCase()];
+  const key=resolveKey(name);
   if(key&&NOTES_DB[key]&&NOTES_DB[key].id) return `https://fimgs.net/mdimg/sastojci/t.${NOTES_DB[key].id}.jpg`;
   return null;
 }
@@ -260,7 +274,7 @@ function guessEmoji(name){
 function wikiCands(name){
   const c=[], low=(name||"").toLowerCase();
   if(ALIAS[low]) c.push(ALIAS[low]);
-  const key=IDX[low];
+  const key=resolveKey(name);
   if(key&&NOTES_DB[key].wiki) c.push(NOTES_DB[key].wiki);
   c.push(name);
   const noAcc=String(name||"").replace(/\s*accord\s*/gi,"").trim();
@@ -279,6 +293,22 @@ async function wikiThumb(name){
       if(src) return src;
     }catch(e){}
   }
+  // langkah terakhir ala contoh: Wikipedia search API (dapat judul terdekat apa pun)
+  try{
+    const r=await fetch("https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&list=search&srsearch="+encodeURIComponent(name)+"&srlimit=3");
+    if(r.ok){
+      const j=await r.json();
+      const title=j.query&&j.query.search&&j.query.search[0]&&j.query.search[0].title;
+      if(title){
+        const r2=await fetch("https://en.wikipedia.org/api/rest_v1/page/summary/"+encodeURIComponent(title));
+        if(r2.ok){
+          const j2=await r2.json();
+          const src=(j2&&j2.thumbnail&&j2.thumbnail.source)||(j2&&j2.originalimage&&j2.originalimage.source);
+          if(src) return src;
+        }
+      }
+    }
+  }catch(e){}
   return null;
 }
 function wikiFallback(img,name){

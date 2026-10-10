@@ -78,6 +78,17 @@
         return wikiThumb(t);
       });
     });
+    // langkah terakhir ala 18. Notes Parfum: Wikipedia search API
+    p = p.then(function (found) {
+      if (found) return found;
+      return fetch("https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&list=search&srsearch=" + encodeURIComponent(name) + "&srlimit=3")
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (j) {
+          var title = j && j.query && j.query.search && j.query.search[0] && j.query.search[0].title;
+          return title ? wikiThumb(title) : null;
+        })
+        .catch(function () { return null; });
+    });
     return p;
   }
 
@@ -92,7 +103,15 @@
   function resolve(img) {
     var name = img.getAttribute("data-note") || "";
     img.addEventListener("load", function () { img.classList.add("ld"); });
-    var key = IDX[name.toLowerCase()];
+    var key = IDX[(name || "").toLowerCase()];
+    if (!key) {
+      var al = NOTE_ALIAS[(name || "").toLowerCase()];
+      if (al) {
+        var k2 = IDX[al.toLowerCase()];
+        if (k2) { key = k2; }
+        else { name = al; }
+      }
+    }
     var fimgs = key && NOTES_DB[key].id
       ? "https://fimgs.net/mdimg/sastojci/t." + NOTES_DB[key].id + ".jpg"
       : null;
