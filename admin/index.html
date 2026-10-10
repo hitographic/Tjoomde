@@ -64,7 +64,6 @@ esec{margin:0 0 18px}.esec-t{display:flex;align-items:center;gap:12px;margin-bot
   <p style="color:var(--muted);font-size:.85rem">Halaman khusus admin. Tidak diindeks Google.</p>
   <input type="password" id="pw" placeholder="Password admin" />
   <button class="btn-png" id="pwBtn" style="width:100%;border:0;border-radius:10px;padding:11px;font-weight:700;cursor:pointer;background:var(--gold)">Masuk</button>
-  <p style="color:var(--muted);font-size:.72rem;margin-top:10px">Default: <code>tjoomde123</code> — ganti di kode.</p>
 </div></div>
 
 <header>
@@ -135,7 +134,7 @@ esec{margin:0 0 18px}.esec-t{display:flex;align-items:center;gap:12px;margin-bot
 
 <div id="toast"></div>
 <script>
-const ADMIN_PW = "tjoomde123"; // ganti sesuai kebutuhan
+const ADMIN_PW = "admin123";
 const COLORS = {citrus:"#EFA13B",fruity:"#E4572E",sweet:"#B565D8",floral:"#EC6FAE","white floral":"#9FB6CD",green:"#6AA84F",fresh:"#4FB0A5",aquatic:"#4FA3D1",aromatic:"#8A9A5B",woody:"#8B5E34",earthy:"#6E6259",powdery:"#C9A9C9",musky:"#9AA5B1",amber:"#D97B29",balsamic:"#9C6B30",smoky:"#555555",leathery:"#7B4B2A",lactonic:"#D9BE8C","warm spicy":"#C1440E","fresh spicy":"#D97941",honey:"#C9A227",tropical:"#8AC926",nutty:"#A67C52",vanilla:"#D9A94B",oud:"#4A3728"};
 const $ = id => document.getElementById(id);
 function toast(m){const t=$("toast");t.textContent=m;t.style.display="block";clearTimeout(t._x);t._x=setTimeout(()=>t.style.display="none",2200);}
