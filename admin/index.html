@@ -97,13 +97,7 @@ section.prev{padding:28px;display:flex;flex-direction:column;gap:26px;align-item
 <main>
 <aside>
   <div><label>Pilih varian (35)</label><select id="varian"></select></div>
-  <div><label>Nama parfum</label><input id="fName" value="9 AM Dive" /></div>
-  <div><label>Sub-judul accords (baris bawah nama)</label><input id="fSub" value="Citrus, Green & Woody" /></div>
-  <div><label>Teks vertikal kiri (mood)</label><input id="fMood" value="Fresh & Vibrant" /></div>
-  <div class="row2">
-    <div><label>Brand kiri bawah</label><input id="fBrand" value="TJOOMDE" /></div>
-    <div><label>Konsentrasi</label><select id="fCons"><option selected>EAU DE PARFUM</option><option>EXTRAIT DE PARFUM</option><option>EAU DE TOILETTE</option></select></div>
-  </div>
+  <div><label>Terinspirasi dari</label><input id="fInsp" value="9 AM Dive - Afnan" /></div>
   <div class="row2">
     <div><label>Warna tema</label><input type="color" id="fTheme" value="#B58A67" /></div>
     <div><label>Warna kertas</label><input type="color" id="fBg" value="#FDFCF7" /></div>
@@ -211,17 +205,20 @@ function accRows(){
 }
 const MOOD = [["citrus","Fresh & Vibrant"],["fresh","Fresh & Vibrant"],["green","Fresh & Vibrant"],["fruity","Sweet & Playful"],["sweet","Sweet, Cozy & Clean"],["floral","Soft & Romantic"],["white floral","Soft & Romantic"],["woody","Deep & Grounding"],["oud","Deep & Mysterious"],["amber","Warm & Comforting"],["musky","Clean & Comforting"]];
 function moodFor(accs){ const p=((accs[0]||[""])[0]||"").toLowerCase(); const f=MOOD.find(([k])=>p.includes(k)); return f?f[1]:"Bold & Charming"; }
+// Nilai kartu otomatis dari varian (input manual dihapus agar editor ringkas)
+const AUTO={name:"9 AM Dive",sub:"Citrus, Green & Woody",mood:"Fresh & Vibrant",brand:"TJOOMDE",cons:"EAU DE PARFUM"};
 async function loadVariant(){
   const sl=$("varian").value;
   const v=(VARIANTS||[]).find(x=>x.slug===sl);
   if(!v) return;
-  $("fName").value=v.name;
+  AUTO.name=v.name;
+  if($("fInsp")) $("fInsp").value=v.inspiration||"";
   const f=FRAG[sl]||{};
   let accs=null;
   if(f.accords){ accs=f.accords.slice(0,5).map(([a,p])=>[a.charAt(0).toUpperCase()+a.slice(1),p]); buildAccEdit(accs); }
   else { accs=accRows(); }
-  if(!$("fSub").dataset.touched) $("fSub").value=accs.slice(0,3).map(([a])=>a).join(", ");
-  if(!$("fMood").dataset.touched) $("fMood").value=moodFor(accs);
+  AUTO.sub=accs.slice(0,3).map(([a])=>a).join(", ");
+  AUTO.mood=moodFor(accs);
   try{
     const html=await (await fetch(`../${sl}/`)).text();
     const doc=new DOMParser().parseFromString(html,"text/html");
@@ -239,8 +236,8 @@ async function loadVariant(){
   }catch(e){ $("fTop").value=(v.top||[]).join(", "); }
   render();
 }
-function bind(){ ["fName","fSub","fMood","fBrand","fCons","fTheme","fBg","fTop","fHeart","fBase"].forEach(id=>{
-  $(id).addEventListener("input",()=>{ if(id==="fSub"||id==="fMood") $(id).dataset.touched="1"; render(); });
+function bind(){ ["fInsp","fTheme","fBg","fTop","fHeart","fBase"].forEach(id=>{
+  const el=$(id); if(el) el.addEventListener("input",render);
 });}
 function split(s){return (s||"").split(",").map(x=>x.trim()).filter(Boolean);}
 // samakan ejaan varian → kunci DB (persis NOTE_ALIAS contoh 18. Notes Parfum)
@@ -333,17 +330,17 @@ function showEmoji(img,name){
 }
 let lastSig="";
 function render(){
-  const name=$("fName").value||"Parfum";
+  const name=AUTO.name||"Parfum";
   const accs=accRows();
   // tema
   const card=$("cardProfile");
   card.style.setProperty("--pf",$("fTheme").value||"#B58A67");
   card.style.background=$("fBg").value||"#FDFCF7";
   $("pfTitle").textContent=name.toUpperCase();
-  $("pfSub").textContent=$("fSub").value||accs.slice(0,3).map(([a])=>a).join(", ");
-  $("pfMood").textContent=$("fMood").value||"";
-  $("pfBrand").textContent=($("fBrand").value||"TJOOMDE").toUpperCase();
-  $("pfCons").textContent=$("fCons").value||"EAU DE PARFUM";
+  $("pfSub").textContent=AUTO.sub||accs.slice(0,3).map(([a])=>a).join(", ");
+  $("pfMood").textContent=AUTO.mood||"";
+  $("pfBrand").textContent=AUTO.brand;
+  $("pfCons").textContent=AUTO.cons;
   // rows (skip rebuild bila notes sama)
   const T=split($("fTop").value), H=split($("fHeart").value), B=split($("fBase").value);
   const sig=JSON.stringify([T,H,B]);
@@ -412,7 +409,7 @@ async function doExport(cardId,fmt){
     await waitImgs(el);
     const canvas=await html2canvas(el,{scale:2,backgroundColor:"#ffffff",useCORS:true,allowTaint:false,imageTimeout:15000,logging:false});
     const a=document.createElement("a");
-    const fn=`tjoomde-${slug($("fName").value)}-${cardId==="cardProfile"?"profile":"accords"}.${fmt==="jpg"?"jpg":"png"}`;
+    const fn=`tjoomde-${slug(AUTO.name)}-${cardId==="cardProfile"?"profile":"accords"}.${fmt==="jpg"?"jpg":"png"}`;
     a.download=fn;
     a.href=fmt==="jpg"?canvas.toDataURL("image/jpeg",0.92):canvas.toDataURL("image/png");
     a.click();
