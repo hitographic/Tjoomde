@@ -3,7 +3,7 @@
 
 Usage: python3 scripts/build_variants.py
 Reads : Data/Tjoomde.xlsx (Sheet1)
-Writes: assets/variants.js + <Slug>/index.html (35 pages)
+Writes: assets/variants.js + <Slug>/index.html (36 pages)
 
 Heuristic fields (longevity, sillage, gender, day/night, seasons,
 accords, descriptions) are DERIVED from notes and labelled "Estimasi"
@@ -95,6 +95,10 @@ NOTE_ACCORDS = {
     "tobacco leaf": [("smoky", .5), ("sweet", .3), ("leathery", .2)],
     "leather": [("leathery", 1.0)], "suede": [("leathery", .7), ("powdery", .3)],
     "incense": [("smoky", .7), ("balsamic", .3)],
+    # aliases used by Fragrantica spellings
+    "cardamon": [("warm spicy", .8), ("aromatic", .2)], "star anise": [("warm spicy", .8), ("aromatic", .2)],
+    "plum": [("fruity", .8), ("sweet", .2)], "driftwood": [("woody", .7), ("aquatic", .3)],
+    "moss": [("earthy", .8), ("green", .2)],
 }
 
 # base notes linger longest -> weighted heaviest (mirrors overall impression)
@@ -280,6 +284,7 @@ PAGE_TPL = """<!DOCTYPE html>
     </div>
 
     <p class="sub" data-id="{desc_id}" data-en="{desc_en}">{desc_id}</p>
+    {frag_html}
 
     <div class="vgrid">
       <section class="vcard">
@@ -454,7 +459,7 @@ def tier(title, cls, notes):
 
 def render_page(v, rel):
     acc_list = ", ".join(a for a, _ in v["accords"]) or "musky"
-    pyr = " | ".join((v["top"][:3] + v["mid"][:2] + v["base"][:2])) or ["—"]
+    pyr = (v["top"][:3] + v["mid"][:2] + v["base"][:2]) or ["—"]
     acc_html = "\n".join(
         f"<div class='acc'><span>{esc(a.title())}</span>"
         f"<div class='bar'><i style='width:{p}%;background:{ACCORD_COLORS.get(a.lower(), '#111')}'></i></div>"
@@ -503,6 +508,7 @@ def render_page(v, rel):
         accord_list=esc(acc_list), pyr_short=esc(", ".join(pyr[:6])),
         accords_html=acc_html or ("<p class='muted' data-id='Accords menyusul.' "
                                     "data-en='Accords coming soon.'>Accords menyusul.</p>"),
+        frag_html=frag_html,
         acc_note=acc_note, long_h=esc(str(v["longevity_h"])), long_pct=long_pct,
         sil_en=sil_en, sil_id=sil_id, dots=dots,
         tiers_html=tiers_html, gender_en=g_en, gender_id=g_id,

@@ -11,7 +11,8 @@
   // Manual aliases for notes missing from NOTES_DB -> best Wikipedia title
   var NOTE_ALIAS = {
     "ambrofix": "Ambroxan", "bourbon vanilla": "Vanilla", "madagascar vanilla": "Vanilla",
-    "calabrian bergamot": "Bergamot", "cedarwood": "Cedar", "granny smith apple": "Granny Smith",
+    "calabrian bergamot": "Bergamot", "sicilian bergamot": "Bergamot", "cardamon": "Cardamom",
+    "moss": "Oakmoss", "cedarwood": "Cedar", "granny smith apple": "Granny Smith",
     "haitian vetiver": "Vetiver", "herbal notes": "Herb", "jasmine sambac": "Jasmine",
     "mandarin": "Mandarin orange", "mimosa absolute": "Mimosa", "tobacco leaf": "Tobacco",
     "tonka": "Tonka bean", "tunisian orange blossom": "Orange blossom",

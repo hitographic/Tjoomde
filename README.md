@@ -1,6 +1,6 @@
 # Tjoomde — tjoomde.my.id
 
-Website parfum Tjoomde. Minimal modern, bilingual ID/EN, katalog 35 varian + order via WhatsApp (`6281384812214`). Static site, GitHub Pages.
+Website parfum Tjoomde. Minimal modern, bilingual ID/EN, katalog 36 varian + order via WhatsApp (`6281384812214`). Static site, GitHub Pages.
 
 Live: https://tjoomde.my.id (juga https://www.tjoomde.my.id)
 
@@ -14,6 +14,6 @@ Live: https://tjoomde.my.id (juga https://www.tjoomde.my.id)
 ## Struktur
 
 - `index.html`, `styles.css`, `script.js` (+ `assets/variants.js`)
-- `<Slug>/index.html` — 35 halaman varian (main accords, pyramid, longevity, sillage, gender, day/night, season)
+- `<Slug>/index.html` — 36 halaman varian (main accords, pyramid, longevity, sillage, gender, day/night, season)
 - `scripts/build_variants.py` — generator dari Excel
 - `CNAME` (`tjoomde.my.id`), `.nojekyll`
