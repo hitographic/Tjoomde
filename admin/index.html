@@ -3,16 +3,185 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="refresh" content="0; url=../" />
-  <link rel="canonical" href="https://tjoomde.my.id/" />
-  <title>Tjoomde — Coming Soon</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Admin — Tjoomde</title>
   <style>
-    body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#FAFAF8;color:#141414;font-family:system-ui,sans-serif;text-align:center;padding:24px}
-    a{color:#141414}
+    :root{
+      --bg:#FAFAF8; --panel:#FFFFFF; --ink:#141414; --muted:#6B6B66;
+      --line:#E6E4DE; --accent:#141414; --ok:#2E7D51; --warn:#B7791F;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; min-height:100vh; background:var(--bg); color:var(--ink);
+      font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+      display:grid; grid-template-columns:240px 1fr;
+    }
+    a{color:inherit}
+
+    /* ---------- Sidebar ---------- */
+    aside{
+      background:var(--panel); border-right:1px solid var(--line);
+      padding:24px 16px; position:sticky; top:0; height:100vh;
+      display:flex; flex-direction:column; gap:24px;
+    }
+    .brand{font-size:18px; font-weight:700; letter-spacing:.12em; text-transform:uppercase}
+    .brand span{display:block; font-size:11px; font-weight:500; letter-spacing:.18em; color:var(--muted); margin-top:4px}
+    nav{display:flex; flex-direction:column; gap:2px}
+    nav a{
+      display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:8px;
+      text-decoration:none; font-size:14px; color:var(--muted); transition:.15s;
+    }
+    nav a:hover{background:#F2F1EC; color:var(--ink)}
+    nav a.active{background:var(--ink); color:#fff}
+    .nav-label{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); padding:0 12px; margin-bottom:6px}
+    aside .foot{margin-top:auto; font-size:12px; color:var(--muted); line-height:1.6}
+
+    /* ---------- Main ---------- */
+    main{padding:28px 32px 48px; max-width:1100px}
+    header.top{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:28px; flex-wrap:wrap}
+    header.top h1{font-size:22px; margin:0}
+    header.top .sub{font-size:13px; color:var(--muted); margin-top:4px}
+    .btn{
+      display:inline-flex; align-items:center; gap:8px; padding:9px 16px; border-radius:8px;
+      border:1px solid var(--line); background:var(--panel); font-size:13px; cursor:pointer;
+    }
+    .btn.primary{background:var(--ink); color:#fff; border-color:var(--ink)}
+    .btn:hover{opacity:.88}
+
+    /* ---------- Stats ---------- */
+    .stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; margin-bottom:28px}
+    .stat{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:18px}
+    .stat .k{font-size:12px; color:var(--muted); letter-spacing:.06em; text-transform:uppercase}
+    .stat .v{font-size:28px; font-weight:700; margin-top:8px}
+    .stat .d{font-size:12px; margin-top:6px; color:var(--ok)}
+
+    /* ---------- Card / table ---------- */
+    .card{background:var(--panel); border:1px solid var(--line); border-radius:12px; overflow:hidden; margin-bottom:24px}
+    .card h2{font-size:15px; margin:0; padding:16px 20px; border-bottom:1px solid var(--line)}
+    table{width:100%; border-collapse:collapse; font-size:14px}
+    th,td{text-align:left; padding:12px 20px; border-bottom:1px solid var(--line)}
+    th{font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); font-weight:600}
+    tr:last-child td{border-bottom:none}
+    tbody tr:hover{background:#FAFAF7}
+    .tag{display:inline-block; padding:3px 10px; border-radius:999px; font-size:11px; font-weight:600}
+    .tag.ok{background:#E7F3EC; color:var(--ok)}
+    .tag.warn{background:#FBF1DC; color:var(--warn)}
+    .tag.muted{background:#EFEFEA; color:var(--muted)}
+    .empty{padding:32px 20px; text-align:center; color:var(--muted); font-size:14px}
+
+    @media (max-width:820px){
+      body{grid-template-columns:1fr}
+      aside{position:static; height:auto; flex-direction:row; align-items:center; justify-content:space-between}
+      aside .foot{display:none}
+      nav{flex-direction:row; flex-wrap:wrap}
+      main{padding:20px}
+    }
   </style>
 </head>
 <body>
-  <p>Halaman ini sedang disiapkan — mengalihkan ke Coming Soon…<br />
-  <a href="../">Klik di sini jika tidak teralihkan otomatis</a></p>
+  <aside>
+    <div class="brand">Tjoomde<span>Admin Panel</span></div>
+    <nav>
+      <div class="nav-label">Menu</div>
+      <a href="#" class="active">📊 Dashboard</a>
+      <a href="#">🧴 Produk</a>
+      <a href="#">🛒 Pesanan</a>
+      <a href="#">👥 Pelanggan</a>
+      <a href="#">⚙️ Pengaturan</a>
+    </nav>
+    <div class="foot">
+      Tjoomde — Admin<br />
+      <a href="../">← Kembali ke situs</a>
+    </div>
+  </aside>
+
+  <main>
+    <header class="top">
+      <div>
+        <h1>Dashboard</h1>
+        <div class="sub">Ringkasan toko — <span id="tanggal"></span></div>
+      </div>
+      <button class="btn primary" type="button">+ Tambah Produk</button>
+    </header>
+
+    <section class="stats">
+      <div class="stat">
+        <div class="k">Produk</div>
+        <div class="v" id="st-produk">—</div>
+        <div class="d">terdaftar di katalog</div>
+      </div>
+      <div class="stat">
+        <div class="k">Pesanan</div>
+        <div class="v">0</div>
+        <div class="d">belum ada data</div>
+      </div>
+      <div class="stat">
+        <div class="k">Pelanggan</div>
+        <div class="v">0</div>
+        <div class="d">belum ada data</div>
+      </div>
+      <div class="stat">
+        <div class="k">Stok Menipis</div>
+        <div class="v">0</div>
+        <div class="d">perlu dicek</div>
+      </div>
+    </section>
+
+    <div class="card">
+      <h2>Produk Terbaru</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Produk</th>
+            <th>Kategori</th>
+            <th>Harga</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="tbody-produk">
+          <tr><td colspan="4" class="empty">Memuat data produk…</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>Pesanan Masuk</h2>
+      <div class="empty">Belum ada pesanan.</div>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById('tanggal').textContent =
+      new Date().toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' });
+
+    // Muat daftar produk dari folder-folder produk di root situs
+    fetch('../Data/produk.json')
+      .then(r => r.ok ? r.json() : Promise.reject('no json'))
+      .then(render)
+      .catch(() => {
+        // Fallback: kalau belum ada produk.json, pakai data contoh
+        render([
+          { nama:'Hawas Ice',   kategori:'Parfum Pria',    harga:'Rp 185.000', status:'aktif' },
+          { nama:'Mykonos Pink Drops', kategori:'Parfum Unisex', harga:'Rp 210.000', status:'aktif' },
+          { nama:'Marshmallow', kategori:'Parfum Wanita',  harga:'Rp 175.000', status:'draft' },
+          { nama:'Vibrato',     kategori:'Parfum Unisex',  harga:'Rp 230.000', status:'aktif' },
+        ]);
+      });
+
+    function render(list){
+      const tbody = document.getElementById('tbody-produk');
+      document.getElementById('st-produk').textContent = list.length;
+      tbody.innerHTML = list.map(p => {
+        const href = p.url || ('../' + p.slug + '/');
+        return `
+        <tr>
+          <td><a href="${href}" target="_blank"><strong>${p.nama}</strong></a></td>
+          <td>${p.kategori}</td>
+          <td>${p.harga}</td>
+          <td><span class="tag ${p.status === 'aktif' ? 'ok' : 'warn'}">${p.status}</span></td>
+        </tr>`;
+      }).join('');
+    }
+  </script>
 </body>
 </html>
