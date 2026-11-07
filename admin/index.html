@@ -174,7 +174,9 @@ const MOOD = [["citrus","Fresh & Vibrant"],["fresh","Fresh & Vibrant"],["green",
 function moodFor(accs){ const p=((accs[0]||[""])[0]||"").toLowerCase(); const f=MOOD.find(([k])=>p.includes(k)); return f?f[1]:"Bold & Charming"; }
 // Nilai kartu otomatis dari varian (input manual dihapus agar editor ringkas)
 const AUTO={name:"9 AM Dive",sub:"Citrus, Green & Woody",mood:"Fresh & Vibrant",brand:"TJOOMDE",cons:"EAU DE PARFUM"};
+let variantLoadId=0;
 async function loadVariant(){
+  const loadId=++variantLoadId;
   const sl=$("varian").value;
   const v=(VARIANTS||[]).find(x=>x.slug===sl);
   if(!v) return;
@@ -185,8 +187,18 @@ async function loadVariant(){
   else { accs=accRows(); }
   AUTO.sub=accs.slice(0,3).map(([a])=>a).join(", ");
   AUTO.mood=moodFor(accs);
+
+  // Selalu reset semua layer terlebih dahulu agar varian sebelumnya tidak tertinggal
+  // pada halaman yang belum memiliki data notes atau masih berupa Coming Soon.
+  const fallbackTop=(v.top&&v.top.length)?v.top:(v.middle||v.base||[]);
+  $("fTop").value=fallbackTop.join(", ");
+  $("fHeart").value=(v.heart||v.middle||[]).join(", ");
+  $("fBase").value=(v.base||[]).join(", ");
+  lastSig="";
+
   try{
     const html=await (await fetch(`../${sl}/`)).text();
+    if(loadId!==variantLoadId) return;
     const doc=new DOMParser().parseFromString(html,"text/html");
     const g=q=>[...doc.querySelectorAll(q)].map(e=>e.textContent.trim()).filter(Boolean);
     let t=g("#pane-top .note-name"), h=g("#pane-heart .note-name"), b=g("#pane-base .note-name");
@@ -196,11 +208,19 @@ async function loadVariant(){
       const tn=i=>tiers[i]?[...tiers[i].querySelectorAll(".note-name")].map(e=>e.textContent.trim()).filter(Boolean):[];
       t=tn(0); h=tn(1); b=tn(2);
     }
-    if(t.length) $("fTop").value=t.join(", ");
-    if(h.length) $("fHeart").value=h.join(", ");
-    if(b.length) $("fBase").value=b.join(", ");
-  }catch(e){ $("fTop").value=(v.top||[]).join(", "); }
-  render();
+    // Kosongkan semua field jika halaman tidak memiliki notes, lalu isi layer yang ada.
+    if(t.length||h.length||b.length){
+      $("fTop").value=t.join(", ");
+      $("fHeart").value=h.join(", ");
+      $("fBase").value=b.join(", ");
+    }
+  }catch(e){
+    if(loadId!==variantLoadId) return;
+  }
+  if(loadId===variantLoadId){
+    lastSig="";
+    render();
+  }
 }
 function bind(){ ["fTop","fHeart","fBase"].forEach(id=>{
   const el=$(id); if(el) el.addEventListener("input",render);
