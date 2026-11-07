@@ -45,32 +45,18 @@ section.prev{padding:28px;display:flex;flex-direction:column;gap:26px;align-item
 .acc{margin:13px 0}.acc .ar{display:flex;justify-content:space-between;font-size:.9rem;margin-bottom:6px}.acc .ar b{font-weight:700}
 .abar{height:11px;background:#F1ECE1;border-radius:99px;overflow:hidden}.abar i{display:block;height:100%;border-radius:99px}
 .efoot{text-align:center;font-size:.72rem;letter-spacing:.2em;color:#A9853F;margin-top:auto;padding-top:16px;font-weight:700}
-/* ---- CARD 1 : pyramid poster ala referensi — rasio 3:4 ---- */
-.pf{--pf:#B58A67;background:#FDFCF7;color:var(--pf);border-radius:14px;padding:38px 34px 28px;width:100%;aspect-ratio:3/4;overflow:hidden;display:flex;flex-direction:column;font-family:'Inter',sans-serif;position:relative}
-.pf-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
-.pf-orn{width:46px;height:46px;flex-shrink:0;color:var(--pf)}
-.pf-titlebox{flex:1;text-align:center}
-.pf-title{font-weight:800;font-size:1.75rem;letter-spacing:.1em;margin:0;color:var(--pf);line-height:1.15}
-.pf-sub{font-size:.92rem;font-weight:500;margin-top:8px;color:var(--pf);opacity:.92}
-.pf-div{display:flex;align-items:center;gap:12px;margin:20px 0 24px;color:var(--pf)}
-.pf-dots{flex:1;text-align:center;font-size:.7rem;letter-spacing:.5em;opacity:.75;white-space:nowrap;overflow:hidden}
-.pf-corn{width:40px;height:40px;flex-shrink:0}
-.pf-body{display:grid;grid-template-columns:52px 1fr;gap:6px;flex:1;min-height:0}
-.pf-rail{writing-mode:vertical-rl;transform:rotate(180deg);font-weight:800;font-size:1.02rem;letter-spacing:.16em;text-transform:uppercase;color:var(--pf);display:flex;align-items:center;justify-content:flex-start;padding-top:6px}
-.pf-row{display:grid;grid-template-columns:56px 1fr;gap:8px;margin-bottom:14px}
-.pf-row:last-child{margin-bottom:0}
-.pf-rowlabel{writing-mode:vertical-rl;transform:rotate(180deg);font-weight:600;font-size:.92rem;letter-spacing:.1em;color:var(--pf);opacity:.85;display:flex;align-items:center}
-.pf-circles{display:flex;gap:14px;flex-wrap:wrap}
+/* ---- CARD 1 : poster notes TOP / MID / BASE — rasio 3:4 (ala referensi Notes.jpg) ---- */
+.pf{background:#fff;color:#111;border-radius:0;padding:34px 30px;width:100%;aspect-ratio:3/4;overflow:hidden;display:flex;flex-direction:column;justify-content:center;font-family:'Inter',sans-serif;position:relative}
+.pf-sec{display:grid;grid-template-columns:52px 1fr;align-items:center;gap:14px;padding:26px 0}
+.pf-sec + .pf-sec{border-top:1px solid #D8D8D8}
+.pf-rail{writing-mode:vertical-rl;transform:rotate(180deg);font-weight:800;font-size:1.35rem;letter-spacing:.2em;text-transform:uppercase;color:#111;justify-self:center;line-height:1}
+.pf-circles{display:flex;gap:22px 20px;flex-wrap:wrap}
 .ncell{width:102px;text-align:center}
-.nimg{width:102px;height:102px;border-radius:50%;overflow:hidden;background:#EDE7D9;cursor:pointer;position:relative;margin:0 auto}
+.nimg{width:102px;height:102px;border-radius:50%;overflow:hidden;background:#fff;cursor:pointer;position:relative;margin:0 auto}
 .nimg img{width:100%;height:100%;object-fit:cover;display:block}
-.nimg .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:2rem;color:#fff}
-.nimg:hover{outline:3px solid var(--pf);outline-offset:3px}
-.nname{font-size:.76rem;font-weight:500;margin-top:7px;color:var(--pf);line-height:1.3;min-height:2.3em}
-.pf-foot{display:grid;grid-template-columns:1fr 1fr 1fr;align-items:end;margin-top:12px;color:var(--pf)}
-.pf-brand{font-size:.8rem;font-weight:600;letter-spacing:.06em}
-.pf-brand b{font-weight:800}
-.pf-cons{text-align:center;font-size:.8rem;font-weight:700;letter-spacing:.14em}
+.nimg .ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:2rem;color:#8A8578;background:#F3F1EC;border-radius:50%}
+.nimg:hover{outline:2px solid #111;outline-offset:3px}
+.nname{font-size:.78rem;font-weight:700;margin-top:8px;color:#111;line-height:1.3}
 /* gate */
 #gate{position:fixed;inset:0;background:#0e0d0b;z-index:99;display:flex;align-items:center;justify-content:center;padding:20px}
 #gate .box{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:28px;width:100%;max-width:360px;text-align:center}
@@ -88,7 +74,7 @@ section.prev{padding:28px;display:flex;flex-direction:column;gap:26px;align-item
 
 <header>
   <div class="mark">T</div>
-  <div><h1>Admin — Export Visual</h1><small>Profile Parfum • Main Accords • PNG / JPG</small></div>
+  <div><h1>Admin — Export Visual</h1><small>Notes Parfum • Main Accords • PNG / JPG</small></div>
   <div class="sp"></div>
   <a href="../">← Lihat web</a>
   <button id="logout">Keluar</button>
@@ -97,11 +83,6 @@ section.prev{padding:28px;display:flex;flex-direction:column;gap:26px;align-item
 <main>
 <aside>
   <div><label>Pilih varian (36)</label><select id="varian"></select></div>
-  <div><label>Terinspirasi dari</label><input id="fInsp" value="9 AM Dive - Afnan" /></div>
-  <div class="row2">
-    <div><label>Warna tema</label><input type="color" id="fTheme" value="#B58A67" /></div>
-    <div><label>Warna kertas</label><input type="color" id="fBg" value="#FDFCF7" /></div>
-  </div>
   <div><label>Main accords (nama + %) — untuk Card 2</label><div id="accEdit"></div></div>
   <div><label>Top notes (koma)</label><textarea id="fTop">Lemon, Mint, Black Currant, Pink Pepper</textarea></div>
   <div><label>Middle notes (koma)</label><textarea id="fHeart">Apple, Cedar, Incense</textarea></div>
@@ -112,33 +93,19 @@ section.prev{padding:28px;display:flex;flex-direction:column;gap:26px;align-item
 
 <section class="prev">
   <div class="card-wrap">
-    <div class="card-label"><span>Card 1 — Profile Parfum (3:4)</span><span id="st1"></span></div>
+    <div class="card-label"><span>Card 1 — Notes Parfum (3:4)</span><span id="st1"></span></div>
     <div class="pf" id="cardProfile">
-      <div class="pf-head">
-        <svg class="pf-orn" viewBox="0 0 48 48" fill="currentColor"><path d="M24 4C26 10 30 14 36 16C30 18 26 22 24 28C22 22 18 18 12 16C18 14 22 10 24 4Z"/><circle cx="24" cy="16" r="1.6" fill="#FDFCF7"/><path d="M24 44C22 38 18 34 12 32C18 30 22 26 24 20C26 26 30 30 36 32C30 34 26 38 24 44Z" opacity=".85"/><circle cx="24" cy="32" r="1.6" fill="#FDFCF7"/></svg>
-        <div class="pf-titlebox">
-          <h2 class="pf-title" id="pfTitle">9 AM DIVE</h2>
-          <div class="pf-sub" id="pfSub">Citrus, Green &amp; Woody</div>
-        </div>
-        <svg class="pf-orn" viewBox="0 0 48 48" fill="currentColor"><path d="M24 4C26 10 30 14 36 16C30 18 26 22 24 28C22 22 18 18 12 16C18 14 22 10 24 4Z"/><circle cx="24" cy="16" r="1.6" fill="#FDFCF7"/><path d="M24 44C22 38 18 34 12 32C18 30 22 26 24 20C26 26 30 30 36 32C30 34 26 38 24 44Z" opacity=".85"/><circle cx="24" cy="32" r="1.6" fill="#FDFCF7"/></svg>
+      <div class="pf-sec">
+        <div class="pf-rail">Top</div>
+        <div class="pf-circles" id="pfTop"></div>
       </div>
-      <div class="pf-div">
-        <div class="pf-dots">•&nbsp;&nbsp;•&nbsp;&nbsp;•&nbsp;&nbsp;•&nbsp;&nbsp;•&nbsp;&nbsp;•&nbsp;&nbsp;•</div>
-        <svg class="pf-corn" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2"><path d="M24 6C27 12 28 14 34 17C30 19 28 22 24 28C20 22 18 19 14 17C20 14 21 12 24 6Z"/><path d="M24 42C21 36 20 34 14 31C18 29 20 26 24 20C28 26 30 29 34 31C28 34 27 36 24 42Z"/><circle cx="24" cy="24" r="2.4" fill="currentColor" stroke="none"/><path d="M10 24H18M30 24H38"/></svg>
-        <div class="pf-dots">•&nbsp;&nbsp;•&nbsp;&nbsp;•&nbsp;&nbsp;•&nbsp;&nbsp;•&nbsp;&nbsp;•&nbsp;&nbsp;•</div>
+      <div class="pf-sec">
+        <div class="pf-rail">Mid</div>
+        <div class="pf-circles" id="pfHeart"></div>
       </div>
-      <div class="pf-body">
-        <div class="pf-rail" id="pfMood">Fresh &amp; Vibrant</div>
-        <div>
-          <div class="pf-row"><div class="pf-rowlabel">Top</div><div class="pf-circles" id="pfTop"></div></div>
-          <div class="pf-row"><div class="pf-rowlabel">Middle</div><div class="pf-circles" id="pfHeart"></div></div>
-          <div class="pf-row"><div class="pf-rowlabel">Base</div><div class="pf-circles" id="pfBase"></div></div>
-        </div>
-      </div>
-      <div class="pf-foot">
-        <div class="pf-brand" id="pfBrand">TJOOMDE</div>
-        <div class="pf-cons" id="pfCons">EAU DE PARFUM</div>
-        <div></div>
+      <div class="pf-sec">
+        <div class="pf-rail">Base</div>
+        <div class="pf-circles" id="pfBase"></div>
       </div>
     </div>
     <div class="exp-bar"><button class="btn-png" data-exp="cardProfile|png">Export PNG</button><button class="btn-jpg" data-exp="cardProfile|jpg">Export JPG</button></div>
@@ -212,7 +179,6 @@ async function loadVariant(){
   const v=(VARIANTS||[]).find(x=>x.slug===sl);
   if(!v) return;
   AUTO.name=v.name;
-  if($("fInsp")) $("fInsp").value=v.inspiration||"";
   const f=FRAG[sl]||{};
   let accs=null;
   if(f.accords){ accs=f.accords.slice(0,5).map(([a,p])=>[a.charAt(0).toUpperCase()+a.slice(1),p]); buildAccEdit(accs); }
@@ -236,7 +202,7 @@ async function loadVariant(){
   }catch(e){ $("fTop").value=(v.top||[]).join(", "); }
   render();
 }
-function bind(){ ["fInsp","fTheme","fBg","fTop","fHeart","fBase"].forEach(id=>{
+function bind(){ ["fTop","fHeart","fBase"].forEach(id=>{
   const el=$(id); if(el) el.addEventListener("input",render);
 });}
 function split(s){return (s||"").split(",").map(x=>x.trim()).filter(Boolean);}
@@ -332,15 +298,7 @@ let lastSig="";
 function render(){
   const name=AUTO.name||"Parfum";
   const accs=accRows();
-  // tema
-  const card=$("cardProfile");
-  card.style.setProperty("--pf",$("fTheme").value||"#B58A67");
-  card.style.background=$("fBg").value||"#FDFCF7";
-  $("pfTitle").textContent=name.toUpperCase();
-  $("pfSub").textContent=AUTO.sub||accs.slice(0,3).map(([a])=>a).join(", ");
-  $("pfMood").textContent=AUTO.mood||"";
-  $("pfBrand").textContent=AUTO.brand;
-  $("pfCons").textContent=AUTO.cons;
+  // Card 1 kini polos (poster TOP/MID/BASE ala referensi) — tanpa judul & tema warna
   // rows (skip rebuild bila notes sama)
   const T=split($("fTop").value), H=split($("fHeart").value), B=split($("fBase").value);
   const sig=JSON.stringify([T,H,B]);
