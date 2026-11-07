@@ -192,7 +192,7 @@ async function loadVariant(){
   // pada halaman yang belum memiliki data notes atau masih berupa Coming Soon.
   const fallbackTop=(v.top&&v.top.length)?v.top:(v.middle||v.base||[]);
   $("fTop").value=fallbackTop.join(", ");
-  $("fHeart").value=(v.heart||v.middle||[]).join(", ");
+  $("fHeart").value=(v.heart||v.mid||v.middle||[]).join(", ");
   $("fBase").value=(v.base||[]).join(", ");
   lastSig="";
 

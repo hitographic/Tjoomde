@@ -426,12 +426,13 @@ def main():
     for v in variants:
         rel = [x for x in by_acc[v["primary"]] if x["slug"] != v["slug"]][:3]
         (ROOT / v["slug"]).mkdir(exist_ok=True)
-        (ROOT / v["slug"] / "index.html").write_text(render_page(v, rel), encoding="utf-8")
+        page = "\n".join(line.rstrip() for line in render_page(v, rel).splitlines()) + "\n"
+        (ROOT / v["slug"] / "index.html").write_text(page, encoding="utf-8")
         count += 1
 
     js = "const VARIANTS = " + json.dumps(
         [{"name": v["name"], "slug": v["slug"], "inspiration": v["inspiration"],
-          "top": v["top"][:4], "cat": ("floral" if v["primary"] in ("floral",) else
+          "top": v["top"][:4], "mid": v["mid"], "base": v["base"], "cat": ("floral" if v["primary"] in ("floral",) else
                                        ("fresh" if v["primary"] in ("citrus", "fresh", "green") else "warm"))}
          for v in variants], ensure_ascii=False) + ";\n"
     (ROOT / "assets").mkdir(exist_ok=True)

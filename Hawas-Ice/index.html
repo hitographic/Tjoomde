@@ -12,7 +12,7 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23111111'/><text x='50' y='68' font-size='55' text-anchor='middle' fill='white' font-family='serif'>T</text></svg>" />
 </head>
 <body>
-  <div class="announce"><span>TJOOMDE • EXTRAIT DE PARFUM 30ML</span></div>
+  <div class="announce"><span>TJOOMDE • EDP 50ML</span></div>
   <header class="nav"><div class="wrap nav-inner">
     <a href="../" class="logo"><img src="../assets/logo.png" alt="Tjoomde" /></a>
     <nav class="links" id="navLinks">
@@ -29,8 +29,9 @@
   <main class="wrap vpage">
     <p class="crumb"><a href="../">Home</a> / Hawas Ice</p>
     <div class="vhero">
+      <img class='vbottle' src='https://fimgs.net/mdimg/perfume-thumbs/375x500.89050.jpg' alt='Hawas Ice' loading='lazy' />
       <div>
-        <p class="eyebrow">TJOOMDE • EXTRAIT DE PARFUM 30ML</p>
+        <p class="eyebrow">TJOOMDE • EAU DE PARFUM 50ML</p>
         <h1>Hawas Ice</h1>
         <p class='insp' data-id='Terinspirasi dari Hawas Ice - Rasasi' data-en='Inspired by Hawas Ice - Rasasi'>Terinspirasi dari Hawas Ice - Rasasi</p>
       </div>
@@ -51,7 +52,7 @@
       </section>
       <section class="vcard">
         <h2 data-id="Performa" data-en="Performance">Performa</h2>
-        <div class="perf"><div><strong data-id="Daya tahan" data-en="Longevity">Daya tahan</strong><span>6-8 jam • Extrait</span></div>
+        <div class="perf"><div><strong data-id="Daya tahan" data-en="Longevity">Daya tahan</strong><span>6-8 jam • EDP</span></div>
         <div class="bar"><i style="width:75%"></i></div></div>
         <div class="perf"><div><strong>Sillage</strong><span>Moderate / Moderat</span></div>
         <div class="dots"><i class='on'></i><i class='on'></i><i class='on'></i><i></i><i></i></div></div>
@@ -78,7 +79,7 @@
 
     <div class="vorder">
       <button class="btn btn-dark" id="orderBtn"><span data-id="Order Hawas Ice via WhatsApp" data-en="Order Hawas Ice via WhatsApp">Order Hawas Ice via WhatsApp</span> →</button>
-      <a class="btn btn-ghost" href="../"><span data-id="← Beranda" data-en="← Home">← Beranda</span></a>
+      <a class="btn btn-ghost" href="../#collection"><span data-id="← Semua varian" data-en="← All variants">← Semua varian</span></a>
     </div>
 
     <section class='vcard'><h2 data-id='Varian se-aroma' data-en='Similar scents'>Varian se-aroma</h2><div class='rel-grid'><a class='rel-card' href='../Kirke-Tiziana-Terenzi/'><strong>Kirke - Tiziana Terenzi</strong><span>Passionfruit, Peach</span></a><a class='rel-card' href='../9-AM-Dive/'><strong>9 AM Dive</strong><span>Lemon, Mint</span></a><a class='rel-card' href='../9-PM-Rebel-Sweet-Version/'><strong>9 PM Rebel Sweet Version</strong><span>Pineapple, Granny Smith Apple</span></a></div></section>
@@ -109,8 +110,8 @@
     document.getElementById("year").textContent = new Date().getFullYear();
     document.getElementById("orderBtn").onclick = () => {
       const msg = lang === "id"
-        ? "Halo Tjoomde! Saya mau order " + NAME + " 30ml Extrait de Parfum. Apakah masih ready?"
-        : "Hi Tjoomde! I'd like to order " + NAME + " 30ml Extrait de Parfum. Is it available?";
+        ? "Halo Tjoomde! Saya mau order " + NAME + " 50ml EDP. Apakah masih ready?"
+        : "Hi Tjoomde! I'd like to order " + NAME + " 50ml EDP. Is it available?";
       window.open("https://wa.me/" + WA + "?text=" + encodeURIComponent(msg), "_blank");
     };
     applyLang();
