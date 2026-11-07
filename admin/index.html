@@ -49,7 +49,7 @@ section.prev{padding:28px;display:flex;flex-direction:column;gap:26px;align-item
 .pf{background:#fff;color:#111;border-radius:0;padding:34px 30px;width:100%;aspect-ratio:3/4;overflow:hidden;display:flex;flex-direction:column;justify-content:center;font-family:'Inter',sans-serif;position:relative}
 .pf-sec{display:grid;grid-template-columns:52px 1fr;align-items:center;gap:14px;padding:26px 0}
 .pf-sec + .pf-sec{border-top:1px solid #D8D8D8}
-.pf-rail{writing-mode:vertical-rl;transform:rotate(180deg);font-weight:800;font-size:1.35rem;letter-spacing:.2em;text-transform:uppercase;color:#111;justify-self:center;align-self:center;line-height:1;white-space:nowrap;block-size:106px;width:52px;text-align:center}
+.pf-rail{width:52px;height:106px;display:flex;align-items:center;justify-content:center;justify-self:center;align-self:center;color:#111;overflow:visible}.pf-rail span{display:block;width:max-content;font-weight:800;font-size:1.35rem;letter-spacing:.2em;text-transform:uppercase;line-height:1;white-space:nowrap;transform:rotate(-90deg);transform-origin:center center}
 .pf-circles{display:flex;gap:22px 20px;flex-wrap:wrap}
 .ncell{width:102px;text-align:center}
 .nimg{width:102px;height:102px;border-radius:50%;overflow:hidden;background:#fff;cursor:pointer;position:relative;margin:0 auto}
@@ -96,15 +96,15 @@ section.prev{padding:28px;display:flex;flex-direction:column;gap:26px;align-item
     <div class="card-label"><span>Card 1 — Notes Parfum (3:4)</span><span id="st1"></span></div>
     <div class="pf" id="cardProfile">
       <div class="pf-sec">
-        <div class="pf-rail">Top</div>
+        <div class="pf-rail"><span>Top</span></div>
         <div class="pf-circles" id="pfTop"></div>
       </div>
       <div class="pf-sec">
-        <div class="pf-rail">Mid</div>
+        <div class="pf-rail"><span>Mid</span></div>
         <div class="pf-circles" id="pfHeart"></div>
       </div>
       <div class="pf-sec">
-        <div class="pf-rail">Base</div>
+        <div class="pf-rail"><span>Base</span></div>
         <div class="pf-circles" id="pfBase"></div>
       </div>
     </div>
