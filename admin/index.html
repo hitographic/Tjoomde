@@ -49,7 +49,7 @@ section.prev{padding:28px;display:flex;flex-direction:column;gap:26px;align-item
 .pf{background:#fff;color:#111;border-radius:0;padding:34px 30px;width:100%;aspect-ratio:3/4;overflow:hidden;display:flex;flex-direction:column;justify-content:center;font-family:'Inter',sans-serif;position:relative}
 .pf-sec{display:grid;grid-template-columns:52px 1fr;align-items:center;gap:14px;padding:26px 0}
 .pf-sec + .pf-sec{border-top:1px solid #D8D8D8}
-.pf-rail{writing-mode:vertical-rl;transform:rotate(180deg);font-weight:800;font-size:1.35rem;letter-spacing:.2em;text-transform:uppercase;color:#111;justify-self:center;line-height:1}
+.pf-rail{writing-mode:vertical-rl;transform:rotate(180deg);font-weight:800;font-size:1.35rem;letter-spacing:.2em;text-transform:uppercase;color:#111;justify-self:center;align-self:center;line-height:1;white-space:nowrap;block-size:106px;width:52px;text-align:center}
 .pf-circles{display:flex;gap:22px 20px;flex-wrap:wrap}
 .ncell{width:102px;text-align:center}
 .nimg{width:102px;height:102px;border-radius:50%;overflow:hidden;background:#fff;cursor:pointer;position:relative;margin:0 auto}
@@ -378,6 +378,8 @@ async function doExport(cardId,fmt){
   try{
     st.textContent="Merender…";
     await document.fonts.ready;
+    el.classList.add("is-exporting");
+    await new Promise(res=>requestAnimationFrame(()=>requestAnimationFrame(res)));
     // Bypass CORS ala 18. Notes Parfum: proxy wsrv.nl agar fimgs ikut ke-render
     imgs.forEach(i=>{
       if(i.src.startsWith("data:")) return;
@@ -385,7 +387,7 @@ async function doExport(cardId,fmt){
       i.src="https://wsrv.nl/?url="+encodeURIComponent(i.src)+"&cors=1";
     });
     await waitImgs(el);
-    const canvas=await html2canvas(el,{scale:2,backgroundColor:"#ffffff",useCORS:true,allowTaint:false,imageTimeout:15000,logging:false});
+    const canvas=await html2canvas(el,{scale:2,backgroundColor:"#ffffff",useCORS:true,allowTaint:false,imageTimeout:15000,logging:false,width:el.offsetWidth,height:el.offsetHeight,windowWidth:el.ownerDocument.documentElement.clientWidth});
     const a=document.createElement("a");
     const fn=`tjoomde-${slug(AUTO.name)}-${cardId==="cardProfile"?"profile":"accords"}.${fmt==="jpg"?"jpg":"png"}`;
     a.download=fn;
@@ -393,7 +395,7 @@ async function doExport(cardId,fmt){
     a.click();
     st.textContent="✓ "+fn;toast("Tersimpan: "+fn);
   }catch(e){st.textContent="Gagal export";toast("Export gagal: "+e.message);}
-  finally{ imgs.forEach((i,x)=>{ i.src=orig[x]; }); }
+  finally{ el.classList.remove("is-exporting"); imgs.forEach((i,x)=>{ i.src=orig[x]; }); }
   setTimeout(()=>st.textContent="",5000);
 }
 </script>
